@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+
+    # project apps
+    'apps.pages.apps',
 ]
 
 MIDDLEWARE = [
@@ -59,6 +62,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [str(BASE_DIR) + '/templates/', ],
+        # 'DIRS': [BASE_DIR / 'templates', ],git status
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
