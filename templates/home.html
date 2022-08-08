@@ -1,17 +1,10 @@
+{% extends 'base.html' %}
+
 {% load static %}
-
-<html lang="en">
-<head>
-    <meta>
-    <title>Heriberto Roman</title>
-</head>
-
-<body style="margin: 0; text-align: center; background-color: #192A51; color: #F9E9D5;">
-    <p style="background-color: #F9E9D5; font-size: 18px; padding: 10px 0 10px 0; color: #192A51;">👆Yes I know site is not secure 😲 once I secure a SWE role I will gladly pay for a Dyno on Heroku 😂</p>
-    <div style="border-bottom: 1px solid #F9E9D5; padding-bottom: 20px">
-
-        <img style="width: 300px;" alt="Image of me" src="{% static 'pages/images/hr.svg' %}">
-    </div>
+{% block body_content %}
+    
+    <p style="background-color: #F9E9D5; font-size: 14px; padding: 2px 0 2px 0; color: #192A51; margin-bottom: 0px;">👆Yes I know site is not secure 😲 once I secure a SWE role I will gladly pay for a Dyno on Heroku 😂</p>
+    {% include 'navbar.html' %}
     <div style='padding-top: 40px'>
         <img style="width: 15%; height: auto; border-radius: 50% " alt="Image of me" src="{% static 'pages/images/hr.png' %}">
         <h1>Hello World 👋 🌎</h1>
@@ -27,8 +20,7 @@
     </div>
 
 
-    <h4 style="position: fixed; bottom: 0; width: 100%">Site is under construction 🚧 👷</h4>
-</body>
+    <h5 style="position: fixed; bottom: 0; width: 100%">Site is under construction 🚧 👷</h5>
+    
 
-</html>
-
+{% endblock %}

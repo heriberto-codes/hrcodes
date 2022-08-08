@@ -42,7 +42,6 @@ INSTALLED_APPS = [
 
     # project apps
     'apps.pages.apps',
-    # 'apps.pages'
 ]
 
 MIDDLEWARE = [
@@ -77,18 +76,6 @@ WSGI_APPLICATION = 'hrcodes.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': config('POSTGRES_DB'),
-#         'USER': config('POSTGRES_USER'),
-#         'HOST': config('POSTGRES_HOST'),
-#         'PORT': 5432,
-#         'PASSWORD': config('POSTGRES_PASSWORD'),
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE':'django.db.backends.sqlite3',
