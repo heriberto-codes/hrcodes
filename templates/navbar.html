@@ -1,47 +1,199 @@
 {% load static %}
 {% block nav_bar %}
-   
-    <nav class="navbar navbar-expand-lg navbar-dark text-uppercase">   
 
-        <!--  Show this only on mobile to medium screens  -->
-          <a class="navbar-brand d-lg-none" href="#">
-            <img class='hrLogo' alt="hroman codes logo" src="{% static 'pages/images/hr.svg' %}">
+<nav style='container' class="navbar navbar-expand-lg navbar-dark text-uppercase">
+  <div class='container-fluid'>
+    <!--  Show this only on mobile to medium screens  -->
+      <a class="navbar-brand d-lg-none" href="#">
+        <img class='hMobile' alt="hroman codes logo" src="{% static 'pages/images/H.svg' %}">
+      </a>
+    
+      <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+    <!--  Use flexbox utility classes to change how the child elements are justified  -->
+      <div class="collapse navbar-collapse justify-content-around text-center" id="navbarToggle">
+    
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Experience</a>
+          </li>
+        </ul>
+        
+        
+    <!--   Show this only lg screens and up   -->
+        <div class='logo_wrapper d-none d-lg-block'>
+          <a class="navbar-brand d-none d-lg-block" href="#">
+              <img class='hrLogo' alt="hroman codes logo" src="{% static 'pages/images/hr.svg' %}">
+              <div class='logo_text text-center'>
+                <img class='hDesktop' alt="hroman codes logo" src="{% static 'pages/images/H.svg' %}">
+              </div>
           </a>
+        </div>
         
-          <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        
-        <!--  Use flexbox utility classes to change how the child elements are justified  -->
-          <div class="collapse navbar-collapse justify-content-around" id="navbarToggle">
-        
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Experience</a>
-              </li>
-            </ul>
-            
-            
-        <!--   Show this only lg screens and up   -->
-            <a class="navbar-brand d-none d-lg-block" href="#">
-                <img class='hrLogo' alt="hroman codes logo" src="{% static 'pages/images/hr.svg' %}">
-            </a>
-            
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="#">Work</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Contact</a>
-              </li>
-              <li class="nav-item">
-                <button><a class="nav-link" href="{% static 'pages/HRoman_ATS_Resume_August_2022.pdf' %}" target='_blank'>Resume</a></button>
-              </li>
-            </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Work</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+          <li class="nav-item">
+            <button><a class="nav-link text-uppercase" href="{% static 'pages/HRoman_ATS_Resume_August_2022.pdf' %}" target='_blank'>Resume</a></button>
+          </li>
+        </ul>
+      </div>
+    </div>
+</nav>
 
-        </nav>
+<style>
+/* ======================================
+  Global Variables
+========================================= */
+  :root {
+    --somethingGoesHere:  
+  }
+/* ========================================= */
+
+  nav {
+    border-bottom: 1px solid #F9E9D5;
+    letter-spacing: 0.15em;
+  }
+  
+  .navbar .navbar-nav .nav-link {
+    color: white;
+    font-size: 1.1em;
+  }
+  .navbar .navbar-nav .nav-link:hover{
+    color: #F29576;
+  }
+  .navbar-logo-centered .navbar-nav .nav-link{
+    padding: .5em 1em;
+  }
+  
+  .custom-toggler.navbar-toggler {
+    border-color: rgb(255,149,117);
+  }
+  
+  .navbar-dark .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(249, 233, 213, 2.0)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E")
+  }
+  
+  .hrLogo {
+    width: 300px;
+  }
+  
+  button {
+    border: 2px solid #F29576;
+    background: #192A51;
+    box-sizing: border-box;
+    border-radius: 5px;
+    color: #C4C4C4;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    outline: 0;
+    line-height: normal;
+    transition: all .3s ease-out;
+    text-align: center;
+  }
+
+  button:hover {
+    box-shadow:inset 0 -4px 0 0 rgba(0,0,0.2),
+        1px 1px 0 0 #C4C4C4,
+        2px 2px 0 0 #C4C4C4,
+        3px 3px 0 0 #C4C4C4,
+        4px 4px 0 0 #C4C4C4,
+        5px 5px 0 0 #C4C4C4;
+  }
+  
+  button:active{
+    background: #F9E9D5;
+  }
+
+  /* The wrapper class that will contain the logo and the text */
+  .logo_wrapper {
+    height: 50px;
+    overflow: hidden;
+  }
+
+  /* The logo will be the same height as the wrapper and transition for 300ms */
+  .logo_wrapper img {
+    transition: transform 300ms;
+  }
+
+  /* The text should also transition for 300ms */
+  .logo_wrapper .logo_text {
+    transition: transform 300ms;
+  }
+
+  /* When hovering over the wrapper, the logo and text will "translate" up 40px */
+  .logo_wrapper:hover img, .logo_wrapper:hover .logo_text {
+    transform: translateY(-46px);
+  }
+
+  .hDesktop {
+    height: 100px;
+    width: 100px;
+    padding-top: 45px
+  }
+
+  .hMobile {
+    height: 104px;
+    width: 100px;
+    padding-top: 15px;
+  }
+
+/*=========================================
+  Media Queries
+/* ======================================
+  Breakpoint	      Purpose
+  (default)	          Mobile-portrait
+  min-width: 480px	  Mobile-landscape (and larger)
+  min-width: 576px	  Mobile-landscape (and larger)
+  min-width: 768px	  Tablet-portrait (and larger)
+  min-width: 992px	  Tablet-landscape (and larger)
+  min-width: 1200px	  Laptops (and larger)
+  min-width: 1400px	  Laptops (and larger)
+========================================= */
+  @media (min-width: 480px) {
+    nav {
+      
+    }
+  }
+  
+  @media (min-width: 576px) {
+    nav {
+      
+    }
+  }
+  
+  @media (min-width: 768px) {
+    nav {
+      
+    }
+  }
+  
+  @media (min-width: 992px) {
+    nav {
+      
+    }
+  }
+
+  @media (min-width: 1200px) {
+    nav {
+      
+    }
+  }
+
+  @media (min-width: 1400px) {
+    nav {
+      
+    }
+}
+</style>
 
 {% endblock %}
