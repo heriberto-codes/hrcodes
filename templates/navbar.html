@@ -51,34 +51,26 @@
 </nav>
 
 <style>
-/* ======================================
-  Global Variables
-========================================= */
-  :root {
-    --somethingGoesHere:  
-  }
-/* ========================================= */
-
   nav {
     border-bottom: 1px solid #F9E9D5;
-    letter-spacing: 0.15em;
+    letter-spacing: var(--letterSpacing);
   }
   
   .navbar .navbar-nav .nav-link {
-    color: white;
+    color: var(--hrColorWhite);
     font-size: 1.1em;
   }
   .navbar .navbar-nav .nav-link:hover{
-    color: #F29576;
+    color: var(--hrColorOrange);
   }
   .navbar-logo-centered .navbar-nav .nav-link{
     padding: .5em 1em;
   }
   
   .custom-toggler.navbar-toggler {
-    border-color: rgb(255,149,117);
+    border-color: var(--hrColorOrange);
   }
-  
+
   .navbar-dark .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(249, 233, 213, 2.0)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E")
   }
@@ -89,7 +81,7 @@
   
   button {
     border: 2px solid #F29576;
-    background: #192A51;
+    background: var(--hrbgColor);
     box-sizing: border-box;
     border-radius: 5px;
     color: #C4C4C4;
@@ -146,54 +138,6 @@
     width: 100px;
     padding-top: 15px;
   }
-
-/*=========================================
-  Media Queries
-/* ======================================
-  Breakpoint	      Purpose
-  (default)	          Mobile-portrait
-  min-width: 480px	  Mobile-landscape (and larger)
-  min-width: 576px	  Mobile-landscape (and larger)
-  min-width: 768px	  Tablet-portrait (and larger)
-  min-width: 992px	  Tablet-landscape (and larger)
-  min-width: 1200px	  Laptops (and larger)
-  min-width: 1400px	  Laptops (and larger)
-========================================= */
-  @media (min-width: 480px) {
-    nav {
-      
-    }
-  }
-  
-  @media (min-width: 576px) {
-    nav {
-      
-    }
-  }
-  
-  @media (min-width: 768px) {
-    nav {
-      
-    }
-  }
-  
-  @media (min-width: 992px) {
-    nav {
-      
-    }
-  }
-
-  @media (min-width: 1200px) {
-    nav {
-      
-    }
-  }
-
-  @media (min-width: 1400px) {
-    nav {
-      
-    }
-}
 </style>
 
 {% endblock %}

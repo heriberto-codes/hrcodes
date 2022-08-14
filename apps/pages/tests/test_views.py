@@ -6,12 +6,12 @@ from django.urls import reverse
 class TestViews(TestCase):
     def setUp(self):
         self.client = Client()
-        self.base_url = reverse('base')  
+        self.base_url = reverse('home')  
             
     def test_can_view_base_template(self):
         
         response = self.client.get(self.base_url)
         
         self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'base.html')
+        self.assertTemplateUsed(response, 'home.html')
         

@@ -7,7 +7,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@100;200;400&family=Inter:wght@600;700&display=swap" rel="stylesheet">   
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -19,10 +18,22 @@
 </body>
 
 <style>
+    /* ======================================
+    Global Variables
+    ========================================= */
+    :root {
+        --hrbgColor: #192A51;
+        --hrFontFamily: 'IBM Plex Mono', monospace;
+        --letterSpacing: 0.15em;
+        --hrColorWhite: #fff;
+        --hrColorOrange: #F29576;
+        --hrColorBeige: #F9E9D5;
+    }
+    /* ========================================= */
+
     body {
-        background-color: #192A51;  
-        font-family: 'IBM Plex Mono', monospace;
-        color: #fff;
-        margin: 0; 
+        background-color: var(--hrbgColor);
+        font-family: var(--hrFontFamily);
+        color: var(--hrColorWhite);
     }
 </style>
