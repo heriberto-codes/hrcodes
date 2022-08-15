@@ -1,7 +1,7 @@
 {% block home %}
 {% load static %}
 
-<div style='padding-top: 40px;' class='text-center'>
+{% comment %} <div style='padding-top: 40px;' class='text-center'>
     <img style="width: 15%; height: auto; border-radius: 50% " alt="Image of me" src="{% static 'pages/images/hr.png' %}">
     <h1>Hello World 👋 🌎</h1>
     <p style>My name is Heriberto Roman I am a Software Engineer looking for new opportunities.</p>
@@ -13,10 +13,64 @@
         <li><a style="color: #F9E9D5;" target="_blank" href="https://hroman-codes.medium.com/">Medium</a></li>
         <li><a style="color: #F9E9D5;" target="_blank" href="https://www.credly.com/badges/2bcefd6b-915d-4f5d-8e57-cad453b7dc2f/public_url">AWS Certification</a></li>
     </ul>
-</div>
+</div> {% endcomment %}
+<section>
+    <div class='container'>
+        <div class='row'>
+            <div class='col'>
+                <h1>Hi, my name is</h1>
+            </div>     
+        </div>
+        <div class='row'>
+            <div class='col'>
+                <h2>Heriberto Roman.</h2>
+            </div>     
+        </div>
+        <div class='row'>
+            <div class='col'>
+                <h3>Frontend Software Engineer.</h3>
+            </div>     
+        </div>
+        <div class='row'>
+            <div class='col'>
+                <p class='specialText'>My name is Heriberto Roman. I am a self-taught Software Engineer. I worked for
+                    startups in techEd, higher education, food tech, and the non-profit sector.
+                    
+                    I am passionate about learning from others and am always interested in advancing my software architecture skills and cloud computing strategies. I'd love for my next role to be at a company that values mentorship and diversity.</p>
+            </div>     
+        </div>
+    </div>
+</section>
 
 <style>
     
+    h1 {
+        color: var(--hrColorOrange);
+        font-size: clamp(14px, 5vw, 16px);
+        margin-top: 10px;
+    }
+
+    h2 {
+        font-size: clamp(30px, 8vw, 58px);
+        margin-top: 10px;
+    }
+
+    h3 {
+        margin-top: 10px;
+        font-size: clamp(30px, 8vw, 58px);
+        color: #8893AF;
+    }
+
+    .specialText {
+        margin: 20px 0px 0px;
+        color: #8893AF;
+        -webkit-font-smoothing: antialiased;
+        font-size: 0.8rem;
+    }
+
+    section {
+        padding-top: clamp(10px, 5vw, 50px);
+    }
    
 </style>
 

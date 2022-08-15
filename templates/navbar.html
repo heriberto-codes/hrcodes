@@ -134,10 +134,29 @@
   }
 
   .hMobile {
-    height: 104px;
-    width: 100px;
+    height: 70px;
+    width: 59px;
     padding-top: 15px;
   }
+
+/*=========================================
+  Media Queries
+/* ======================================
+  Breakpoint	      Purpose
+  (default)	          Mobile-portrait
+  max-width: 480px	  Mobile-landscape (and larger)
+  max-width: 576px	  Mobile-landscape (and larger)
+  max-width: 768px	  Tablet-portrait (and larger)
+  max-width: 992px	  Tablet-landscape (and larger)
+  max-width: 1200px	  Laptops (and larger)
+  max-width: 1400px	  Laptops (and larger)
+========================================= */
+  @media all and (max-width: 992px) {
+    nav {
+      border-bottom: none;
+    }
+  }
+
 </style>
 
 {% endblock %}
