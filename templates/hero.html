@@ -1,24 +1,18 @@
 {% block home %}
 {% load static %}
 
-{% comment %} <div style='padding-top: 40px;' class='text-center'>
-    <img style="width: 15%; height: auto; border-radius: 50% " alt="Image of me" src="{% static 'pages/images/hr.png' %}">
-    <h1>Hello World 👋 🌎</h1>
-    <p style>My name is Heriberto Roman I am a Software Engineer looking for new opportunities.</p>
-    <p>Feel free to click on the links below to learn more about me:</p>
-    <ul style="list-style: none;">
-        <li><a style="color: #F9E9D5;" target="_blank" href="https://github.com/hroman-codes">GitHub</a></li>
-        <li><a style="color: #F9E9D5;" target="_blank" href="https://www.linkedin.com/in/heribertoroman/">LinkedIn</a></li>
-        <li><a style="color: #F9E9D5;" target="_blank" href="https://www.youtube.com/channel/UCWLLLB21WpFoNklfx1et25A">YouTube</a></li>
-        <li><a style="color: #F9E9D5;" target="_blank" href="https://hroman-codes.medium.com/">Medium</a></li>
-        <li><a style="color: #F9E9D5;" target="_blank" href="https://www.credly.com/badges/2bcefd6b-915d-4f5d-8e57-cad453b7dc2f/public_url">AWS Certification</a></li>
-    </ul>
-</div> {% endcomment %}
-<section>
+{% comment %} <ul style="list-style: none;">
+    <li><a style="color: #F9E9D5;" target="_blank" href="https://github.com/hroman-codes">GitHub</a></li>
+    <li><a style="color: #F9E9D5;" target="_blank" href="https://www.linkedin.com/in/heribertoroman/">LinkedIn</a></li>
+    <li><a style="color: #F9E9D5;" target="_blank" href="https://www.youtube.com/channel/UCWLLLB21WpFoNklfx1et25A">YouTube</a></li>
+    <li><a style="color: #F9E9D5;" target="_blank" href="https://hroman-codes.medium.com/">Medium</a></li>
+    <li><a style="color: #F9E9D5;" target="_blank" href="https://www.credly.com/badges/2bcefd6b-915d-4f5d-8e57-cad453b7dc2f/public_url">AWS Certification</a></li>
+</ul> {% endcomment %}
+<section class='hrSection'>
     <div class='container'>
         <div class='row'>
             <div class='col'>
-                <h1>Hi, my name is</h1>
+                <h1>👋 Hi, my name is</h1>
             </div>     
         </div>
         <div class='row'>
@@ -28,48 +22,132 @@
         </div>
         <div class='row'>
             <div class='col'>
-                <h3>Frontend Software Engineer.</h3>
+                <h3>I build things for the web.</h3>
             </div>     
         </div>
         <div class='row'>
-            <div class='col'>
-                <p class='specialText'>My name is Heriberto Roman. I am a self-taught Software Engineer. I worked for
-                    startups in techEd, higher education, food tech, and the non-profit sector.
-                    
-                    I am passionate about learning from others and am always interested in advancing my software architecture skills and cloud computing strategies. I'd love for my next role to be at a company that values mentorship and diversity.</p>
+            <div class='col col-lg-8'>
+                <p class='heroBlurb'>
+                    I am a Frontend Software Engineer. I design and code beautifully simple things, and I love what I do. 
+                    I worked for startups in tech ed, food tech, and the non-profit sector. I'm equipped with just the right tools and can function independently. 
+                    I am passionate about learning from others and advancing my software architecture skills, and cloud computing strategies.
+                </p>
             </div>     
+        </div>
+        <div class='row scroll-downs fixed-bottom'>
+            <div class='col mousey'>
+                <div class="scroller"></div>  
         </div>
     </div>
 </section>
 
 <style>
+    .hrSection {
+        margin: var(--hrSectionMargin);
+        max-width: var(--hrSectionMaxWidth);
+        padding-block: var(--hrSectionPaddingBlock);
+    }
     
     h1 {
         color: var(--hrColorOrange);
-        font-size: clamp(14px, 5vw, 16px);
+        font-size: clamp(0.875rem, 2vw, 1.5rem);
         margin-top: 10px;
     }
 
     h2 {
         font-size: clamp(30px, 8vw, 58px);
+        font-weight: 900;
         margin-top: 10px;
+        line-height: 0.9;
     }
 
     h3 {
         margin-top: 10px;
         font-size: clamp(30px, 8vw, 58px);
-        color: #8893AF;
+        color: var(--hrTextColorGrey);
     }
 
-    .specialText {
+    .heroBlurb {
         margin: 20px 0px 0px;
-        color: #8893AF;
+        color: var(--hrTextColorGrey);
         -webkit-font-smoothing: antialiased;
-        font-size: 0.8rem;
+        font-size: 1rem;
     }
 
-    section {
-        padding-top: clamp(10px, 5vw, 50px);
+    .scroll-downs {
+        margin: auto;
+        width :34px;
+        height: 55px;
+        margin-bottom: 50px;
+    }
+
+    .mousey {
+        width: 3px;
+        padding: 10px 15px;
+        height: 35px;
+        border: 2px solid #fff;
+        border-radius: 25px;
+        opacity: 0.75;
+        box-sizing: content-box;
+    }
+
+    .scroller {
+        width: 3px;
+        height: 10px;
+        border-radius: 25%;
+        background-color: #fff;
+        animation-name: scroll;
+        animation-duration: 2.2s;
+        animation-timing-function: cubic-bezier(.15,.41,.69,.94);
+        animation-iteration-count: infinite;
+    }
+
+    @keyframes scroll {
+        0% { opacity: 0; }
+        10% { transform: translateY(0); opacity: 1; }
+        100% { transform: translateY(15px); opacity: 0;}
+    }
+
+/*=========================================
+  Media Queries
+/* ======================================
+  Breakpoint	      Purpose
+  (default)	          Mobile-portrait
+  max-width: 480px	  Mobile-landscape (and larger)
+  max-width: 576px	  Mobile-landscape (and larger)
+  max-width: 768px	  Tablet-portrait (and larger)
+  max-width: 992px	  Tablet-landscape (and larger)
+  max-width: 1200px	  Laptops (and larger)
+  max-width: 1400px	  Laptops (and larger)
+========================================= */
+    @media all and (min-width: 480px) {
+        body {
+            background-color: red;
+        }
+    }
+
+    @media all and (min-width: 768px) {
+        body {
+            background-color: blue;
+        }
+    }
+
+    @media all and (min-width: 992px) {
+        body {
+            background-color: yellow;
+        }
+    }
+
+    @media all and (min-width: 1200px) {
+        body {
+            background-color: pink;
+        }
+    }
+
+    @media all and (min-width: 1400px) {
+    body {
+        background-color: green;
+    }
     }
    
 </style>
