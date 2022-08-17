@@ -26,9 +26,9 @@
             </div>     
         </div>
         <div class='row'>
-            <div class='col col-lg-8'>
+            <div class='col col-md-10 col-lg-8'>
                 <p class='heroBlurb'>
-                    I am a Frontend Software Engineer. I design and code beautifully simple things, and I love what I do. 
+                    I am a <strong>Frontend Software Engineer</strong>. I design and code beautifully simple things, and I love what I do. 
                     I worked for startups in tech ed, food tech, and the non-profit sector. I'm equipped with just the right tools and can function independently. 
                     I am passionate about learning from others and advancing my software architecture skills, and cloud computing strategies.
                 </p>
@@ -120,34 +120,30 @@
   max-width: 1200px	  Laptops (and larger)
   max-width: 1400px	  Laptops (and larger)
 ========================================= */
-    @media all and (min-width: 480px) {
+    @media all and (max-width: 480px) {
         body {
             background-color: red;
         }
     }
 
-    @media all and (min-width: 768px) {
-        body {
-            background-color: blue;
+    @media all and (max-width: 768px) {
+        .container {
+            max-width: 650px !important;
+        }
+        
+        h2 {
+            font-size: 3rem;
+        }
+
+        h3 {
+            font-size: 2.3rem;
         }
     }
 
-    @media all and (min-width: 992px) {
-        body {
-            background-color: yellow;
+    @media all and (max-width: 992px) {
+        .container {
+            max-width: 800px;
         }
-    }
-
-    @media all and (min-width: 1200px) {
-        body {
-            background-color: pink;
-        }
-    }
-
-    @media all and (min-width: 1400px) {
-    body {
-        background-color: green;
-    }
     }
    
 </style>
