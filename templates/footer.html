@@ -1,16 +1,28 @@
 {% block footer %}
 
 <footer>
-    <p class='text-center'>Site is under construction 🚧 👷</p>
+    <section class='footerSection'>
+        <div class='container'>
+            <div class='row'>
+                <div class='col'>
+                    <h1>Footer section coming soon 🦶</h1>
+                </div>
+            </div>
+        </div>
+    </section>
 </footer>
 
 <style>
     footer {
-        position: fixed; 
-        bottom: 0; 
-        width: 100%;
+        background-color: var(--hrColorBeige); 
         font-size: 14px;
-        color: #F9E9D5;
+        color: var(--hrbgColor);
+    }
+
+    .footerSection {
+        margin: var(--hrSectionMargin);
+        max-width: var(--hrSectionMaxWidth);
+        padding-block: var(--hrFooterSectionPaddingBlock);
     }
 </style>
 
