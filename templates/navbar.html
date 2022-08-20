@@ -61,6 +61,7 @@
   #navbar {
     transition: top 1s;
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
   
   .navbar .navbar-nav .nav-link {
@@ -158,11 +159,12 @@
   max-width: 1200px	  Laptops (and larger)
   max-width: 1400px	  Laptops (and larger)
 ========================================= */
-  @media all and (max-width: 991px) {
-    nav {
-      border-bottom: none;
-    }
+@media all and (max-width: 991px) {
+  nav {
+    border-bottom: none;
   }
+}
+
 </style>
 
 <script>
