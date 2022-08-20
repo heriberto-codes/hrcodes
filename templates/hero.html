@@ -1,13 +1,6 @@
 {% block home %}
 {% load static %}
 
-{% comment %} <ul style="list-style: none;">
-    <li><a style="color: #F9E9D5;" target="_blank" href="https://github.com/hroman-codes">GitHub</a></li>
-    <li><a style="color: #F9E9D5;" target="_blank" href="https://www.linkedin.com/in/heribertoroman/">LinkedIn</a></li>
-    <li><a style="color: #F9E9D5;" target="_blank" href="https://www.youtube.com/channel/UCWLLLB21WpFoNklfx1et25A">YouTube</a></li>
-    <li><a style="color: #F9E9D5;" target="_blank" href="https://hroman-codes.medium.com/">Medium</a></li>
-    <li><a style="color: #F9E9D5;" target="_blank" href="https://www.credly.com/badges/2bcefd6b-915d-4f5d-8e57-cad453b7dc2f/public_url">AWS Certification</a></li>
-</ul> {% endcomment %}
 <section class='hrSection' id='hero'>
     <div class='container'>
         <div class='row'>
@@ -45,7 +38,37 @@
     margin: var(--hrSectionMargin);
     max-width: var(--hrSectionMaxWidth);
     padding-block: var(--hrSectionPaddingBlock);
+
+    -webkit-animation: fadein 3s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadein 3s; /* Firefox < 16 */
+        -ms-animation: fadein 3s; /* Internet Explorer */
+         -o-animation: fadein 3s; /* Opera < 12.1 */
+            animation: fadein 3s;
 }
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 3; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 3; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 33; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 3; }
+}
+
 
 h1 {
     color: var(--hrColorOrange);
