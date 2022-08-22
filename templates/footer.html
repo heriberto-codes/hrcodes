@@ -1,3 +1,4 @@
+{% load static %}
 {% block footer %}
 
 <footer>
@@ -5,7 +6,15 @@
         <div class='container'>
             <div class='row'>
                 <div class='col'>
-                    <h1>Footer section coming soon 🦶</h1>
+                    <a href='#hero' class='hrFooterLogo' style="text-decoration: none;">
+                        <img class='hMobile' id='hMobileFooter' alt="hroman codes logo" src="{% static 'pages/images/hLogoBlueOutline.svg' %}">
+                        <div class='topLabel'>Top</div>
+                    </a>
+                </div>
+            </div>
+            <div class='row'>
+                <div class='col'>
+                    <p>Built from scratch and with ❤️ by Heriberto Roman</p>
                 </div>
             </div>
         </div>
@@ -17,12 +26,35 @@
         background-color: var(--hrColorBeige); 
         font-size: 14px;
         color: var(--hrbgColor);
+        text-align: center;
     }
 
     .footerSection {
         margin: var(--hrSectionMargin);
         max-width: var(--hrSectionMaxWidth);
         padding-block: var(--hrFooterSectionPaddingBlock);
+    }
+
+    #hMobileFooter {
+        z-index: 1;
+        position: relative;
+    }
+
+    .topLabel {
+        position: relative;
+        top: -38px;
+        z-index: 2;
+        color: #F9E9D5;
+        width: 50px;
+        height: 2vh;
+        margin: 0 auto;
+    }
+
+    .topLabel:hover {
+        -webkit-transform: translateX(40px);
+        transform: translateX(50px);
+        transition: all .3s ease;
+        color: #192A51;
     }
 </style>
 
