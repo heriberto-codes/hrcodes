@@ -1,27 +1,45 @@
 {% block home %}
+{% load static %}
 
 <section class='aboutSection' id='about'>
     <div class='container'>
         <div class='row'>
             <div class='col'>
-                <h1>ABOUT</h1>
-                <p>Hello! My name is Heriberto Roman I am a <strong>Freelance Frontend Software Engineer</strong> with a passion for creating on the web. 
+                <div class='wrapper'>
+                    <picture class='pictureTag'>
+                        <img class='aboutMeImage' alt="Picture of Heriberto Roman" src="{% static 'pages/images/aboutMeImage.png' %}">
+                    </picture>
+                </div>
+            </div>
+            <div class='col'>
+                <h1 class='heading'>ABOUT ME</h1> 
+                <hr>
+                <p>👋 Hello! My name is Heriberto Roman I am a <strong>Freelance Frontend Software Engineer</strong> with a passion for creating on the web. 
                     I come from a family of builders and problem solvers. I started to teach myself how to code back in 2014 and spent a 
                     few years as a technical instructor teaching disconnected young adults in the South Bronx how to code.</p>
                     
                     <p>I currently have two years of professional experience as a Software Engineer. I love front-end technologies and 
                     work with several programming tools to deliver quality results to clients.</p>
 
-                    <p>When I am not behind a computer coding I enjoy spending quality time with my wife and kids 👨‍👩‍👧‍👦. I also play ice hockey twice a week 🥅 🏒 to keep me fit.</p>
+                    <p>When I am not behind a computer coding I enjoy spending quality time with my wife and kids 👨‍👩‍👧‍👦. I also play ice hockey twice a week 🥅 🏒 🙌 to keep me fit.</p>
 
-                    <p>I am for Hire!</p>
-                {% comment %} <ul style="list-style: none;">
-                    <li><a style="color: #F9E9D5;" target="_blank" href="https://github.com/hroman-codes">GitHub</a></li>
-                    <li><a style="color: #F9E9D5;" target="_blank" href="https://www.linkedin.com/in/heribertoroman/">LinkedIn</a></li>
-                    <li><a style="color: #F9E9D5;" target="_blank" href="https://www.youtube.com/channel/UCWLLLB21WpFoNklfx1et25A">YouTube</a></li>
-                    <li><a style="color: #F9E9D5;" target="_blank" href="https://hroman-codes.medium.com/">Medium</a></li>
-                    <li><a style="color: #F9E9D5;" target="_blank" href="https://www.credly.com/badges/2bcefd6b-915d-4f5d-8e57-cad453b7dc2f/public_url">AWS Certification</a></li>
-                </ul>  {% endcomment %}
+                    <p class='forHire'>
+                        <span style="--i:1">I</span>
+                        <span style="--i:2"></span>
+                        <span style="--i:3">a</span>
+                        <span style="--i:4">m</span>
+                        <span style="--i:5"></span>
+                        <span style="--i:6">f</span>
+                        <span style="--i:7">o</span>
+                        <span style="--i:8">r</span>
+                        <span style="--i:9"></span>
+                        <span style="--i:10">h</span>
+                        <span style="--i:11">i</span>
+                        <span style="--i:12">r</span>
+                        <span style="--i:13">e</span>
+                        <span style="--i:14">🤝</span>
+                        <span style="--i:15">🧳</span>
+                    </p>
             </div>
         </div>
 
@@ -29,11 +47,98 @@
 </section>
 
 <style>
-    .aboutSection {
-        margin: var(--hrSectionMargin);
-        max-width: var(--hrSectionMaxWidth);
-        padding-block: var(--hrSectionPaddingBlock);
-    }
+    .forHire {
+        position: relative;
+        -webkit-box-reflect: below -20px linear-gradient(transparent, rgba(0,0,0,.2));
+      }
+      .forHire span {
+        position: relative;
+        display: inline-block;
+        color: #fff;
+        text-transform: uppercase;
+        animation: forHire 1s infinite;
+        animation-delay: calc(.1s * var(--i));
+        
+      }
+      @keyframes forHire {
+        0%,40%,100% {
+          transform: translateY(0)
+        }
+        20% {
+          transform: translateY(-5px)
+        }
+      }
+
+.aboutSection {
+    margin: var(--hrSectionMargin);
+    max-width: var(--hrSectionMaxWidth);
+    padding-block: var(--hrSectionPaddingBlock);
+}
+
+.aboutMeImage {
+    width: 100%;
+    object-fit: cover;
+    max-width: 500px;
+    display: block;
+}
+
+.heading::before {
+    counter-increment: section 1;
+    content: "0" counter(section) ".";
+    margin-right: 10px;
+}
+
+hr {
+    border-top: 1px solid white;
+}
+
+.wrapper {
+    background-color: #192A51;
+    position: relative;
+    box-shadow: 0 10px 30px -15px #f29576;
+    background-image: linear-gradient(318deg, #F29576, #F9E9D5);
+}
+
+.wrapper::before {
+    border: 2px solid #F9E9D5;
+    content: "";
+    width: 100%;
+    height: 100%;
+    display: block;
+    top: 10px;
+    position: absolute;
+    z-index: -1;
+    right: 10px;
+    transition: transform 1s;
+}
+
+.wrapper::after {
+    border: 2px solid var(--hrColorOrange);
+    content: "";
+    width: 100%;
+    height: 100%;
+    display: block;
+    top: 20px;
+    position: absolute;
+    z-index: -1;
+    right: 20px;
+    transition: transform 1s;
+}
+
+.wrapper:hover::after {
+    transition: transform 1s;
+    transform: translateY(-20px) translateX(20px);
+}
+
+.wrapper:hover::before {
+    transition: transform 1s;
+    transform: translateY(-10px) translateX(10px);
+}
+
+.pictureTag {
+    filter: grayscale(50%) contrast(1);
+}
+
 </style>
 
 
