@@ -25,70 +25,67 @@
 <body>
     {% block home %}{% endblock %}
     <div class='loader-wrapper'>
-        {% comment %} <span class='loader'><span class='loader-inner'></span></span> {% endcomment %}
-        <span class='loader'><span class='loader-inner'><img class='hDesktopTest' alt="hroman codes logo" src="{% static 'pages/images/H.svg' %}"></span></span>
+        <span class='loader'><img class='hDesktopLoader' alt="hroman codes logo" src="{% static 'pages/images/H.svg' %}"></span>
     </div>
-    
 </body>
 
 <style>
-    .loader-wrapper {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-color: var(--hrbgColor);
-        display:flex;
-        justify-content: center;
-        align-items: center;
-      }
+/* ======================================
+Global Variables
+========================================= */
+:root {
+    --hrbgColor: #192A51;
+    --hrFontFamily: 'IBM Plex Mono', monospace;
+    --letterSpacing: 0.15em;
+    --hrColorWhite: #fff;
+    --hrColorOrange: #F29576;
+    --hrColorBeige: #F9E9D5;
+    --hrTextColorGrey: #8893AF;
+    --hrSectionMargin: 0px auto; 
+    --hrSectionMaxWidth: 1000px;
+    --hrSectionPaddingBlock: 20vh;
+    --hrFooterSectionPaddingBlock: 3vh;
+}
+/* ========================================= */
 
-      .hDesktopTest {
-        display: inline-block;
-        width: 100px;
-        height: 100px;
-        position: relative;
-        display: block;
-        animation: loader 2s infinite ease;
-      }
-  
-      
-      @keyframes loader {
-        0% { transform: rotate(0deg);}
-        25% { transform: rotate(180deg);}
-        50% { transform: rotate(180deg);}
-        75% { transform: rotate(360deg);}
-        100% { transform: rotate(360deg);}
-      }
-    
-    /* ======================================
-    Global Variables
-    ========================================= */
-    :root {
-        --hrbgColor: #192A51;
-        --hrFontFamily: 'IBM Plex Mono', monospace;
-        --letterSpacing: 0.15em;
-        --hrColorWhite: #fff;
-        --hrColorOrange: #F29576;
-        --hrColorBeige: #F9E9D5;
-        --hrTextColorGrey: #8893AF;
-        --hrSectionMargin: 0px auto; 
-        --hrSectionMaxWidth: 1000px;
-        --hrSectionPaddingBlock: 20vh;
-        --hrFooterSectionPaddingBlock: 3vh;
-    }
-    /* ========================================= */
+html {
+    scroll-behavior: smooth;
+}
 
-    html {
-        scroll-behavior: smooth;
-    }
+body {
+    background-color: var(--hrbgColor);
+    font-family: var(--hrFontFamily);
+    color: var(--hrColorWhite);
+}
+
+.loader-wrapper {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--hrbgColor);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hDesktopLoader {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    animation: loader 2s infinite ease;
+}
+
     
-    body {
-        background-color: var(--hrbgColor);
-        font-family: var(--hrFontFamily);
-        color: var(--hrColorWhite);
-    }
+@keyframes loader {
+    0% { transform: rotate(0deg);}
+    25% { transform: rotate(180deg);}
+    50% { transform: rotate(180deg);}
+    75% { transform: rotate(360deg);}
+    100% { transform: rotate(360deg);}
+}
 </style>
 
 <script>
