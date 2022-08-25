@@ -4,24 +4,30 @@
 <section class='aboutSection' id='about'>
     <div class='container'>
         <div class='row'>
-            <div class='col'>
+            <div class='col col-md-9 col-lg-6 col-xl-6'>
                 <div class='wrapper'>
                     <picture class='pictureTag'>
-                        <img class='aboutMeImage' alt="Picture of Heriberto Roman" src="{% static 'pages/images/aboutMeImage.png' %}">
+                        <img class='aboutMeImage d-none d-sm-none d-md-none d-lg-block d-xl-block d-xxl-block' alt="Picture of Heriberto Roman" src="{% static 'pages/images/aboutMeImage.png' %}">
                     </picture>
                 </div>
             </div>
-            <div class='col'>
+            <div class='col col-md-12 col-lg-6 col-xl-6'>
                 <h1 class='heading'>ABOUT ME</h1> 
                 <hr>
-                <p>👋 Hello! My name is Heriberto Roman I am a <strong>Freelance Frontend Software Engineer</strong> with a passion for creating on the web. 
+                <p>
+                    👋 Hello! My name is Heriberto Roman I am a <strong>Freelance Frontend Software Engineer</strong> with a passion for creating on the web. 
                     I come from a family of builders and problem solvers. I started to teach myself how to code back in 2014 and spent a 
-                    few years as a technical instructor teaching disconnected young adults in the South Bronx how to code.</p>
+                    few years as a technical instructor teaching disconnected young adults in the South Bronx how to code.
+                </p>
                     
-                    <p>I currently have two years of professional experience as a Software Engineer. I love front-end technologies and 
-                    work with several programming tools to deliver quality results to clients.</p>
+                <p>
+                    I currently have two years of professional experience as a Software Engineer. I love front-end technologies and 
+                    work with several programming tools to deliver quality results to clients.
+                </p>
 
-                    <p>When I am not behind a computer coding I enjoy spending quality time with my wife and kids 👨‍👩‍👧‍👦. I also play ice hockey twice a week 🥅 🏒 🙌 to keep me fit.</p>
+                <p>
+                    When I am not behind a computer coding I enjoy spending quality time with my wife and kids 👨‍👩‍👧‍👦. I also play ice hockey twice a week 🥅 🏒 🙌 to keep me fit.
+                </p>
 
                     <p class='forHire'>
                         <span style="--i:1">I</span>
@@ -120,24 +126,59 @@ hr {
 .forHire {
     position: relative;
     -webkit-box-reflect: below -10px linear-gradient(transparent, rgba(0,0,0,.2));
-  }
-  .forHire span {
+}
+
+.forHire span {
     position: relative;
     display: inline-block;
     color: #fff;
     text-transform: uppercase;
     animation: forHire 1s infinite;
     animation-delay: calc(.1s * var(--i));
-    
-  }
-  @keyframes forHire {
+}
+
+@keyframes forHire {
     0%,40%,100% {
-      transform: translateY(0)
+        transform: translateY(0)
     }
+
     20% {
-      transform: translateY(-2px)
+        transform: translateY(-2px)
     }
-  }
+}
+
+/*=========================================
+  Media Queries
+/* ======================================
+  Breakpoint	      Purpose
+  (default)	          Mobile-portrait
+  max-width: 480px	  Mobile-landscape (and larger)
+  max-width: 576px	  Mobile-landscape (and larger)
+  max-width: 768px	  Tablet-portrait (and larger)
+  max-width: 992px	  Tablet-landscape (and larger)
+  max-width: 1200px	  Laptops (and larger)
+  max-width: 1400px	  Laptops (and larger)
+========================================= */
+
+@media all and (max-width: 768px) {
+    .wrapper::before {
+        border: none;
+    }
+
+    .wrapper::after {
+        border: none;
+    }
+}
+
+@media all and (max-width: 992px) {
+    .wrapper::before {
+        border: none;
+    }
+
+    .wrapper::after {
+        border: none;
+    }
+}
 
 </style>
 

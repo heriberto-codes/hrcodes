@@ -5,17 +5,17 @@
     <div class='container'>
         <div class='row'>
             <div class='col content-tertiary'>
-                <p><span>👋 </span> Hi, my name is</p>
+                <p class='heroP'><span>👋 </span> Hi, my name is</p>
             </div>     
         </div>
         <div class='row'>
             <div class='col'>
-                <h2>Heriberto Roman.</h2>
+                <h2 class='heroH2'>Heriberto Roman.</h2>
             </div>     
         </div>
         <div class='row'>
             <div class='col'>
-                <h3>I build for the web.</h3>
+                <h3 class='heroH3'>I build for the <span class='heroWeb'>web</span><span class='ball'></span></h3>
             </div>     
         </div>
         <div class='row'>
@@ -34,6 +34,7 @@
 </section>
 
 <style>
+    
 .hrSection {
     margin: var(--hrSectionMargin);
     max-width: var(--hrSectionMaxWidth);
@@ -70,23 +71,24 @@
 }
 
 
-h1 {
+.heroP {
     color: var(--hrColorOrange);
     font-size: clamp(0.875rem, 2vw, 1.5rem);
     margin-top: 10px;
 }
 
-h2 {
+.heroH2 {
     font-size: clamp(30px, 8vw, 58px);
     font-weight: 900;
     margin-top: 10px;
     line-height: 0.9;
 }
 
-h3 {
+.heroH3 {
     margin-top: 10px;
     font-size: clamp(30px, 8vw, 58px);
     color: var(--hrTextColorGrey);
+    position: relative;
 }
 
 strong {
@@ -98,6 +100,27 @@ strong {
     color: var(--hrTextColorGrey);
     -webkit-font-smoothing: antialiased;
     font-size: 1rem;
+}
+
+.heroWeb::after {
+    content: '';
+    width: 13%;
+    position: absolute;
+    bottom: -8px;
+    left: 560px;
+    height: 6px;
+    display: block;
+    z-index: 5;
+    background: #FF9575;
+    transform: rotate(-5deg);
+    border-radius: 5px;
+}
+
+.heroWeb:hover::after {
+    transform: rotate(0deg);
+    width: 17%;
+    left: 535px;
+    transition: all .2s cubic-bezier(.175,.885,.32,1.275);
 }
 
 .scroll-downs {
@@ -134,7 +157,7 @@ strong {
     100% { transform: translateY(15px); opacity: 0;}
 }
 
-.content-tertiary p span {
+.content-tertiary .heroP span {
     animation: wobble 2.5s infinite;
     display: inline-block;
 }
@@ -147,6 +170,31 @@ strong {
     60% {transform: translate3d(10%,0,0) rotate(2deg) scale(1.2);}
     75% {transform: translate3d(-5%,0,0) rotate(-1deg) scale(1.1);}
     100% {transform: translateZ(0) scale(1);}
+}
+
+.ball {
+    height: 10px;
+    width: 10px;
+    border-radius: 100px;
+    position: absolute;
+    top: 46px;
+    left: 670px;
+    animation: spinBall 1s linear infinite;
+    animation-delay: 5s; 
+    animation-fill-mode: forwards;
+    box-shadow: inset 0 0 18px #fff, 
+        inset 6px 0 18px violet, 
+        inset -6px 0 18px #0ff, 
+        inset 6px 0 30px violet, 
+        inset -6px 0 30px #0ff, 
+        0 0 18px #fff, -4px 
+        0 18px violet, 4px 0 18px #0ff;
+}
+    
+@keyframes spinBall {
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /*=========================================
