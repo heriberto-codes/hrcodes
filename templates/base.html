@@ -75,17 +75,20 @@ body {
     width: 100px;
     height: 100px;
     position: relative;
-    animation: loader 2s infinite ease;
+    animation: circle-size 3s infinite ease;
 }
 
-    
-@keyframes loader {
-    0% { transform: rotate(0deg);}
-    25% { transform: rotate(180deg);}
-    50% { transform: rotate(180deg);}
-    75% { transform: rotate(360deg);}
-    100% { transform: rotate(360deg);}
+@keyframes circle-size {
+    from {
+        width: 50px;
+        height: 50px;
+    }
+    to {
+        width: 300px;
+        height: 300px;
+    }
 }
+
 </style>
 
 <script>
