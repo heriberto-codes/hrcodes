@@ -63,6 +63,31 @@ html {
 /* ======================================
 HERO SECTION
 ========================================= */
+.ball {
+    height: 10px;
+    width: 10px;
+    border-radius: 100px;
+    position: absolute;
+    top: 46px;
+    left: 670px;
+    animation: spinBall 1s linear infinite;
+    animation-delay: 5s; 
+    
+    box-shadow: inset 0 0 18px #fff, 
+        inset 6px 0 18px violet, 
+        inset -6px 0 18px #0ff, 
+        inset 6px 0 30px violet, 
+        inset -6px 0 30px #0ff, 
+        0 0 18px #fff, -4px 
+        0 18px violet, 4px 0 18px #0ff;
+}
+    
+@keyframes spinBall {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 .hrSection {
     margin: var(--hrSectionMargin);
     max-width: var(--hrSectionMaxWidth);
@@ -202,31 +227,6 @@ strong {
     100% {transform: translateZ(0) scale(1);}
 }
 
-.ball {
-    height: 10px;
-    width: 10px;
-    border-radius: 100px;
-    position: absolute;
-    top: 46px;
-    left: 670px;
-    animation: spinBall 1s linear infinite;
-    animation-delay: 5s; 
-    
-    box-shadow: inset 0 0 18px #fff, 
-        inset 6px 0 18px violet, 
-        inset -6px 0 18px #0ff, 
-        inset 6px 0 30px violet, 
-        inset -6px 0 30px #0ff, 
-        0 0 18px #fff, -4px 
-        0 18px violet, 4px 0 18px #0ff;
-}
-    
-@keyframes spinBall {
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
 /* ======================================
 ABOUT SECTION
 ========================================= */
@@ -329,6 +329,8 @@ hr {
 /* ======================================
     Breakpoint	      Purpose
     (default)	          Mobile-portrait
+    max-width: 320px	  Mobile-landscape (and larger)
+    max-width: 375px	  Mobile-landscape (and larger)
     max-width: 480px	  Mobile-landscape (and larger)
     max-width: 576px	  Mobile-landscape (and larger)
     max-width: 768px	  Tablet-portrait (and larger)
@@ -363,6 +365,11 @@ hr {
 }
 
 @media all and (max-width: 768px) {
+    .ball {
+        top: 27px;
+        left: 425px;
+    }
+
     .container {
         max-width: 650px !important;
     }
@@ -386,6 +393,15 @@ hr {
     .wrapper::after {
         border: none;
     }
+
+    .heroWeb::after {
+        left: 355px;
+    }
+
+    .heroWeb:hover::after {
+        width: 15%;
+        left: 350px;
+    }
 }
 
 @media all and (max-width: 576px) {
@@ -400,9 +416,24 @@ hr {
     .heroH2 {
         font-size: 2.3rem;
     }
+
+    .heroWeb::after {
+        width: 17%;
+    }
+
+    .heroWeb:hover::after {
+        width: 20%;
+    }
 }
 
 @media all and (max-width: 480px) {
+    .ball {
+        top: 20px;
+        left: 296px;
+        height: 7px;
+        width: 7px;
+    }
+
     .container {
         max-width: 460px !important;  
     }
@@ -426,10 +457,79 @@ hr {
     .heroBlurb {
         font-size: 0.8rem;
     }
+
+    .heroWeb::after {
+        width: 16%;
+        left: 245px;
+    }
+
+    .heroWeb:hover::after {
+        width: 18%;
+        left: 240px;
+    }
 }
 
 @media all and (max-width: 375px) {
     .hrSection {
         padding-top: 90px !important;
+    }
+}
+
+@media all and (max-width: 320px) {
+    .ball {
+        top: 16px;
+        left: 260px;
+        height: 6px;
+        width: 6px;
+    }
+
+    .heroBlurb {
+        font-size: 1rem;;
+    }
+
+    .heroP {
+        font-size: 1.2rem;
+    }
+
+    .heroH2 {
+        font-size: 1.8rem;
+    }
+
+    .heroH3 {
+        font-size: 1.4rem;
+    }
+
+    .heroWeb::after {
+        width: 16%;
+        left: 215px;
+    }
+
+    .heroWeb:hover::after {
+        width: 18%;
+        left: 215px;
+    }
+}
+
+@media all and (max-width: 280px) {
+    .ball {
+        left: 241px;
+    }
+
+    .heroH2 {
+        font-size: 1.5rem;
+    }
+
+    .heroH3 {
+        font-size: 1.3rem;
+    }
+
+    .heroWeb::after {
+        width: 16%;
+        left: 200px;
+    }
+
+    .heroWeb:hover::after {
+        width: 18%;
+        left: 200px;
     }
 }
