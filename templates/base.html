@@ -3,6 +3,7 @@
 <head>
     <meta>
     <title>Heriberto Roman</title>
+    <link rel='preload stylesheet' href="static/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@100;200;400&family=Inter:wght@600;700&display=swap" rel="preload stylesheet" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -18,82 +19,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 </head>
-<body>
-    {% block home %}{% endblock %}
-    <div class='loader-wrapper'>
+
+<body class='hrBody'>
+    {% comment %} <div class='loader-wrapper'>
         <span class='loader'><img class='hDesktopLoader' alt="hroman codes logo" src="{% static 'pages/images/H.svg' %}"></span>
-    </div>
+    </div> {% endcomment %}
+    {% block home %}{% endblock %}
 </body>
 
-<style>
-/* ======================================
-Global Variables
-========================================= */
-:root {
-    --hrbgColor: #192A51;
-    --hrFontFamily: 'IBM Plex Mono', monospace;
-    --letterSpacing: 0.15em;
-    --hrColorWhite: #fff;
-    --hrColorOrange: #F29576;
-    --hrColorBeige: #F9E9D5;
-    --hrTextColorGrey: #8893AF;
-    --hrSectionMargin: 0px auto; 
-    --hrSectionMaxWidth: 1000px;
-    --hrSectionPaddingBlock: 20vh;
-    --hrFooterSectionPaddingBlock: 3vh;
-}
-/* ========================================= */
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    background-color: var(--hrbgColor);
-    font-family: var(--hrFontFamily);
-    color: var(--hrColorWhite);
-}
-
-.loader-wrapper {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: var(--hrbgColor);
-    display:flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.hDesktopLoader {
-    display: inline-block;
-    width: 100px;
-    height: 100px;
-    position: relative;
-    animation: circle-size 3s infinite ease;
-}
-
-@keyframes circle-size {
-    from {
-        width: 50px;
-        height: 50px;
-    }
-    to {
-        width: 300px;
-        height: 300px;
-    }
-}
-
-</style>
-
-<script>
+{% comment %} <script>
     $(window).on("load", function() {
         $(".loader-wrapper").fadeOut(2000);
     });
-</script>
-
+</script> {% endcomment %}
