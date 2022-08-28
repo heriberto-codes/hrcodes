@@ -13,6 +13,7 @@ Global Variables
     --hrSectionMaxWidth: 1000px;
     --hrSectionPaddingBlock: 20vh;
     --hrFooterSectionPaddingBlock: 3vh;
+    --hrFontSmoothing: antialiased;
 }
 /* ========================================= */
 
@@ -161,7 +162,7 @@ strong {
 .heroBlurb {
     margin: 20px 0px 0px;
     color: var(--hrTextColorGrey);
-    -webkit-font-smoothing: antialiased;
+    -webkit-font-smoothing: var(--hrFontSmoothing);
     font-size: 1rem;
 }
 
@@ -259,14 +260,20 @@ ABOUT SECTION
     margin-right: 10px;
 }
 
-.wrapper {
+.aboutBlurb {
+    color: var(--hrTextColorGrey);
+    -webkit-font-smoothing: var(--hrFontSmoothing);
+    word-wrap: break-word;
+}
+
+.aboutPictureWrapper {
     background-color: #192A51;
     position: relative;
     box-shadow: 0 10px 30px -15px #f29576;
     background-image: linear-gradient(318deg, #F29576, #F9E9D5);
 }
 
-.wrapper::before {
+.aboutPictureWrapper::before {
     border: 2px solid #F9E9D5;
     content: "";
     width: 100%;
@@ -279,7 +286,7 @@ ABOUT SECTION
     transition: transform 1s;
 }
 
-.wrapper::after {
+.aboutPictureWrapper::after {
     border: 2px solid var(--hrColorOrange);
     content: "";
     width: 100%;
@@ -292,12 +299,12 @@ ABOUT SECTION
     transition: transform 1s;
 }
 
-.wrapper:hover::after {
+.aboutPictureWrapper:hover::after {
     transition: transform 1s;
     transform: translateY(-20px) translateX(20px);
 }
 
-.wrapper:hover::before {
+.aboutPictureWrapper:hover::before {
     transition: transform 1s;
     transform: translateY(-10px) translateX(10px);
 }
@@ -355,14 +362,14 @@ ABOUT SECTION
         max-width: 800px;
     }
 
-    .wrapper {
+    .aboutPictureWrapper {
         background-color: #192A51;
         position: relative;
         width: 40vw;
         height: auto;
         box-shadow: 0 10px 30px -15px #f29576;
         background-image: linear-gradient(318deg, #F29576, #F9E9D5);
-        max-width: 50%;
+        max-width: 65%;
     }
 
     .hrImgThumbnailMobile {
@@ -404,7 +411,7 @@ ABOUT SECTION
         font-size: 2.3rem;
     }
 
-    .wrapper {
+    .aboutPictureWrapper {
         background-color: #192A51;
         position: relative;
         width: 40vw;
@@ -495,6 +502,10 @@ ABOUT SECTION
 }
 
 @media all and (max-width: 320px) {
+    .aboutPictureWrapper {
+        min-width: 80%;
+    }
+
     .ball {
         top: 16px;
         left: 260px;
@@ -527,6 +538,7 @@ ABOUT SECTION
         width: 18%;
         left: 215px;
     }
+    
 }
 
 @media all and (max-width: 280px) {
