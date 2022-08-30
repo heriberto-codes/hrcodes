@@ -24,11 +24,6 @@ html {
     scroll-behavior: smooth;
 }
 
-.heading {
-    color: var(--hrColorOrange);
-    font-size: 1.5rem;
-}
-
 .hrLineBreak {
     border-top: 1px solid var(--hrColorWhite);
     margin-bottom: 30px;
@@ -99,7 +94,7 @@ HERO SECTION
     }
 }
 
-.hrSection {
+.heroSection {
     margin: var(--hrSectionMargin);
     max-width: var(--hrSectionMaxWidth);
     padding-block: var(--hrSectionPaddingBlock);
@@ -243,7 +238,7 @@ ABOUT SECTION
 ========================================= */
 .aboutSection {
     margin: var(--hrSectionMargin);
-    max-width: var(--hrSectionMaxWidth);
+    /* max-width: var(--hrSectionMaxWidth); */
     padding-block: var(--hrSectionPaddingBlock);
 }
 
@@ -254,7 +249,12 @@ ABOUT SECTION
     display: block;
 }
 
-.heading::before {
+.aboutHeading {
+    color: var(--hrColorOrange);
+    font-size: 1.5rem;
+}
+
+.aboutHeading::before {
     counter-increment: section 1;
     content: "0" counter(section) ".";
     margin-right: 10px;
@@ -335,6 +335,122 @@ ABOUT SECTION
     20% {
         transform: translateY(-2px)
     }
+}
+
+/* ======================================
+EXPERIENCE SECTION
+========================================= */
+.experienceSection {
+    margin: var(--hrSectionMargin);
+    /* max-width: var(--hrSectionMaxWidth); */
+    padding-block: var(--hrSectionPaddingBlock);
+}
+
+.experienceHeading {
+    color: var(--hrColorOrange);
+    font-size: 1.5rem;
+}
+
+.experienceHeading::before {
+    counter-increment: section 2;
+    content: "0" counter(section) ".";
+    margin-right: 10px;
+}
+
+
+.historyBubble {
+    color: white;
+    background-color: #222;
+    border-radius: 20px;
+    padding: 1.5em;
+}
+
+.PicSpotrBG {
+    overflow: hidden;
+}
+
+.PicSpotrBG::before {
+    background-image: url('https://uploads-ssl.webflow.com/5fd576424a6309c3ea8f7634/5fd576aa837d13fb2c864e23_logo-p-500.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    content: '';
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 37px;
+    opacity: 0.1;
+    width: 90%;
+}
+
+.LiHEBG::before {
+    background-image: url('https://latinosinhighered.com/imglib/lihe-logo-svg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    content: '';
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 37px;
+    opacity: 0.1;
+    width: 90%;
+}
+
+.IndependentSoftwareBG::before {
+    background-image: url('https://d2q79iu7y748jz.cloudfront.net/s/_squarelogo/128x128/0963a6da89f0aed01480d87ece8162c5');
+    background-repeat: no-repeat;
+    background-size: cover;
+    content: '';
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 300px;
+    opacity: 0.1;
+    width: 15%;
+}
+
+.CALAHEBG::before {
+    background-image: url('https://calahe.org/s/cdn/v1.0/i/m?url=https%3A%2F%2Fstorage.googleapis.com%2Fproduction-constantcontact-v1-0-3%2F503%2F518503%2FVbzi60dC%2F38fd919bc18b4f45aa86a9c1c1970ace&methods=resize%2C500%2C5000');
+    background-repeat: no-repeat;
+    background-size: cover;
+    content: '';
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 37px;
+    opacity: 0.1;
+    width: 90%;
+}
+
+.TKHBG::before {
+    background-image: url('https://d2x0vsetbcibj0.cloudfront.net/static-final/assets/img/sec_logo2sec.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    content: '';
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 37px;
+    opacity: 0.1;
+    width: 90%;
+}
+
+.TinyOrganicsBG::before {
+    background-image: url('https://cdn.shopify.com/s/files/1/0018/4650/9667/files/Tiny-Logos-ALL-01_1_6f7a4e61-2612-4f4b-8327-62b0ed2413be_300x300.png?v=1624156432');
+    background-repeat: no-repeat;
+    background-size: cover;
+    content: '';
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 37px;
+    opacity: 0.1;
+    width: 90%;
 }
 
 /*=========================================
@@ -464,7 +580,7 @@ ABOUT SECTION
         max-width: 460px !important;  
     }
 
-    .hrSection {
+    .heroSection {
         padding-top: 114.800;
     }
 
@@ -496,7 +612,7 @@ ABOUT SECTION
 }
 
 @media all and (max-width: 375px) {
-    .hrSection {
+    .herorSection {
         padding-top: 90px !important;
     }
 }
