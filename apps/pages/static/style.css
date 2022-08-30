@@ -238,7 +238,7 @@ ABOUT SECTION
 ========================================= */
 .aboutSection {
     margin: var(--hrSectionMargin);
-    /* max-width: var(--hrSectionMaxWidth); */
+    max-width: var(--hrSectionMaxWidth);
     padding-block: var(--hrSectionPaddingBlock);
 }
 
@@ -566,6 +566,10 @@ EXPERIENCE SECTION
     .heroWeb:hover::after {
         width: 20%;
     }
+
+    .tkhPositionLetterSpace {
+        letter-spacing: -1px;
+    }
 }
 
 @media all and (max-width: 480px) {
@@ -609,11 +613,32 @@ EXPERIENCE SECTION
         width: 18%;
         left: 240px;
     }
+
+    .TinyOrganicsBG::before,
+    .LiHEBG::before, 
+    .PicSpotrBG::before,
+    .TKHBG::before {
+        width: 85%;
+    }
+
+    .IndependentSoftwareBG::before {
+        width: 27%;
+        left: 175px;
+    }
+    
+    .tkhPositionLetterSpace {
+        letter-spacing: -2px;
+    }
 }
 
 @media all and (max-width: 375px) {
     .herorSection {
         padding-top: 90px !important;
+    }
+
+    .IndependentSoftwareBG::before {
+        width: 40%;
+        left: 120px;
     }
 }
 
