@@ -360,9 +360,10 @@ EXPERIENCE SECTION
 
 .historyBubble {
     color: white;
-    background-color: #222;
+    /* background-color: #222; */
     border-radius: 20px;
     padding: 1.5em;
+    box-shadow: 0 5px 30px -15px white;
 }
 
 .PicSpotrBG {
