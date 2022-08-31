@@ -366,6 +366,11 @@ EXPERIENCE SECTION
     box-shadow: 0 5px 30px -15px white;
 }
 
+.historyBubble:hover {
+    transition: transform .35s ease;
+    transform: scale(1.05);
+}
+
 .PicSpotrBG {
     overflow: hidden;
 }
