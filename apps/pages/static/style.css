@@ -629,6 +629,43 @@ EXPERIENCE SECTION
     .tkhPositionLetterSpace {
         letter-spacing: -2px;
     }
+
+    .tinyOrganicsWorkYears {
+        font-size: 1.2rem;
+    }
+}
+
+@media all and (max-width: 480px) {
+    .tkhTitleAndPosition {
+        font-size: 0.8rem;
+    }
+    
+    .tkhPositionLetterSpace {
+        letter-spacing: -1px;
+    }
+
+    .tkhWorkYears {
+        font-size: 1.2rem;
+    }
+
+    .calaheWorkYears {
+        font-size: 1.2rem;
+    }
+
+    .independentSoftwareTitleAndPosition {
+        font-size: 0.8rem;
+    }
+
+    .liheWorkYears {
+        font-size: 1.2rem;
+    }
+
+    .picSpotrTitleAndPosition {
+        font-size: 0.9rem;
+    }
+
+    .picSpotrWorkYears {
+        font-size: 1.2rem;
 }
 
 @media all and (max-width: 375px) {
@@ -639,6 +676,65 @@ EXPERIENCE SECTION
     .IndependentSoftwareBG::before {
         width: 40%;
         left: 120px;
+    }
+
+    .tinyOrganicsTitleAndPosition {
+        font-size: 0.9rem;
+    }
+
+    .tkhTitleAndPosition {
+        font-size: 0.8rem;
+    }
+
+    .tkhWorkYears {
+        font-size: 1.2rem;
+    }
+
+    .calaheWorkYears {
+        font-size: 1.2rem;
+    }
+
+    .independentSoftwareTitleAndPosition {
+        font-size: 0.8rem;
+    }
+
+    .liheTitleAndPosition {
+        font-size: 0.9rem;
+        letter-spacing: -1px;
+    }
+
+    .liheWorkYears {
+        font-size: 1.2rem;
+    }
+
+    .picSpotrWorkYears {
+        font-size: 1.2rem;
+    }
+}
+
+@media all and (max-width: 360px) {
+    .tinyOrganicsWorkYears {
+        font-size: 1.1rem;
+    }
+
+    .tkhWorkYears {
+        font-size: 1.1rem;
+    }
+
+    .calaheWorkYears {
+        font-size: 1.1rem;
+    }
+
+    .independentSoftwareTitleAndPosition {
+        font-size: 0.7rem;
+    }
+
+    .liheWorkYears {
+        font-size: 1.1rem;
+    }
+
+    .picSpotrWorkYears {
+        font-size: 1.1rem;
     }
 }
 
@@ -679,6 +775,51 @@ EXPERIENCE SECTION
         width: 18%;
         left: 215px;
     }
+
+    .tinyOrganicsTitleAndPosition {
+        font-size: 0.788rem;
+    }
+
+    .tinyOrganicsWorkYears {
+        font-size: 0.9rem;
+    }
+
+    .tkhTitleAndPosition {
+        font-size: 0.7rem;;
+    }
+
+    .tkhWorkYears {
+        font-size: 0.9rem;
+    }
+
+    .calaheWorkYears {
+        font-size: 0.9rem;
+    }
+
+    .calaheTitleAndPosition {
+        font-size: 0.788rem;
+    }
+
+    .independentSoftwareTitleAndPosition {
+        font-size: 0.6rem;
+    }
+
+    .liheTitleAndPosition {
+        font-size: 0.8rem;
+        letter-spacing: -1px;
+    }
+
+    .liheWorkYears {
+        font-size: 0.9rem;
+    }
+
+    .picSpotrTitleAndPosition {
+        font-size: 0.9rem;
+    }
+
+    .picSpotrWorkYears {
+        font-size: 1.2rem;
+    }
     
 }
 
@@ -703,5 +844,54 @@ EXPERIENCE SECTION
     .heroWeb:hover::after {
         width: 18%;
         left: 200px;
+    }
+
+    .tinyOrganicsTitleAndPosition {
+        font-size: 0.6rem;
+    }
+
+    .tinyOrganicsWorkYears {
+        font-size: 0.7rem;
+    }
+
+    .tkhTitleAndPosition {
+        font-size: 0.5rem;
+    }
+    
+    .tkhPositionLetterSpace {
+        letter-spacing: -1px;
+    }
+
+    .tkhWorkYears {
+        font-size: 0.7rem;
+    }
+
+    .calaheWorkYears {
+        font-size: 0.7rem;
+    }
+
+    .calaheTitleAndPosition {
+        font-size: 0.6rem;
+    }
+
+    .independentSoftwareTitleAndPosition {
+        font-size: 0.5rem;
+    }
+
+    .liheTitleAndPosition {
+        font-size: 0.7rem;
+        letter-spacing: -1px;
+    }
+
+    .liheWorkYears {
+        font-size: 0.7rem;
+    }
+
+    .picSpotrTitleAndPosition {
+        font-size: 0.7rem;
+    }
+
+    .picSpotrWorkYears {
+        font-size: 0.9rem;
     }
 }
