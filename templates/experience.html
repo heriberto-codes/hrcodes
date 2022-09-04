@@ -102,4 +102,13 @@
     </div>
 </section>
 
+<script>
+	VanillaTilt.init(document.querySelector(".historyBubble"), {
+		max: 10,
+		speed: 400,
+	});
+	
+	VanillaTilt.init(document.querySelectorAll(".historyBubble"));
+</script>
+
 {% endblock %}

@@ -365,11 +365,6 @@ EXPERIENCE SECTION
     box-shadow: 0 5px 30px -20px white;
 }
 
-.historyBubble:hover {
-    transition: transform .35s ease;
-    transform: scale(1.05);
-}
-
 .PicSpotrBG {
     overflow: hidden;
 }
@@ -388,6 +383,15 @@ EXPERIENCE SECTION
     width: 90%;
 }
 
+.PicSpotrBG:hover::before{
+    transition: transform .35s ease;
+    transform: scale(2);
+}
+
+.LiHEBG {
+    overflow: hidden;
+}
+
 .LiHEBG::before {
     background-image: url('https://latinosinhighered.com/imglib/lihe-logo-svg.png');
     background-repeat: no-repeat;
@@ -400,6 +404,15 @@ EXPERIENCE SECTION
     left: 37px;
     opacity: 0.1;
     width: 90%;
+}
+
+.LiHEBG:hover::before{
+    transition: transform .35s ease;
+    transform: scale(2);
+}
+
+.IndependentSoftwareBG {
+    overflow: hidden;
 }
 
 .IndependentSoftwareBG::before {
@@ -416,6 +429,15 @@ EXPERIENCE SECTION
     width: 15%;
 }
 
+.IndependentSoftwareBG:hover::before{
+    transition: transform .35s ease;
+    transform: scale(2);
+}
+
+.CALAHEBG {
+    overflow: hidden;
+}
+
 .CALAHEBG::before {
     background-image: url('https://calahe.org/s/cdn/v1.0/i/m?url=https%3A%2F%2Fstorage.googleapis.com%2Fproduction-constantcontact-v1-0-3%2F503%2F518503%2FVbzi60dC%2F38fd919bc18b4f45aa86a9c1c1970ace&methods=resize%2C500%2C5000');
     background-repeat: no-repeat;
@@ -428,6 +450,15 @@ EXPERIENCE SECTION
     left: 37px;
     opacity: 0.1;
     width: 90%;
+}
+
+.CALAHEBG:hover::before{
+    transition: transform .35s ease;
+    transform: scale(2);
+}
+
+.TKHBG {
+    overflow: hidden;
 }
 
 .TKHBG::before {
@@ -444,6 +475,15 @@ EXPERIENCE SECTION
     width: 90%;
 }
 
+.TKHBG:hover::before{
+    transition: transform .35s ease;
+    transform: scale(2);
+}
+
+.TinyOrganicsBG {
+    overflow: hidden;
+}
+
 .TinyOrganicsBG::before {
     background-image: url('https://cdn.shopify.com/s/files/1/0018/4650/9667/files/Tiny-Logos-ALL-01_1_6f7a4e61-2612-4f4b-8327-62b0ed2413be_300x300.png?v=1624156432');
     background-repeat: no-repeat;
@@ -456,6 +496,11 @@ EXPERIENCE SECTION
     left: 37px;
     opacity: 0.1;
     width: 90%;
+}
+
+.TinyOrganicsBG:hover::before{
+    transition: transform .35s ease;
+    transform: scale(2);
 }
 
 /*=========================================
