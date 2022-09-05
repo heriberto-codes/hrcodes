@@ -11,9 +11,12 @@ Global Variables
     --hrTextColorGrey: #8893AF;
     --hrSectionMargin: 0px auto; 
     --hrSectionMaxWidth: 1000px;
-    --hrSectionPaddingBlock: 20vh;
+    --heroSectionPaddingBlock: 20vh;
     --hrFooterSectionPaddingBlock: 3vh;
     --hrFontSmoothing: antialiased;
+    --aboutMeSectionPaddingBlock: 20vh;
+    --experienceSectionPaddingBlock: 10vh;
+    --toolsSectionPaddingBlock: 10vh;
 }
 /* ========================================= */
 
@@ -97,7 +100,7 @@ HERO SECTION
 .heroSection {
     margin: var(--hrSectionMargin);
     max-width: var(--hrSectionMaxWidth);
-    padding-block: var(--hrSectionPaddingBlock);
+    padding-block: var(--heroSectionPaddingBlock);
 
     -webkit-animation: fadein 5s; /* Safari, Chrome and Opera > 12.1 */
         -moz-animation: fadein 5s; /* Firefox < 16 */
@@ -239,7 +242,7 @@ ABOUT SECTION
 .aboutSection {
     margin: var(--hrSectionMargin);
     max-width: var(--hrSectionMaxWidth);
-    padding-block: var(--hrSectionPaddingBlock);
+    padding-block: var(--aboutMeSectionPaddingBlock);
 }
 
 .aboutMeImage {
@@ -342,8 +345,7 @@ EXPERIENCE SECTION
 ========================================= */
 .experienceSection {
     margin: var(--hrSectionMargin);
-    /* max-width: var(--hrSectionMaxWidth); */
-    padding-block: var(--hrSectionPaddingBlock);
+    padding-block: var(--experienceSectionPaddingBlock);
 }
 
 .experienceHeading {
@@ -356,7 +358,6 @@ EXPERIENCE SECTION
     content: "0" counter(section) ".";
     margin-right: 10px;
 }
-
 
 .historyBubble {
     color: white;
@@ -503,6 +504,36 @@ EXPERIENCE SECTION
     transform: scale(2);
 }
 
+/* ======================================
+TOOLING SECTION
+========================================= */
+.toolsSection {
+    margin: var(--hrSectionMargin);
+    padding-block: var(--toolsSectionPaddingBlock);
+}
+
+.toolsHeading {
+    color: var(--hrColorOrange);
+    font-size: 1.5rem;
+}
+
+.toolsHeading::before {
+    counter-increment: section 3;
+    content: "0" counter(section) ".";
+    margin-right: 10px;
+}
+
+.devicon-jquery-plain, 
+.devicon-django-plain,
+.devicon-postgresql-plain,
+.devicon-mongodb-plain,
+.devicon-heroku-original,
+.devicon-vscode-plain {
+    font-size: 5rem;
+}
+
+
+
 /*=========================================
     Media Queries
 /* ======================================
@@ -520,6 +551,12 @@ EXPERIENCE SECTION
 @media all and (max-width: 3000px) and (max-height: 900px) {
     .mousey {
         display: none;
+    }
+}
+
+@media all and (max-width: 3000px) {
+    .toolContainer {
+        max-width: 1007px !important;
     }
 }
 
@@ -683,9 +720,7 @@ EXPERIENCE SECTION
     .tinyOrganicsWorkYears {
         font-size: 1.2rem;
     }
-}
 
-@media all and (max-width: 480px) {
     .tkhTitleAndPosition {
         font-size: 0.8rem;
     }
@@ -716,6 +751,7 @@ EXPERIENCE SECTION
 
     .picSpotrWorkYears {
         font-size: 1.2rem;
+    }
 }
 
 @media all and (max-width: 375px) {
