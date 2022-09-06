@@ -58,135 +58,139 @@
 
 <style>
   
-  nav {
-    border-bottom: 1px solid #F9E9D5;
-    letter-spacing: var(--letterSpacing);
-  }
-  #navbar {
-    transition: top 1s;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  }
-  
-  .navbar .navbar-nav .nav-link {
-    color: var(--hrColorWhite);
-    font-size: 1.1em;
-  }
-  .navbar .navbar-nav .nav-link:hover{
-    color: var(--hrColorOrange);
-  }
-  .navbar-logo-centered .navbar-nav .nav-link{
-    padding: .5em 1em;
-  }
-  
-  .custom-toggler.navbar-toggler {
-    border-color: var(--hrColorOrange);
-  }
+nav {
+  border-bottom: 1px solid #F9E9D5;
+  letter-spacing: var(--letterSpacing);
+}
 
-  .navbar-dark .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(249, 233, 213, 2.0)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E")
-  }
-  
-  .hrLogo {
-    width: 300px;
-  }
-  
-  button {
-    animation: wiggle 3s linear 5s;
-    border: 2px solid #F29576;
-    background: var(--hrbgColor);
-    box-sizing: border-box;
-    border-radius: 5px;
-    color: #C4C4C4;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    outline: 0;
-    line-height: normal;
-    transition: all .3s ease-out;
-    text-align: center;
-  }
+#navbar {
+  transition: top 1s;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
 
-  button:hover {
-    box-shadow:inset 0 -4px 0 0 rgba(0,0,0.2),
-        1px 1px 0 0 #C4C4C4,
-        2px 2px 0 0 #C4C4C4,
-        3px 3px 0 0 #C4C4C4,
-        4px 4px 0 0 #C4C4C4,
-        5px 5px 0 0 #C4C4C4;
-  }
-  
-  button:active{
-    background: #F9E9D5;
-  }
+.navbar .navbar-nav .nav-link {
+  color: var(--hrColorWhite);
+  font-size: 1.1em;
+}
 
-  @keyframes wiggle {
-    0%, 7% {
-      transform: rotateZ(0);
-    }
-    15% {
-      transform: rotateZ(-15deg);
-    }
-    20% {
-      transform: rotateZ(10deg);
-    }
-    25% {
-      transform: rotateZ(-10deg);
-    }
-    30% {
-      transform: rotateZ(6deg);
-    }
-    35% {
-      transform: rotateZ(-4deg);
-    }
-    40%, 100% {
-      transform: rotateZ(0);
-    }
-  }
+.navbar .navbar-nav .nav-link:hover{
+  color: var(--hrColorOrange);
+}
 
-  /* The wrapper class that will contain the logo and the text */
-  .logo_wrapper {
-    height: 50px;
-    overflow: hidden;
-  }
+.navbar-logo-centered .navbar-nav .nav-link{
+  padding: .5em 1em;
+}
 
-  /* The logo will be the same height as the wrapper and transition for 300ms */
-  .logo_wrapper img {
-    transition: transform 300ms;
-  }
+.custom-toggler.navbar-toggler {
+  border-color: var(--hrColorOrange);
+}
 
-  /* The text should also transition for 300ms */
-  .logo_wrapper .logo_text {
-    transition: transform 300ms;
-  }
+.navbar-dark .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(249, 233, 213, 2.0)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E")
+}
 
-  /* When hovering over the wrapper, the logo and text will "translate" up 40px */
-  .logo_wrapper:hover img, .logo_wrapper:hover .logo_text {
-    transform: translateY(-46px);
-  }
+.hrLogo {
+  width: 300px;
+}
 
-  .hDesktop {
-    height: 100px;
-    width: 100px;
-    padding-top: 45px
-  }
+button {
+  animation: wiggle 3s linear 5s;
+  border: 2px solid #F29576;
+  background: var(--hrbgColor);
+  box-sizing: border-box;
+  border-radius: 5px;
+  color: #C4C4C4;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  outline: 0;
+  line-height: normal;
+  transition: all .3s ease-out;
+  text-align: center;
+  animation-delay: 10s;
+}
 
-  .hMobile {
-    height: 70px;
-    width: 59px;
-    padding-top: 15px;
+button:hover {
+  box-shadow:inset 0 -4px 0 0 rgba(0,0,0.2),
+      1px 1px 0 0 #C4C4C4,
+      2px 2px 0 0 #C4C4C4,
+      3px 3px 0 0 #C4C4C4,
+      4px 4px 0 0 #C4C4C4,
+      5px 5px 0 0 #C4C4C4;
+}
+
+button:active{
+  background: #F9E9D5;
+}
+
+@keyframes wiggle {
+  0%, 7% {
+    transform: rotateZ(0);
   }
+  15% {
+    transform: rotateZ(-15deg);
+  }
+  20% {
+    transform: rotateZ(10deg);
+  }
+  25% {
+    transform: rotateZ(-10deg);
+  }
+  30% {
+    transform: rotateZ(6deg);
+  }
+  35% {
+    transform: rotateZ(-4deg);
+  }
+  40%, 100% {
+    transform: rotateZ(0);
+  }
+}
+
+/* The wrapper class that will contain the logo and the text */
+.logo_wrapper {
+  height: 50px;
+  overflow: hidden;
+}
+
+/* The logo will be the same height as the wrapper and transition for 300ms */
+.logo_wrapper img {
+  transition: transform 300ms;
+}
+
+/* The text should also transition for 300ms */
+.logo_wrapper .logo_text {
+  transition: transform 300ms;
+}
+
+/* When hovering over the wrapper, the logo and text will "translate" up 40px */
+.logo_wrapper:hover img, .logo_wrapper:hover .logo_text {
+  transform: translateY(-46px);
+}
+
+.hDesktop {
+  height: 100px;
+  width: 100px;
+  padding-top: 45px
+}
+
+.hMobile {
+  height: 70px;
+  width: 59px;
+  padding-top: 15px;
+}
 
 /*=========================================
-  Media Queries
+Media Queries
 /* ======================================
-  Breakpoint	      Purpose
-  (default)	          Mobile-portrait
-  max-width: 480px	  Mobile-landscape (and larger)
-  max-width: 576px	  Mobile-landscape (and larger)
-  max-width: 768px	  Tablet-portrait (and larger)
-  max-width: 992px	  Tablet-landscape (and larger)
-  max-width: 1200px	  Laptops (and larger)
-  max-width: 1400px	  Laptops (and larger)
+Breakpoint	      Purpose
+(default)	          Mobile-portrait
+max-width: 480px	  Mobile-landscape (and larger)
+max-width: 576px	  Mobile-landscape (and larger)
+max-width: 768px	  Tablet-portrait (and larger)
+max-width: 992px	  Tablet-landscape (and larger)
+max-width: 1200px	  Laptops (and larger)
+max-width: 1400px	  Laptops (and larger)
 ========================================= */
 @media all and (max-width: 991px) {
   nav {

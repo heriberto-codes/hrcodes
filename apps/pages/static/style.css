@@ -17,6 +17,7 @@ Global Variables
     --aboutMeSectionPaddingBlock: 20vh;
     --experienceSectionPaddingBlock: 10vh;
     --toolsSectionPaddingBlock: 10vh;
+    --workSectionPaddingBlock: 10vh;
 }
 /* ========================================= */
 
@@ -72,6 +73,10 @@ html {
 /* ======================================
 HERO SECTION
 ========================================= */
+.animate__animated.animate__hinge {
+    --animate-duration: 3s;
+}
+
 .ball {
     height: 10px;
     width: 10px;
@@ -532,7 +537,25 @@ TOOLING SECTION
     font-size: 5rem;
 }
 
+/* ======================================
+WORK SECTION
+========================================= */
+.workSection {
+    margin: var(--hrSectionMargin);
+    padding-block: var(--workSectionPaddingBlock);
+}
 
+.workHeading {
+    color: var(--hrColorOrange);
+    font-size: 1.5rem;
+    text-transform: uppercase;
+}
+
+.workHeading::before {
+    counter-increment: section 4;
+    content: "0" counter(section) ".";
+    margin-right: 10px;
+}
 
 /*=========================================
     Media Queries
