@@ -1,6 +1,7 @@
 {% block home %}
+{% load static %}
 
-<section class='workSection' id='work'>
+<section class='workSection timeline' id='work'>
     <div class='container'>
         <div class='row'>
             <div class='col'>
@@ -8,7 +9,197 @@
                 <hr class="hrLineBreak">
             </div>
         </div>
+
+        {% comment %} <div class='workbox text-center'>
+            <div class="row align-items-start">
+                <div class="col">
+                    Project 1
+                </div>
+                <div class="col">
+                    Project 2
+                </div>
+                <div class="col">
+                    Project 3
+                </div>
+              </div>
+              <div class="row align-items-center">
+                <div class="col">
+                    Project 4
+                </div>
+                <div class="col">
+                    Project 5
+                </div>
+                <div class="col">
+                    Project 6
+                </div>
+              </div>
+              <div class="row align-items-end">
+                <div class="col">
+                    Project 7
+                </div>
+                <div class="col">
+                    Project 8
+                </div>
+                <div class="col">
+                    Project 9
+                </div>
+            </div>
+        </div> {% endcomment %}
+        {% comment %} src="{% static 'pages/images/highlanderHome.png' %}" {% endcomment %}
+        <ul>
+            <li>
+                <div class="card text-center border-0 workCard">
+                    <img class="card-img-top rounded-0" src="{% static 'pages/images/HromanCodesDemo.gif' %}" alt="Card image cap">
+                    <div class="card-body cardBodyHromancodesBG">
+                        <h1 class="card-title text-uppercase pb-3">Hroman.codes Portfolio site V2</h1>
+                        <p class="card-text pb-3">Some Text Goes Here</p>
+                        <span class="badge rounded-pill text-bg-primary">HTML</span>
+                        <span class="badge rounded-pill text-bg-primary">CSS</span>
+                        <span class="badge rounded-pill text-bg-primary">Bootstrap</span>
+                        <span class="badge rounded-pill text-bg-primary">Animate.css</span>
+                        <span class="badge rounded-pill text-bg-primary">Python</span>
+                        <span class="badge rounded-pill text-bg-primary">Django</span>
+                        <span class="badge rounded-pill text-bg-primary">Heroku</span>
+                        <div class="experienceButtonGroup btn-group text-center row pt-5" role="group" aria-label="Basic outlined example">
+                            <div class='py-1 col'>
+                                <a href="https://github.com/hroman-codes/hrcodes" class="." target='_blank'><i class="fa-brands fa-github fa-3x pb-2"></i></a>
+                                <p>Github</p>
+                            </div>
+                            <div class='py-1 col'>
+                                <a href="http://www.hroman.codes/" class="card-link" target='_blank'><i class="fa-solid fa-link fa-3x pb-2"></i></a>
+                                <p>View</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="card text-center border-0 workCard">
+                    <img class="card-img-top rounded-0" src="{% static 'pages/images/highlanderHome.png' %}" alt="Card image cap">
+                    <div class="card-body cardBodyHighlanderBG">
+                        <h1 class="card-title text-uppercase pb-3">Highlander</h1>
+                        <p class="card-text pb-3">A web app for coaches to manage their teams stats, averages, trash talk, and poach players from other teams.</p>
+                        <span class="badge rounded-pill text-bg-primary">HTML</span>
+                        <span class="badge rounded-pill text-bg-primary">CSS</span>
+                        <span class="badge rounded-pill text-bg-primary">Bulma</span>
+                        <span class="badge rounded-pill text-bg-danger">jQuery</span>
+                        <span class="badge rounded-pill text-bg-danger">Node</span>
+                        <span class="badge rounded-pill text-bg-danger">Express</span>
+                        <span class="badge rounded-pill text-bg-danger">Morgan</span>
+                        <span class="badge rounded-pill text-bg-danger">Knex</span>
+                        <span class="badge rounded-pill text-bg-danger">Bookshelf</span>
+                        <span class="badge rounded-pill text-bg-danger">Bcrypt</span>
+                        <span class="badge rounded-pill text-bg-primary">PostgreSQL</span>
+                        <span class="badge rounded-pill text-bg-primary">Heroku</span>
+                        <div class="experienceButtonGroup btn-group text-center row pt-5" role="group" aria-label="Basic outlined example">
+                            <div class='py-1 col'>
+                                <a href="https://github.com/hroman-codes/highlander" class="." target='_blank'><i class="fa-brands fa-github fa-3x pb-2"></i></a>
+                                <p>Github</p>
+                            </div>
+                            <div class='py-1 col'>
+                                <a href="https://highlandersport.herokuapp.com/index.html" class="card-link" target='_blank'><i class="fa-solid fa-link fa-3x pb-2"></i></a>
+                                <p>View</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="card text-center border-0 workCard">
+                    <img class="card-img-top rounded-0" src="{% static 'pages/images/highlanderHome.png' %}" alt="Card image cap">
+                    <div class="card-body cardBodyHighlanderBG">
+                        <h1 class="card-title text-uppercase pb-3">Highlander React/Redux</h1>
+                        <p class="card-text mb-0">A web app for coaches to manage their teams stats, averages, trash talk, and poach players from other teams</p><br> 
+                        <p class="card-text pb-3">This version was refactored utilizng React/Redux on the client side. </p>
+                        <span class="badge rounded-pill text-bg-primary">HTML</span>
+                        <span class="badge rounded-pill text-bg-primary">CSS</span>
+                        <span class="badge rounded-pill text-bg-primary">Javascript</span>
+                        <span class="badge rounded-pill text-bg-danger">React</span>
+                        <span class="badge rounded-pill text-bg-danger">Redux</span>
+                        <span class="badge rounded-pill text-bg-primary">Bulma</span>
+                        <span class="badge rounded-pill text-bg-danger">Node</span>
+                        <span class="badge rounded-pill text-bg-danger">Express</span>
+                        <span class="badge rounded-pill text-bg-danger">Morgan</span>
+                        <span class="badge rounded-pill text-bg-danger">Knex</span>
+                        <span class="badge rounded-pill text-bg-danger">Bookshelf</span>
+                        <span class="badge rounded-pill text-bg-danger">Bcrypt</span>
+                        <span class="badge rounded-pill text-bg-primary">PostgreSQL</span>
+                        <div class="experienceButtonGroup btn-group text-center row pt-5" role="group" aria-label="Basic outlined example">
+                            <div class='py-1 col'>
+                                <a href="https://github.com/hroman-codes/highlander-react-redux" class="card-link" target='_blank'><i class="fa-brands fa-github fa-3x pb-2"></i></a>
+                                <p>Github</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            
+            <li>
+                <div class="card text-center border-0 workCard">
+                    <img class="card-img-top rounded-0" src="{% static 'pages/images/hot-cold.gif' %}" alt="Card image cap">
+                    <div class="card-body cardBodyHotColdBG">
+                        <h1 class="card-title text-uppercase pb-3">Hot Cold React</h1>
+                        <p class="card-text mb-0">A Hot and Cold guessing game built with React and Redux, the computer randomly selects a number between 1 and 100, and the player then tries to guess the number.</p><br> 
+                        <p class="card-text pb-3">The player gets feedback for each guess – "hot" if their guess was close, and "cold" if their guess was far. When the user guesses the secret number, the app lets them know, and they'll have the option to start a new game.</p>
+                        <span class="badge rounded-pill text-bg-primary">HTML</span>
+                        
+                       
+                        <div class="experienceButtonGroup btn-group text-center row pt-5" role="group" aria-label="Basic outlined example">
+                            <div class='py-1 col'>
+                                <a href="https://github.com/hroman-codes/HotColdReact" class="card-link" target='_blank'><i class="fa-brands fa-github fa-3x pb-2"></i></a>
+                                <p>Github</p>
+                            </div>
+                            <div class='py-1 col'>
+                                <a href="https://hot-cold-react.netlify.app/" class="card-link" target='_blank'><i class="fa-solid fa-link fa-3x pb-2"></i></a>
+                                <p>View</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            
+        </ul>
     </div>
 </section>
 
-{% endblock%}
+<script>
+    (function() {
+
+        'use strict';
+      
+        // define variables
+        var items = document.querySelectorAll(".timeline li");
+      
+        // check if an element is in viewport
+        // http://stackoverflow.com/questions/123999/how-to-tell-if-a-dom-element-is-visible-in-the-current-viewport
+        function isElementInViewport(el) {
+          var rect = el.getBoundingClientRect();
+
+          return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+          );
+        }
+      
+        function callbackFunc() {
+          for (var i = 0; i < items.length; i++) {
+            if (isElementInViewport(items[i])) {
+              items[i].classList.add("in-view");
+            }
+          }
+        }
+      
+        // listen for events'
+        window.addEventListener("load", callbackFunc);
+        window.addEventListener("resize", callbackFunc);
+        window.addEventListener("scroll", callbackFunc);
+      
+      })();
+</script>
+
+
+{% endblock %}

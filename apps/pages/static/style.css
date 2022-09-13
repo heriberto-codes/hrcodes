@@ -84,8 +84,6 @@ HERO SECTION
     position: absolute;
     top: 46px;
     left: 670px;
-    /* animation: spinBall 1s linear infinite; */
-    /* animation-delay: 5s;  */
     
     box-shadow: inset 0 0 18px #fff, 
         inset 6px 0 18px violet, 
@@ -96,16 +94,11 @@ HERO SECTION
         0 18px violet, 4px 0 18px #0ff;
 }
     
-/* @keyframes spinBall {
-    100% {
-        transform: rotate(360deg);
-    }
-} */
-
 .heroSection {
     margin: var(--hrSectionMargin);
     max-width: var(--hrSectionMaxWidth);
     padding-block: var(--heroSectionPaddingBlock);
+    -webkit-font-smoothing: var(--hrFontSmoothing);
 
     -webkit-animation: fadein 5s; /* Safari, Chrome and Opera > 12.1 */
         -moz-animation: fadein 5s; /* Firefox < 16 */
@@ -145,6 +138,7 @@ HERO SECTION
 }
 
 .heroH2 {
+    color: var(--hrColorBeige);
     font-size: clamp(30px, 8vw, 58px);
     font-weight: 900;
     margin-top: 10px;
@@ -248,6 +242,7 @@ ABOUT SECTION
     margin: var(--hrSectionMargin);
     max-width: var(--hrSectionMaxWidth);
     padding-block: var(--aboutMeSectionPaddingBlock);
+    -webkit-font-smoothing: var(--hrFontSmoothing);
 }
 
 .aboutMeImage {
@@ -258,8 +253,8 @@ ABOUT SECTION
 }
 
 .aboutHeading {
-    color: var(--hrColorOrange);
-    font-size: 1.5rem;
+    color: var(--hrColorBeige);
+    font-size: 2rem;
 }
 
 .aboutHeading::before {
@@ -351,11 +346,12 @@ EXPERIENCE SECTION
 .experienceSection {
     margin: var(--hrSectionMargin);
     padding-block: var(--experienceSectionPaddingBlock);
+    -webkit-font-smoothing: var(--hrFontSmoothing);
 }
 
 .experienceHeading {
-    color: var(--hrColorOrange);
-    font-size: 1.5rem;
+    color: var(--hrColorBeige);
+    font-size: 2rem;
 }
 
 .experienceHeading::before {
@@ -515,11 +511,12 @@ TOOLING SECTION
 .toolsSection {
     margin: var(--hrSectionMargin);
     padding-block: var(--toolsSectionPaddingBlock);
+    -webkit-font-smoothing: var(--hrFontSmoothing);
 }
 
 .toolsHeading {
-    color: var(--hrColorOrange);
-    font-size: 1.5rem;
+    color: var(--hrColorBeige);
+    font-size: 2rem;
 }
 
 .toolsHeading::before {
@@ -540,14 +537,202 @@ TOOLING SECTION
 /* ======================================
 WORK SECTION
 ========================================= */
+.card a {
+    color: var(--hrColorWhite) !important;
+}
+
+/* FIX THE CARD A HOVER TO BADGE JUST ON THE CARDS NOT GLOBALLY.  */
+
+
+.badge {
+    background-color: #E9743F;
+    border-radius: 4px;
+    font-size: 80%  !important;
+}
+
+.card-body {
+    border-top: 5px solid var(--hrColorOrange) !important;
+}
+
+.card-body h1 {
+    font-size: 2rem;
+}
+
+.cardBodyHighlanderBG {
+    overflow: hidden;
+}
+
+.cardBodyHighlanderBG::before {
+    background-image: url('pages/images/highlanderHome.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    content: '';
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    opacity: 0.1;
+    width: 100%;
+}
+
+.cardBodyHighlanderBG:hover::before{
+    transition: transform .35s ease;
+    transform: scale(2);
+}
+
+.cardBodyHromancodesBG {
+    overflow: hidden;
+}
+
+.cardBodyHromancodesBG::before {
+    background-image: url('pages/images/HromanCodesDemo.gif');
+    background-repeat: no-repeat;
+    background-size: cover;
+    content: '';
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    opacity: 0.1;
+    width: 100%;
+}
+
+.cardBodyHromancodesBG:hover::before{
+    transition: transform .35s ease;
+    transform: scale(2);
+}
+
+.cardBodyHotColdBG {
+    overflow: hidden;
+}
+
+.cardBodyHotColdBG::before {
+    background-image: url('pages/images/hot-cold.gif');
+    background-repeat: no-repeat;
+    background-size: cover;
+    content: '';
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    opacity: 0.1;
+    width: 100%;
+}
+
+.cardBodyHotColdBG:hover::before{
+    transition: transform .35s ease;
+    transform: scale(2);
+}
+
+
+.experienceButtonGroup {
+    justify-content: space-around !important; 
+}
+
+.timeline ul li {
+    list-style-type: none;
+    position: relative;
+    width: 6px;
+    margin: 0 auto;
+    padding-top: 50px;
+    background: var(--hrColorWhite);
+}
+  
+.timeline ul li::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: inherit;
+}
+
+.timeline ul li div {
+    position: relative;
+    bottom: 0;
+    width: 400px;
+}
+
+.timeline ul li > div::before {
+    content: '';
+    position: absolute;
+    bottom: 7px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+
+.timeline ul li:nth-child(odd) > div {
+    background-color: #F8F8F8;
+    color: var(--hrColorWhite);
+    left: 45px;
+    opacity: 0.9;
+}
+
+
+.timeline ul li:nth-child(odd) > div::before {
+    left: -15px;
+    border-width: 8px 16px 8px 0;
+    border-color: transparent #F8F8F8 transparent transparent;
+}
+
+
+.timeline ul li:nth-child(even) > div {
+    background-color: #F8F8F8;
+    /* color: #726f77; */
+    left: -439px;
+/* left: -550px; */
+}
+
+.timeline ul li:nth-child(even) > div::before {
+    right: -15px;
+    border-width: 8px 0 8px 16px;
+    border-color: transparent transparent transparent #F8F8F8;
+}
+
+/* EFFECTS
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.timeline ul li::after {
+    transition: background .5s ease-in-out;
+}
+
+.timeline ul li.in-view::after {
+    background: var(--hrColorWhite);
+}
+
+.timeline ul li div {
+    visibility: hidden;
+    opacity: 0;
+    transition: all .5s ease-in-out;
+}
+
+.timeline ul li:nth-child(odd) div {
+    transform: translate3d(200px, 0, 0);
+}
+
+.timeline ul li:nth-child(even) div {
+    transform: translate3d(-200px, 0, 0);
+}
+
+.timeline ul li.in-view div {
+    transform: none;
+    visibility: visible;
+    opacity: 1;
+}
+
 .workSection {
     margin: var(--hrSectionMargin);
     padding-block: var(--workSectionPaddingBlock);
+    -webkit-font-smoothing: var(--hrFontSmoothing);
 }
 
 .workHeading {
-    color: var(--hrColorOrange);
-    font-size: 1.5rem;
+    color: var(--hrColorBeige);
+    font-size: 2rem;
     text-transform: uppercase;
 }
 
@@ -555,6 +740,11 @@ WORK SECTION
     counter-increment: section 4;
     content: "0" counter(section) ".";
     margin-right: 10px;
+}
+
+.workCard {
+    background-color: transparent !important;
+    box-shadow: 0 5px 30px -20px white;
 }
 
 /*=========================================
