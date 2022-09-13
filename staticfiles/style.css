@@ -541,6 +541,9 @@ WORK SECTION
     color: var(--hrColorWhite) !important;
 }
 
+/* FIX THE CARD A HOVER TO BADGE JUST ON THE CARDS NOT GLOBALLY.  */
+
+
 .badge {
     background-color: #E9743F;
     border-radius: 4px;
@@ -560,7 +563,7 @@ WORK SECTION
 }
 
 .cardBodyHighlanderBG::before {
-    background-image: url('pages/images/highlanderHome.png');
+    background-image: url('pages/images/highlanderHomeDemo.gif');
     background-repeat: no-repeat;
     background-size: cover;
     content: '';
@@ -582,7 +585,7 @@ WORK SECTION
 }
 
 .cardBodyHromancodesBG::before {
-    background-image: url('pages/images/Hroman_codes.png');
+    background-image: url('pages/images/HromanCodesDemo.gif');
     background-repeat: no-repeat;
     background-size: cover;
     content: '';
@@ -595,6 +598,28 @@ WORK SECTION
 }
 
 .cardBodyHromancodesBG:hover::before{
+    transition: transform .35s ease;
+    transform: scale(2);
+}
+
+.cardBodyHotColdBG {
+    overflow: hidden;
+}
+
+.cardBodyHotColdBG::before {
+    background-image: url('pages/images/hot-cold.gif');
+    background-repeat: no-repeat;
+    background-size: cover;
+    content: '';
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    opacity: 0.1;
+    width: 100%;
+}
+
+.cardBodyHotColdBG:hover::before{
     transition: transform .35s ease;
     transform: scale(2);
 }

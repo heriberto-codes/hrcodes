@@ -563,7 +563,7 @@ WORK SECTION
 }
 
 .cardBodyHighlanderBG::before {
-    background-image: url('pages/images/highlanderHomeDemo.gif');
+    background-image: url("pages/images/highlanderHomeDemo.04379c51e0fe.gif");
     background-repeat: no-repeat;
     background-size: cover;
     content: '';
@@ -585,7 +585,7 @@ WORK SECTION
 }
 
 .cardBodyHromancodesBG::before {
-    background-image: url('pages/images/HromanCodesDemo.gif');
+    background-image: url("pages/images/HromanCodesDemo.5c8e6d250971.gif");
     background-repeat: no-repeat;
     background-size: cover;
     content: '';
@@ -607,7 +607,7 @@ WORK SECTION
 }
 
 .cardBodyHotColdBG::before {
-    background-image: url('pages/images/hot-cold.gif');
+    background-image: url("pages/images/hot-cold.4abb4646af37.gif");
     background-repeat: no-repeat;
     background-size: cover;
     content: '';
@@ -797,12 +797,6 @@ WORK SECTION
     .forHire {
         margin-bottom: 50px;
     }
-
-    /* .timeline ul li {   <<<<<<<<<<<<<<<<<< COME BACK TO THIS
-        width: 0px;
-        position: static;
-
-    } */
 }
 
 @media all and (max-width: 768px) and (max-height: 900px) {
