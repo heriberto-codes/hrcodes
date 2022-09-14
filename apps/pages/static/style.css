@@ -624,6 +624,27 @@ WORK SECTION
     transform: scale(2);
 }
 
+.cardBodyTinyOrganicsBG {
+    overflow: hidden;
+}
+
+.cardBodyTinyOrganicsBG::before {
+    background-image: url('pages/images/tinyOrganicsDemo.gif');
+    background-repeat: no-repeat;
+    background-size: cover;
+    content: '';
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    opacity: 0.1;
+    width: 100%;
+}
+
+.cardBodyTinyOrganicsBG:hover::before{
+    transition: transform .35s ease;
+    transform: scale(2);
+}
 
 .experienceButtonGroup {
     justify-content: space-around !important; 
@@ -797,12 +818,6 @@ WORK SECTION
     .forHire {
         margin-bottom: 50px;
     }
-
-    /* .timeline ul li {   <<<<<<<<<<<<<<<<<< COME BACK TO THIS
-        width: 0px;
-        position: static;
-
-    } */
 }
 
 @media all and (max-width: 768px) and (max-height: 900px) {
