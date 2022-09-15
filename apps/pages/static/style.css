@@ -648,11 +648,6 @@ WORK SECTION
     transform: scale(2);
 }
 
-
-
-
-
-
 .cardBodyBBGBG {
     overflow: hidden;
 }
@@ -675,11 +670,27 @@ WORK SECTION
     transform: scale(2);
 }
 
+.cardBodyParkchesterOval {
+    overflow: hidden;
+}
 
+.cardBodyParkchesterOval::before {
+    background-image: url('pages/images/parkchesterOvalDemo.gif');
+    background-repeat: no-repeat;
+    background-size: cover;
+    content: '';
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    opacity: 0.1;
+    width: 100%;
+}
 
-
-
-
+.cardBodyParkchesterOval:hover::before{
+    transition: transform .35s ease;
+    transform: scale(2);
+}
 
 .experienceButtonGroup {
     justify-content: space-around !important; 
@@ -802,6 +813,16 @@ WORK SECTION
 .workCard {
     background-color: transparent !important;
     box-shadow: 0 5px 30px -20px white;
+}
+
+.workCardTextWrapper {
+    max-width: 30rem;
+    margin: 0 auto;
+}
+
+.workCardPillWrapper {
+    max-width: 25rem;
+    margin: 0 auto;
 }
 
 /*=========================================
