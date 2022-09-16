@@ -539,7 +539,8 @@ TOOLING SECTION
 /* ======================================
 WORK SECTION
 ========================================= */
-.card a {
+.card a,
+.archiveLink {
     color: var(--hrColorWhite) !important;
 }
 
