@@ -876,6 +876,10 @@ WORK SECTION
     .forHire {
         margin-bottom: 50px;
     }
+
+    nav {
+        border-bottom: none !important;
+    }
 }
 
 @media all and (max-width: 768px) and (max-height: 900px) {

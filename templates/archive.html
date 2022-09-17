@@ -4,7 +4,25 @@
 
 {% block archive %}
 {% include 'banner.html' %}
-{% include 'navbar.html' %}
+<nav class="navbar navbar-expand-lg navbar-dark text-uppercase sticky-top" id='navbar'>
+    <div class='container-fluid'>
+      <!--  Show this only on mobile to medium screens  -->
+        <a class="navbar-brand d-lg-none" href="{% url 'home' %}">
+          <img class='hMobile' alt="hroman codes logo" src="{% static 'pages/images/H.svg' %}">
+        </a>
+      
+      <!--  Use flexbox utility classes to change how the child elements are justified  -->
+        <div class="collapse navbar-collapse justify-content-around text-center" id="navbarToggle"> 
+          
+      <!--   Show this only lg screens and up   -->
+          <div class='logo_wrapper d-none d-lg-block'>
+            <a class="navbar-brand d-none d-lg-block" href="{% url 'home' %}">
+                <img class='hrLogo' alt="hroman codes logo" src="{% static 'pages/images/hr.svg' %}">
+            </a>
+          </div>
+        </div>
+    </div>
+</nav>
 
 <section class='archiveSection'>
     <div class="container">
@@ -23,16 +41,36 @@
                 <th scope="col">Year</th>
                 <th scope="col">Title</th>
                 <th scope="col">Made at</th>
-                <th scope="col">Built with</th>
+                <th scope="col" class='d-none d-sm-none d-md-none d-lg-block d-xl-block d-xxl-block'>Built with</th>
                 <th scope="col">Link</th>
               </tr>
             </thead>
             <tbody>
+            <tr>
+                    <th scope="row">2022</th>
+                    <td>Login Page</td>
+                    <td>Tiny Organics</td>
+                    <td style="font-size: 10px;" class='d-none d-sm-none d-md-none d-lg-block d-xl-block d-xxl-block'>
+                        <div class='row'>
+                            <div class='col-3 pr-3'><span>Python</span></div>
+                            <div class='col-3 pr-3'><span>Django</span></div>
+                        </div>
+                        <div class='row'>
+                            <div class='col-12 pr-3'><span>Django Template Language</span></div>
+                        </div>
+                        <div class='row'>
+                            <div class='col-2 pr-3'><span>HTML</span></div>
+                            <div class='col-2 pr-3'><span>CSS</span></div>
+                            <div class='col-2 pr-3'><span>Bootstrap</span></div>
+                        </div>
+                    </td>
+                    <td><a style='color: white;' target='_blank' href='https://shop.tinyorganics.com/accounts/login/?gclid=CjwKCAjwsNiIBhBdEiwAJK4khqMgQzKRNHwkD79hobP02BSJ1P8ol5l1iSIjP7NjR873S04d-jzuoBoCpNwQAvD_BwE&_gl=1*zezxw7*_ga*MTE0MzQ4MjgyMi4xNjQyNjUxODQz*_ga_5HVEYQ07R3*MTY2MzM2NDU3Ni4xMTQuMS4xNjYzMzY0NTg5LjAuMC4w'><i class="fa-solid fa-arrow-up-right-from-square"></i></a></td>
+                </tr> 
                 <tr>
                     <th scope="row">2020</th>
                     <td>Coding Challenges</td>
                     <td>Freelance</td>
-                    <td style="font-size: 10px;">
+                    <td style="font-size: 10px;" class='d-none d-sm-none d-md-none d-lg-block d-xl-block d-xxl-block'>
                         <div class='row'>
                             <div class='col-1 pr-3'><span>Javascript</span></div>
                         </div>
@@ -43,7 +81,7 @@
                     <th scope="row">2020</th>
                     <td>Weather App</td>
                     <td>The Knowledge House</td>
-                    <td style="font-size: 10px;">
+                    <td style="font-size: 10px;" class='d-none d-sm-none d-md-none d-lg-block d-xl-block d-xxl-block'>
                         <div class='row'>
                             <div class='col-1 pr-3'><span>HTML</span></div> 
                             <div class='col-1 pr-3'><span>CSS</span></div> 
@@ -68,7 +106,7 @@
                         <th scope="row">2019</th>
                         <td>Rock Paper Scissors</td>
                         <td>The Knowledge House</td>
-                        <td style="font-size: 10px;">
+                        <td style="font-size: 10px;" class='d-none d-sm-none d-md-none d-lg-block d-xl-block d-xxl-block'>
                             <div class='row'>
                                 <div class='col-1 pr-3'><span>HTML</span></div> 
                                 <div class='col-1 pr-3'><span>CSS</span></div> 
@@ -81,7 +119,7 @@
                         <th scope="row">2018</th>
                         <td>cThink</td>
                         <td>The Knowledge House</td>
-                        <td style="font-size: 10px;">
+                        <td style="font-size: 10px;" class='d-none d-sm-none d-md-none d-lg-block d-xl-block d-xxl-block'>
                             <div class='row'>
                                 <div class='col-1 pr-3'><span>HTML</span></div> 
                                 <div class='col-1 pr-3'><span>CSS</span></div> 
@@ -89,7 +127,20 @@
                             </div>
                         </td>
                         <td><a style='color: white;' target='_blank' href='https://github.com/hroman-codes/cThink'><i class="fa-solid fa-arrow-up-right-from-square"></i></a></td>
-                    </tr>  
+                    </tr> 
+                    <tr>
+                        <th scope="row">2018</th>
+                        <td>jQuery Street Fighter</td>
+                        <td>Thinkful Coding Bootcamp</td>
+                        <td style="font-size: 10px;" class='d-none d-sm-none d-md-none d-lg-block d-xl-block d-xxl-block'>
+                            <div class='row'>
+                                <div class='col-1 pr-3'><span>HTML</span></div> 
+                                <div class='col-1 pr-3'><span>CSS</span></div> 
+                                <div class='col-1 pr-3'><span>Javascript</span></div>
+                            </div>
+                        </td>
+                        <td><a style='color: white;' target='_blank' href='https://github.com/hroman-codes/cThink'><i class="fa-solid fa-arrow-up-right-from-square"></i></a></td>
+                    </tr>   
             </tbody>
           </table>
 
@@ -100,5 +151,35 @@
         </div>
     </div>
 <section>
+
+
+<style>
+    nav {
+        border-bottom: 1px solid #F9E9D5;
+        letter-spacing: var(--letterSpacing);
+    }
+    
+    #navbar {
+        transition: top 1s;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+      
+    .hrLogo {
+        width: 300px;
+    }
+    
+    .hDesktop {
+        height: 100px;
+        width: 100px;
+        padding-top: 45px
+    }
+    
+    .hMobile {
+        height: 70px;
+        width: 59px;
+        padding-top: 15px;
+    }
+</style>
 
 {% endblock %}
