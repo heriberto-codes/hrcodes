@@ -4,6 +4,7 @@
 
 {% block archive %}
 {% include 'banner.html' %}
+
 <nav class="navbar navbar-expand-lg navbar-dark text-uppercase sticky-top" id='navbar'>
     <div class='container-fluid'>
       <!--  Show this only on mobile to medium screens  -->
@@ -151,35 +152,4 @@
         </div>
     </div>
 <section>
-
-
-<style>
-    nav {
-        border-bottom: 1px solid #F9E9D5;
-        letter-spacing: var(--letterSpacing);
-    }
-    
-    #navbar {
-        transition: top 1s;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-    }
-      
-    .hrLogo {
-        width: 300px;
-    }
-    
-    .hDesktop {
-        height: 100px;
-        width: 100px;
-        padding-top: 45px
-    }
-    
-    .hMobile {
-        height: 70px;
-        width: 59px;
-        padding-top: 15px;
-    }
-</style>
-
 {% endblock %}
