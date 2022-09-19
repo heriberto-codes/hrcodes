@@ -566,7 +566,7 @@ WORK SECTION
 }
 
 .cardBodyHighlanderBG::before {
-    background-image: url('pages/images/highlanderHomeDemo.gif');
+    background-image: url("pages/images/highlanderHomeDemo.1b68fd970279.gif");
     background-repeat: no-repeat;
     background-size: cover;
     content: '';
@@ -588,7 +588,7 @@ WORK SECTION
 }
 
 .cardBodyHromancodesBG::before {
-    background-image: url('pages/images/HromanCodesDemo.gif');
+    background-image: url("pages/images/HromanCodesDemo.db975ced6c66.gif");
     background-repeat: no-repeat;
     background-size: cover;
     content: '';
@@ -610,7 +610,7 @@ WORK SECTION
 }
 
 .cardBodyHotColdBG::before {
-    background-image: url('pages/images/hot-cold.gif');
+    background-image: url("pages/images/hot-cold.fed11251d5b6.gif");
     background-repeat: no-repeat;
     background-size: cover;
     content: '';
@@ -632,7 +632,7 @@ WORK SECTION
 }
 
 .cardBodyTinyOrganicsBG::before {
-    background-image: url('pages/images/tinyOrganicsDemo.gif');
+    background-image: url("pages/images/tinyOrganicsDemo.7725163cc548.gif");
     background-repeat: no-repeat;
     background-size: cover;
     content: '';
@@ -654,7 +654,7 @@ WORK SECTION
 }
 
 .cardBodyBBGBG::before {
-    background-image: url('pages/images/builtByGetromanHomeDemo.gif');
+    background-image: url("pages/images/builtByGetromanHomeDemo.36ddc42eab10.gif");
     background-repeat: no-repeat;
     background-size: cover;
     content: '';
@@ -676,7 +676,7 @@ WORK SECTION
 }
 
 .cardBodyParkchesterOval::before {
-    background-image: url('pages/images/parkchesterOvalDemo.gif');
+    background-image: url("pages/images/parkchesterOvalDemo.861557adc23b.gif");
     background-repeat: no-repeat;
     background-size: cover;
     content: '';
