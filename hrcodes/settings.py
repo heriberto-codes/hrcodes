@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # project apps
     'apps.pages.apps',
     'apps.archive',
+    'apps.blog',
 ]
 
 MIDDLEWARE = [
