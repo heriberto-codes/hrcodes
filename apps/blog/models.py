@@ -1,4 +1,6 @@
+from doctest import TestResults
 from django.db import models
+from ckeditor.fields import RichTextField
 
 
 # Create a class for Categories 
@@ -8,7 +10,7 @@ class Category(models.Model):
 # Create a class for Post 
 class Post(models.Model):
     title = models.CharField(max_length=225)
-    body = models.TextField()
+    body = RichTextField(blank=True, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now_add=True)
     categories = models.ManyToManyField('Category', related_name='posts')

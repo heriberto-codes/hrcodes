@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    
+    #3rd party apps
+    'ckeditor',
 
     # project apps
     'apps.pages.apps',
