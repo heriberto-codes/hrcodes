@@ -826,6 +826,28 @@ WORK SECTION
     margin: 0 auto;
 }
 
+/* ======================================
+BLOG SECTION
+========================================= */
+.blogSection {
+    max-width: var(--hrSectionMaxWidth);
+    margin: var(--hrSectionMargin);
+    padding-block: var(--workSectionPaddingBlock);
+    -webkit-font-smoothing: var(--hrFontSmoothing);
+}
+
+.blogHeading {
+    color: var(--hrColorBeige);
+    font-size: 2rem;
+    text-transform: uppercase;
+}
+
+.blogHeading::before {
+    counter-increment: section 5;
+    content: "0" counter(section) ".";
+    margin-right: 10px;
+}
+
 /*=========================================
     Media Queries
 /* ======================================

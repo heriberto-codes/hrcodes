@@ -3,10 +3,14 @@ from apps.blog.models import Post, Category
 
 # Register your models here.
 class PostAdmin(admin.ModelAdmin):
-    pass 
+    list_display = ('title', 'created_on', 'last_modified', 'status')
+    list_filter = ('status',)
+    search_fields = ('title', 'body')
+    prepopulated_fields = {'slug': ('title',)}
+    readonly_fields= ('id',)
 
 class CategoryAdmin(admin.ModelAdmin):
-    pass 
+    list_display = ['name']
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(Category, CategoryAdmin)
