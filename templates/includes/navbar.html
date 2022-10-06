@@ -1,0 +1,69 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-dark text-uppercase sticky-top" id='navbar'>
+  <div class='container-fluid'>
+    <!--  Show this only on mobile to medium screens  -->
+      <a class="navbar-brand d-lg-none" href="#hero">
+        <img class='hMobile' alt="hroman codes logo" src="{% static 'pages/images/H.svg' %}">
+      </a>
+    
+      <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+    <!--  Use flexbox utility classes to change how the child elements are justified  -->
+      <div class="collapse navbar-collapse justify-content-around text-center" id="navbarToggle">
+    
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#experience">Experience</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#tools">Tools</a>
+          </li>
+        </ul>
+        
+        
+    <!--   Show this only lg screens and up   -->
+        <div class='logo_wrapper d-none d-lg-block'>
+          <a class="navbar-brand d-none d-lg-block" href="#hero">
+              <img class='hrLogo' alt="hroman codes logo" src="{% static 'pages/images/hr.svg' %}">
+              <div class='logo_text text-center'>
+                <img class='hDesktop' alt="hroman codes logo" src="{% static 'pages/images/H.svg' %}">
+              </div>
+          </a>
+        </div>
+        
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#work">Work</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#blog">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact</a>
+          </li>
+          <li class="nav-item">
+            <button><a class="nav-link text-uppercase" href="{% static 'pages/HRoman_ATS_Resume_September_2022.pdf' %}" target='_blank'>Resume</a></button>
+          </li>
+        </ul>
+      </div>
+    </div>
+</nav>
+
+<script>
+  var prevScrollpos = window.pageYOffset;
+  window.onscroll = function() {
+  var currentScrollPos = window.pageYOffset;
+    if (prevScrollpos > currentScrollPos) {
+      document.getElementById("navbar").style.top = '0px'
+    } else {
+      document.getElementById("navbar").style.top = "-100px";
+    }
+    prevScrollpos = currentScrollPos;
+  }
+</script>

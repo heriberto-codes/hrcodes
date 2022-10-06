@@ -1,13 +1,15 @@
 {% load static %}
+
 <html lang="en">
 <head>
     <meta>
-    <title>Heriberto Roman</title>
+    <title>{% block title %} Heriberto Roman {% endblock %}</title>
     <link rel="icon"href="{% static 'favicon.ico' %}">
     <link rel='preload stylesheet' href="static/style.css">
     <link rel='preload stylesheet' href="static/archive.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@100;200;400&family=Inter:wght@600;700&display=swap" rel="preload stylesheet" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@100;200;400&family=Inter:wght@600;700&display=swap"></noscript>
     
@@ -32,6 +34,11 @@
 </head>
 
 <body class='hrBody'>
-    {% block home %}{% endblock %}
-    {% block archive %}{% endblock %}
+    {% block content %}
+        Wrapper is needed
+        {% comment %} {% block page_content %}
+            Templates will go here
+        {% endblock %} {% endcomment %}
+    {% endblock %}
 </body>
+  

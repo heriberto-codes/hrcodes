@@ -1,24 +1,26 @@
 {% load static %}
-{% block alternate_navbar.html %}
 
-<nav class="navbar navbar-expand-lg navbar-dark text-uppercase sticky-top" id='navbar'>
-    <div class='container-fluid'>
-      <!--  Show this only on mobile to medium screens  -->
-        <a class="navbar-brand d-lg-none" href="{% url 'home' %}">
-          <img class='hMobile' alt="hroman codes logo" src="{% static 'pages/images/H.svg' %}">
-        </a>
-      
-      <!--  Use flexbox utility classes to change how the child elements are justified  -->
-        <div class="collapse navbar-collapse justify-content-around text-center" id="navbarToggle"> 
-          
-      <!--   Show this only lg screens and up   -->
-          <div class='logo_wrapper d-none d-lg-block'>
-            <a class="navbar-brand d-none d-lg-block" href="{% url 'home' %}">
-                <img class='hrLogo' alt="hroman codes logo" src="{% static 'pages/images/hr.svg' %}">
-            </a>
+  <nav class="navbar navbar-expand-lg navbar-dark text-uppercase sticky-top" id='navbar'>
+      <div class='container-fluid'>
+        <!--  Show this only on mobile to medium screens  -->
+          <a class="navbar-brand d-lg-none" href="{% url 'home' %}">
+            <img class='hMobile' alt="hroman codes logo" src="{% static 'pages/images/H.svg' %}">
+          </a>
+        
+        <!--  Use flexbox utility classes to change how the child elements are justified  -->
+          <div class="collapse navbar-collapse justify-content-around text-center" id="navbarToggle"> 
+            
+        <!--   Show this only lg screens and up   -->
+            <div class='logo_wrapper d-none d-lg-block'>
+              <a class="navbar-brand d-none d-lg-block" href="{% url 'home' %}">
+                  <img class='hrLogo' alt="hroman codes logo" src="{% static 'pages/images/hr.svg' %}">
+                  <div class='logo_text text-center'>
+                    <img class='hDesktop' alt="hroman codes logo" src="{% static 'pages/images/H.svg' %}">
+                  </div>
+              </a>
+            </div>
           </div>
-        </div>
-    </div>
-</nav>
+      </div>
+  </nav>
 
-{% endblock %}
+ 
