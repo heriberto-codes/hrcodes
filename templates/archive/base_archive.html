@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Archive {% endblock %}
+{% block content_wrapper %}
+    {% include 'includes/alternate_navbar.html'%}
+    {% block content %}{% endblock %}
+    {% include 'includes/footer.html' %}
+{% endblock %}
+

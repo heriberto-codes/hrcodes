@@ -3,4 +3,4 @@ from django.views.generic import TemplateView
 
 # Create your views here.
 class ArchivePageView(TemplateView):
-    template_name = 'archive.html';
+    template_name = 'archive/archive.html';

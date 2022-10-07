@@ -34,11 +34,8 @@
 </head>
 
 <body class='hrBody'>
-    {% block content %}
-        Wrapper is needed
-        {% comment %} {% block page_content %}
-            Templates will go here
-        {% endblock %} {% endcomment %}
+    {% block content_wrapper %}
+        {% block content %}{% endblock %}
     {% endblock %}
 </body>
   

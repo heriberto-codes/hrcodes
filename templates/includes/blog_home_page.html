@@ -8,7 +8,20 @@
         </div>
         <div class='row'>
             <div class='col'>
-                Blogs comign soon 📝
+                {% for post in posts %}
+                    <h2><a href='{% url 'blog_detail' post.pk %}'>{{ post.title }}</a></h2>
+                    <small>
+                        {{ post.created_on.date}} |&nbsp;
+                        Categories:&nbsp;
+                        {% for category in post.categories.all %}
+                            <a href="{% url 'blog_category' category.name %}">
+                                {{ category.name }}
+                            </a>&nbsp;
+                        {% endfor %}
+                    </small>
+                        {{ post.image }} 
+                        {{ post.body|slice:":300"|safe}}...
+                {% endfor %}
             </div>
         </div>
         <div class='row pt-5'>

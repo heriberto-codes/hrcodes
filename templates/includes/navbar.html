@@ -1,5 +1,7 @@
 {% load static %}
 
+{% block page_content %}
+
 <nav class="navbar navbar-expand-lg navbar-dark text-uppercase sticky-top" id='navbar'>
   <div class='container-fluid'>
     <!--  Show this only on mobile to medium screens  -->
@@ -67,3 +69,5 @@
     prevScrollpos = currentScrollPos;
   }
 </script>
+
+{% endblock %}
