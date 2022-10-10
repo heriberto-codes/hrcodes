@@ -73,6 +73,16 @@ db.sqlite3
 *.pyc
 media
 
+# If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
+# in your Git repository. Update and uncomment the following line accordingly.
+hrcodes/staticfiles/
+
+# Media and Static directories
+/media/
+!/media/.gitkeep
+
+/static/
+!/static/.gitkeep
 
 # Flask stuff:
 instance/

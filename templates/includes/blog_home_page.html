@@ -9,19 +9,21 @@
         <div class='row'>
             <div class='col'>
                 {% for post in posts %}
-                    <h2><a href='{% url 'blog_detail' post.pk %}'>{{ post.title }}</a></h2>
-                    <small>
-                        {{ post.created_on.date}} |&nbsp;
-                        Categories:&nbsp;
-                        {% for category in post.categories.all %}
-                            <a href="{% url 'blog_category' category.name %}">
-                                {{ category.name }}
-                            </a>&nbsp;
-                        {% endfor %}
-                    </small>
-                        {{ post.image }} 
-                        {{ post.body|slice:":300"|safe}}...
-                {% endfor %}
+                        <h2><a href='{% url 'blog_detail' post.pk %}'>{{ post.title }}</a></h2>
+                        <small>
+                            {{ post.created_on.date}} |&nbsp;
+                            Categories:&nbsp;
+                            {% for category in post.categories.all %}
+                                <a href="{% url 'blog_category' category.name %}">
+                                    {{ category.name }}
+                                </a>&nbsp;
+                            {% endfor %}
+                        </small> 
+                            <br>
+                            <img style='width: 300px; height: 300px;' src={{post.image.url}} />
+                            {{ post.image }} 
+                            {{ post.body|slice:":300"|safe}}...
+                    {% endfor %}
             </div>
         </div>
         <div class='row pt-5'>

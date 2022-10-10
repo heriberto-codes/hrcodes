@@ -1,14 +1,11 @@
-{% extends 'base.html'%} 
+{% extends 'blog/base_blog.html'%} 
 
 <title>{% block title %} Blogs {% endblock %}</title>
 
-{% block nav %}{% endblock %}
-
 {% block content %}
-{% include 'alternate_navbar.html' %}
-    <section>
+    <section class='blogIndexSection'>
         <div class='container'>
-            <div class="row justify-content-center align-items-center g-2 pt-5 pb-5">
+            <div class="row justify-content-center align-items-center g-2 pb-5 pt-5">
                 <div class="col-12 text-center">
                     <h1 class='text-uppercase'>Blog <i class="fa-solid fa-blog"></i></h1>
                 </div>
@@ -25,12 +22,15 @@
                                     {{ category.name }}
                                 </a>&nbsp;
                             {% endfor %}
-                        </small>
+                        </small> 
+                            <br>
+                            <img style='width: 300px; height: 300px;' src={{post.image.url}} />
+                            {{ post.image }} 
                             {{ post.body|slice:":300"|safe}}...
                     {% endfor %}
                 </div>
             </div>
-            <div class='row pt-5'>
+            <div class='row pt-5 pb-5'>
                 <div class='col'>
                     <p class='text-center'><a style='color: white;' href="{% url 'home' %}">go back home</a></p>
                 </div>

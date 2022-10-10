@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render
 from apps.blog.models import Post, Comment
 from .forms import CommentForm
@@ -8,7 +9,10 @@ def blog_index(request):
     context = {
         'posts': posts,
     }
-    return render(request, 'blog_index.html', context)
+    if posts is not None:
+        return render(request, 'blog/blog_index.html', context)
+    else:
+        raise Http404('Post does not exist')
 
 def blog_category(request, category):
     posts = Post.objects.filter(
@@ -20,7 +24,7 @@ def blog_category(request, category):
         "category": category,
         "posts":posts
     }
-    return render(request, 'blog_category.html', context)
+    return render(request, 'blog/blog_category.html', context)
 
 def blog_detail(request, pk):
     post = Post.objects.get(pk=pk)
@@ -42,4 +46,4 @@ def blog_detail(request, pk):
         'comments': comments
     }
     
-    return render(request, 'blog_detail.html', context)
+    return render(request, 'blog/blog_detail.html', context)
