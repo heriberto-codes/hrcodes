@@ -20,6 +20,7 @@ class Post(models.Model):
     slug = models.SlugField(max_length=225, unique=True)
     image = models.ImageField(null=True, blank=True) 
     body = RichTextField(blank=True, null=True)
+    snippet = models.CharField(max_length=225, help_text='This text that will show up on the list of blogs page. Write a short snippet of text to describe your blog post.')
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now_add=True)
     categories = models.ManyToManyField('Category', related_name='posts', blank=False)

@@ -5,3 +5,7 @@ a {
 .archiveSection {
     -webkit-font-smoothing: var(--hrFontSmoothing);
 }
+
+.builtWithText {
+    font-size: 10px;
+}
