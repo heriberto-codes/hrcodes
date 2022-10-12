@@ -10,7 +10,7 @@
         {% for post in posts %}
             <div class='row pb-5'>
                 <div class='col-6'>
-                    <img style='object-fit: cover; max-width: 100%; height: 100%;' src={{post.image.url}} />
+                    <a  href='{% url "blog_detail" post.pk %}'><img class='blogImage' src={{post.image.url}} /></a>
                 </div>
 
                 <div class='col-6'>
@@ -18,7 +18,7 @@
                         <div class='col blogPostMetaData pb-3'>
                             {% for category in post.categories.all %}
                                 <a href="{% url 'blog_category' category.name %}">
-                                    <span style='padding: 8px;' class='badge'>{{ category.name }}<span>
+                                    <span class='badge blogCategory'>{{ category.name }}<span>
                                 </a>&nbsp;
                             {% endfor %}
                             <small>
@@ -30,9 +30,9 @@
                     <div class='row'>
                         <div class='col'>
                             <h3 class='pb-2'>
-                                <a style='color: var(--hrColorBeige) !important; font-weight: 900;' href='{% url "blog_detail" post.pk %}'>{{ post.title }}</a>
+                                <a class='blogTitle' href='{% url "blog_detail" post.pk %}'>{{ post.title }}</a>
                             </h3>
-                            <div style='color: var(--hrTextColorGrey); -webkit-font-smoothing: var(--hrFontSmoothing); word-wrap: break-word;'>
+                            <div class='blogSnippet'>
                                 {{ post.snippet|safe}}...
                             </div>
                         </div>
@@ -41,7 +41,7 @@
 
             </div>
         {% endfor %}
-        <br>
+        
         <div class='row pt-5'>
             <div class='col'>
                 <p class='text-center'><a class='archiveLink' href="{% url 'blog_index' %}">👀 view the blogs</a></p>
