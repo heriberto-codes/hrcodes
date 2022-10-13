@@ -18,7 +18,7 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=225)
     slug = models.SlugField(max_length=225, unique=True)
-    image = models.ImageField(null=True, blank=True) 
+    image = models.ImageField(null=False, blank=False) 
     body = RichTextField(blank=True, null=True)
     snippet = models.CharField(max_length=225, help_text='This text that will show up on the list of blogs page. Write a short snippet of text to describe your blog post.')
     created_on = models.DateTimeField(auto_now_add=True)

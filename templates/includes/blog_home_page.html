@@ -15,7 +15,7 @@
 
                 <div class='col-12 col-lg-6'>
                     <div class='row'>
-                        <div class='col blogPostMetaData pb-3'>
+                        <div class='col blogPostMetaData pt-3 pb-3'>
                             {% for category in post.categories.all %}
                                 <a href="{% url 'blog_category' category.name %}">
                                     <span class='badge blogCategory'>{{ category.name }}<span>

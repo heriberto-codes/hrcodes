@@ -1019,6 +1019,26 @@ BLOG SECTION
     margin-right: 10px;
 }
 
+.blogImage {
+    object-fit: cover;
+    max-width: 100%;
+    height: 100%;
+}
+
+.blogCategory {
+    padding: 8px !important;
+}
+
+.blogTitle {
+    color: var(--hrColorBeige) !important;
+    font-weight: 900;
+}
+
+.blogSnippet {
+    color: var(--hrTextColorGrey);
+    -webkit-font-smoothing: var(--hrFontSmoothing);
+    word-wrap: break-word;
+}
 /*=========================================
     Media Queries
 /* ======================================

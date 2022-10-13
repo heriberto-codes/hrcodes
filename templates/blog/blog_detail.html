@@ -1,7 +1,57 @@
  {% extends 'blog/base_blog.html' %}
+ {% load static %}
 
  <title>{% block title %} Blog Detail {% endblock %}</title>
 
  {% block content %}
- 
- {% endblock %}
+    <section class='blogSection' id='blog'>
+        <div class='container'>
+
+            {{ post.title }}
+            {{ post.snippet|safe}}...
+
+            
+            <div class='row pb-5'>
+
+                <div class='col-12 col-lg-6'>
+                    <div class='row'>
+                        <div class='col blogPostMetaData pt-3 pb-3'>
+                            {% for category in post.categories.all %}
+                                <a href="{% url 'blog_category' category.name %}">
+                                    <span class='badge blogCategory'>{{ category.name }}<span>
+                                </a>&nbsp;
+                            {% endfor %}
+                            <small>
+                                {{ post.created_on.date}}
+                            </small> 
+                        </div>
+                    </div>
+                    
+                    <div class='row'>
+                        <div class='col'>
+                            <h3 class='pb-2'>
+                                <a class='blogTitle' href='{% url "blog_detail" post.pk %}'>{{ post.title }}</a>
+                            </h3>
+                            <div class='blogSnippet'>
+                                {{ post.snippet|safe}}...
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+
+                <div class='col-12 col-lg-6'>
+                    <a  href='{% url "blog_detail" post.pk %}'><img class='blogImage' src={{post.image.url}} /></a>
+                </div>
+
+            </div>
+            
+            
+            <div class='row pt-5'>
+                <div class='col'>
+                    <p class='text-center'><a class='archiveLink' href="{% url 'blog_index' %}">👀 view the blogs</a></p>
+                </div>
+            </div> 
+
+        </div>
+    </section>
+{% endblock %}
