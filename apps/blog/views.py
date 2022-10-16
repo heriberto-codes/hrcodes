@@ -34,8 +34,8 @@ def blog_detail(request, pk):
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = Comment(
-                author=form.cleaned_data['author'],
-                body=form.cleaned_data['body'],
+                author=form.cleaned_data["author"],
+                body=form.cleaned_data["body"],
                 post=post
             )
             comment.save()
@@ -43,7 +43,8 @@ def blog_detail(request, pk):
     comments = Comment.objects.filter(post=post)
     context = {
         'post': post,
-        'comments': comments
+        'comments': comments,
+        'form': form,
     }
     
     return render(request, 'blog/blog_detail.html', context)

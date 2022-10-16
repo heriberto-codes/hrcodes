@@ -7,12 +7,7 @@
     <section class='blogSection' id='blog'>
         <div class='container'>
 
-            {{ post.title }}
-            {{ post.snippet|safe}}...
-
-            
             <div class='row pb-5'>
-
                 <div class='col-12 col-lg-6'>
                     <div class='row'>
                         <div class='col blogPostMetaData pt-3 pb-3'>
@@ -42,7 +37,34 @@
                 <div class='col-12 col-lg-6'>
                     <a  href='{% url "blog_detail" post.pk %}'><img class='blogImage' src={{post.image.url}} /></a>
                 </div>
+            </div>
 
+            <div class=''></div>
+
+            <div class='row'>
+                <div class='col'>
+                    <p>{{ post.body|safe|linebreaks }}</p>
+                    <h3>Leave a comment:</h3>
+                    <form action='/blog/{{ post.pk }}/' method='post'>
+                        {% csrf_token %}
+                        <div class='form-group'>
+                            {{ form.author }}
+                        </div>
+                        <div class='form-group'>
+                            {{ form.body }}
+                        </div>
+                        <button type='submit' class='btn btn-primary'>Submit</button>
+                    </form>
+                    <h3>Comments:</h3>
+                    {% for comment in comments %}
+                    <p>
+                        On {{ comment.created_on.date }}
+                        <b>{{ comment.author }}</b> wrote: 
+                    </p>
+                    <p>{{ comment.body }}</p>
+                    <hr>
+                    {% endfor %}
+                </div>
             </div>
             
             
