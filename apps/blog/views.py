@@ -5,14 +5,15 @@ from .forms import CommentForm
 
 # Create your views here.
 def blog_index(request):
-    posts = Post.objects.all().order_by('-created_on')
-    context = {
-        'posts': posts,
-    }
-    if posts is not None:
+    try: 
+        posts = Post.objects.all().order_by('-created_on')
+        context = {
+            'posts': posts,
+        }
         return render(request, 'blog/blog_index.html', context)
-    else:
-        raise Http404('Post does not exist')
+    
+    except Post.DoesNotExist:
+        return render(request, 'blog_post_error_page.html')
 
 def blog_category(request, category):
     posts = Post.objects.filter(
@@ -27,9 +28,8 @@ def blog_category(request, category):
     return render(request, 'blog/blog_category.html', context)
 
 def blog_detail(request, pk):
-    post = Post.objects.get(pk=pk)
-    
     try:
+        post = Post.objects.get(pk=pk)
         form = CommentForm()
         if request.method == 'POST':
             form = CommentForm(request.POST)
@@ -51,4 +51,4 @@ def blog_detail(request, pk):
         return render(request, 'blog/blog_detail.html', context)
 
     except Post.DoesNotExist:
-        return render(request, '505.html')
+        return render(request, 'blog_detail_error_page.html')

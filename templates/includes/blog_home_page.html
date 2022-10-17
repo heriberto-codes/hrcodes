@@ -7,39 +7,45 @@
             </div>
         </div>
 
+        {% if not posts %}
+            {% include 'includes/no_blog_post_to_show.html' %}
+        {% endif%}
+        
         {% for post in posts %}
-            <div class='row pb-5'>
-                <div class='col-12 col-lg-6'>
-                    <a  href='{% url "blog_detail" post.pk %}'><img class='blogImage' src={{post.image.url}} /></a>
-                </div>
-
-                <div class='col-12 col-lg-6'>
-                    <div class='row'>
-                        <div class='col blogPostMetaData pt-3 pb-3'>
-                            {% for category in post.categories.all %}
-                                <a href="{% url 'blog_category' category.name %}">
-                                    <span class='badge blogCategory'>{{ category.name }}<span>
-                                </a>&nbsp;
-                            {% endfor %}
-                            <small>
-                                {{ post.created_on.date}}
-                            </small> 
-                        </div>
+            {% if posts and post.status == 1 %}
+                <div class='row pb-5'>
+                    <div class='col-12 col-lg-6'>
+                        <a  href='{% url "blog_detail" post.pk %}'><img class='blogImage' src={{post.image.url}} /></a>
                     </div>
-                    
-                    <div class='row'>
-                        <div class='col'>
-                            <h3 class='pb-2'>
-                                <a class='blogTitle' href='{% url "blog_detail" post.pk %}'>{{ post.title }}</a>
-                            </h3>
-                            <div class='blogSnippet'>
-                                {{ post.snippet|safe}}...
+                    <div class='col-12 col-lg-6'>
+                        <div class='row'>
+                            <div class='col blogPostMetaData pt-3 pb-3'>
+                                {% for category in post.categories.all %}
+                                    <a href="{% url 'blog_category' category.name %}">
+                                        <span class='badge blogCategory'>{{ category.name }}<span>
+                                    </a>&nbsp;
+                                {% endfor %}
+                                <small>
+                                    {{ post.created_on.date}}
+                                </small> 
                             </div>
                         </div>
+                        
+                        <div class='row'>
+                            <div class='col'>
+                                <h3 class='pb-2'>
+                                    <a class='blogTitle' href='{% url "blog_detail" post.pk %}'>{{ post.title }}</a>
+                                </h3>
+                                <div class='blogSnippet'>
+                                    {{ post.snippet|safe}}...
+                                </div>
+                            </div>
+                        </div>  
                     </div>  
                 </div>
-
-            </div>
+            {% else %}
+                {% include 'includes/no_blog_post_to_show.html' %}
+            {% endif %}
         {% endfor %}
         
         <div class='row pt-5'>
