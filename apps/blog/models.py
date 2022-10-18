@@ -13,6 +13,9 @@ STATUS = (
 # Create a class for Categories 
 class Category(models.Model):
     name = models.CharField(max_length=20)
+    
+    def __str__(self):
+        return self.name 
 
 # Create a class for Post 
 class Post(models.Model):
