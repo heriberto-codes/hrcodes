@@ -1,9 +1,6 @@
-from distutils.command.upload import upload
-from doctest import TestResults
-from email.policy import default
-from tkinter.tix import Tree
 from django.db import models
 from ckeditor.fields import RichTextField
+from django.urls import reverse
 
 STATUS = (
     (0, 'Draft'),
@@ -13,9 +10,13 @@ STATUS = (
 # Create a class for Categories 
 class Category(models.Model):
     name = models.CharField(max_length=20)
+    slug = models.SlugField(max_length=225, unique=False, null=True)
     
     def __str__(self):
         return self.name 
+    
+    def get_absolute_url(self):
+        return reverse('blog_category', kwargs={'slug': self.slug})
 
 # Create a class for Post 
 class Post(models.Model):
