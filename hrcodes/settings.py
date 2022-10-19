@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
-from tkinter.tix import Tree
+# from tkinter.tix import Tree
 import django_heroku
 from pathlib import Path
 
@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # ALLOWED_HOSTS = ['127.0.0.1']
 ALLOWED_HOSTS = ['gentle-fortress-58982.herokuapp.com', 'hroman.codes', 'www.hroman.codes']
