@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # ALLOWED_HOSTS = ['127.0.0.1']
 ALLOWED_HOSTS = ['gentle-fortress-58982.herokuapp.com', 'hroman.codes', 'www.hroman.codes']
@@ -87,22 +87,36 @@ WSGI_APPLICATION = 'hrcodes.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": env.str('POSTGRES_DB'),
-        "USER": env.str('POSTGRES_HOST'),
-        "PASSWORD": env.str('POSTGRES_PASSWORD', 'postgres'),
-        "HOST": 5432,
-        "PORT": env.str('POSTGRES_PORT'),
-    }
-}
 # DATABASES = {
-#     'default': {
-#         'ENGINE':'django.db.backends.sqlite3',
-#         'NAME':os.path.join(BASE_DIR,'db.sqlite3'),
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql_psycopg2",
+#         "NAME": 'd7em8o9jlhkakp',
+#         "USER": 'ec2-23-23-182-238.compute-1.amazonaws.com',
+#         "PASSWORD": 'bdfee7e3e0783f3898485942046a0fccecceca6d12242838af8a800cb7e78bae',
+#         "HOST": 'ec2-23-23-182-238.compute-1.amazonaws.com',
+#         "PORT": 5432,
 #     }
 # }
+
+# import dj_database_url
+# DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql_psycopg2",
+#         "NAME": env.str('POSTGRES_DB'),
+#         "USER": env.str('POSTGRES_HOST'),
+#         "PASSWORD": env.str('POSTGRES_PASSWORD', 'postgres'),
+#         "HOST": 5432,
+#         "PORT": env.str('POSTGRES_PORT'),
+#     }
+# }
+DATABASES = {
+    'default': {
+        'ENGINE':'django.db.backends.sqlite3',
+        'NAME':os.path.join(BASE_DIR,'db.sqlite3'),
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
