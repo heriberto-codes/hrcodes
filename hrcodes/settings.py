@@ -87,19 +87,10 @@ WSGI_APPLICATION = 'hrcodes.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql_psycopg2",
-#         "NAME": 'd7em8o9jlhkakp',
-#         "USER": 'ec2-23-23-182-238.compute-1.amazonaws.com',
-#         "PASSWORD": 'bdfee7e3e0783f3898485942046a0fccecceca6d12242838af8a800cb7e78bae',
-#         "HOST": 'ec2-23-23-182-238.compute-1.amazonaws.com',
-#         "PORT": 5432,
-#     }
-# }
 
 # import dj_database_url
 # DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+
 
 # DATABASES = {
 #     "default": {
