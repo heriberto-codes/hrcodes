@@ -28,13 +28,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# DEBUG = 'RENDER' not in os.environ
+DEBUG = True
 
 # ALLOWED_HOSTS = ['127.0.0.1']
+# ALLOWED_HOSTS = ['gentle-fortress-58982.herokuapp.com', 'hroman.codes', 'www.hroman.codes']
 ALLOWED_HOSTS = ['gentle-fortress-58982.herokuapp.com', 'hroman.codes', 'www.hroman.codes']
 
-# Application definition
+# RENDER_EXTERNAL_HOSTNAME = config('RENDER_EXTERNAL_HOSTNAME')
+# if RENDER_EXTERNAL_HOSTNAME:
+#     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
