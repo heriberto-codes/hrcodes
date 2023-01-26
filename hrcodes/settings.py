@@ -33,7 +33,7 @@ DEBUG = True
 
 # ALLOWED_HOSTS = ['127.0.0.1']
 # ALLOWED_HOSTS = ['gentle-fortress-58982.herokuapp.com', 'hroman.codes', 'www.hroman.codes']
-ALLOWED_HOSTS = ['gentle-fortress-58982.herokuapp.com', 'hroman.codes', 'www.hroman.codes']
+ALLOWED_HOSTS = ['https://gentle-fortress-58982.onrender.com', 'gentle-fortress-58982.herokuapp.com', 'hroman.codes', 'www.hroman.codes']
 
 # RENDER_EXTERNAL_HOSTNAME = config('RENDER_EXTERNAL_HOSTNAME')
 # if RENDER_EXTERNAL_HOSTNAME:
