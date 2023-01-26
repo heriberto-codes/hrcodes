@@ -29,7 +29,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = 'RENDER' not in os.environ
-DEBUG = True
+DEBUG = False
 
 # ALLOWED_HOSTS = ['127.0.0.1']
 ALLOWED_HOSTS = ['https://gentle-fortress-58982.onrender.com', 'gentle-fortress-58982.herokuapp.com', 'hroman.codes', 'www.hroman.codes']
