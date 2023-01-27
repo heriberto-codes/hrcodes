@@ -11,5 +11,5 @@ services:
     domains: # custom domains
       - 'hroman.codes'
       - 'www.hroman.codes'
-    envVars:
+    envVars: SECRET_KEY
 
