@@ -33,12 +33,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = False
 
 # ALLOWED_HOSTS = ['127.0.0.1']
-ALLOWED_HOSTS = ['https://gentle-fortress-58982.onrender.com', 'gentle-fortress-58982.herokuapp.com', 'hroman.codes', 'www.hroman.codes']
+ALLOWED_HOSTS = ['https://gentle-fortress-58982.onrender.com', 'hroman.codes', 'www.hroman.codes']
 
 # RENDER_EXTERNAL_HOSTNAME = config('RENDER_EXTERNAL_HOSTNAME')
-RENDER_EXTERNAL_HOSTNAME = 'https://gentle-fortress-58982.onrender.com'
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+# RENDER_EXTERNAL_HOSTNAME = 'https://gentle-fortress-58982.onrender.com'
+# if RENDER_EXTERNAL_HOSTNAME:
+#     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 # Application definition
 INSTALLED_APPS = [
@@ -148,7 +148,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_ROOT =  BASE_DIR / "static"
+# STATIC_ROOT =  BASE_DIR / "static" 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')] 
 
