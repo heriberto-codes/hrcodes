@@ -162,7 +162,7 @@ STATIC_ROOT =  BASE_DIR / "static"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATICFILES_LOCATION = 'static'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATIC_URL = 'https://s3.amazonaws.com/' + os.environ.get('AWS_STORAGE_BUCKET_NAME') + '/static/'
+STATIC_URL = 'https://s3.amazonaws.com/' + 'AWS_STORAGE_BUCKET_NAME' + '/static/'
 
 # Media Files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
