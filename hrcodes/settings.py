@@ -12,7 +12,10 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 import django_heroku
 from pathlib import Path
-from decouple import config
+# from decouple import config
+from dotenv import load_dotenv
+
+load_dotenv()  # take environment variables from .env.
 
 import environ
 
@@ -25,8 +28,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
-# SECRET_KEY = os.environ.get('SECRET_KEY')
+# SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = 'RENDER' not in os.environ
@@ -159,7 +162,7 @@ STATIC_ROOT =  BASE_DIR / "static"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATICFILES_LOCATION = 'static'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATIC_URL = 'https://s3.amazonaws.com/' + config('AWS_STORAGE_BUCKET_NAME') + '/static/'
+STATIC_URL = 'https://s3.amazonaws.com/' + os.environ.get('AWS_STORAGE_BUCKET_NAME') + '/static/'
 
 # Media Files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
@@ -174,9 +177,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_I')
 # AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 
-AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_I')
-AWS_STORAGE_BUCKET_NAME = config('hroman-codes-portfolio-site')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_I')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('hroman-codes-portfolio-site')
 
 # Configure Django App for Heroku
 django_heroku.settings(locals())
