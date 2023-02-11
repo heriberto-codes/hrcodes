@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 
 import os
-import django_heroku
+# import django_heroku
 from pathlib import Path
 # from decouple import config
 from dotenv import load_dotenv
@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     
     #3rd party apps
     'ckeditor',
+    'storages',
 
     # project apps
     'apps.pages',
