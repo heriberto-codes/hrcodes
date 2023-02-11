@@ -9,6 +9,8 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+
+
 import os
 import django_heroku
 from pathlib import Path
@@ -182,4 +184,4 @@ AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_I')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('hroman-codes-portfolio-site')
 
 # Configure Django App for Heroku
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
