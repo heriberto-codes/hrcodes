@@ -14,10 +14,10 @@ import os
 # import django_heroku
 from pathlib import Path
 # from decouple import config
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from storages.backends.s3boto3 import S3Boto3Storage
 
-load_dotenv()  # take environment variables from .env.
+# load_dotenv()  # take environment variables from .env.
 
 import environ
 
