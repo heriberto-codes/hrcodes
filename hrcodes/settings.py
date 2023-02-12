@@ -181,3 +181,4 @@ AWS_STORAGE_BUCKET_NAME = os.environ.get('hroman-codes-portfolio-site')
 
 # Configure Django App for Heroku
 # django_heroku.settings(locals())
+# asdlkfjsalkjdlka 
