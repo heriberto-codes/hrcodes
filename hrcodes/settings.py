@@ -179,6 +179,7 @@ AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_I')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 
+
 # Configure Django App for Heroku
 # django_heroku.settings(locals())
 # asdlkfjsalkjdlka 
