@@ -10,11 +10,16 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+
 import os
 # import django_heroku
 from pathlib import Path
 from dotenv import load_dotenv
 from storages.backends.s3boto3 import S3Boto3Storage
+
+import environ
+
+env = environ.Env()
 
 load_dotenv()  # take environment variables from .env.
 
@@ -26,7 +31,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = config('SECRET_KEY')
-SECRET_KEY = os.environ.get('SECRET_KEY')
+# SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = env.str('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -104,12 +110,6 @@ WSGI_APPLICATION = 'hrcodes.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE':'django.db.backends.sqlite3',
-        'NAME':os.path.join(BASE_DIR,'db.sqlite3'),
-    }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -141,9 +141,9 @@ USE_I18N = True
 USE_TZ = True
 
 # AWS Config to S3 Bucket 
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+AWS_ACCESS_KEY_ID = env.str('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env.str('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = env.str('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 AWS_DEFAULT_ACL = 'public-read'
 AWS_S3_OBJECT_PARAMETERS = {
@@ -153,28 +153,17 @@ AWS_QUERYSTRING_AUTH = False
 AWS_HEADERS = {
     'Access-Control-Allow-Origin': '*'
 }
-
+    
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-
-# STATIC_URL = '/static/'
-# STATIC_ROOT =  BASE_DIR / "static" 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')] 
-
-#cacheable files and compression support
-# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATICFILES_LOCATION = 'static'
-# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
-# STATIC_URL = 'https://s3.amazonaws.com/' + 'AWS_STORAGE_BUCKET_NAME' + '/static/'
 STATIC_URL = f'https://{AWS_STORAGE_BUCKET_NAME}/static/'
 
 # Media Files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
-# MEDIA_URL = '/images/'
 MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}/media/'
 
 # Default primary key field type
@@ -184,3 +173,27 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Configure Django App for Heroku
 # django_heroku.settings(locals())
+
+if DEBUG is True:
+    ALLOWED_HOSTS = ['127.0.0.1']
+    # Static files (CSS, JavaScript, Images)
+    # https://docs.djangoproject.com/en/4.0/howto/static-files/ 
+    STATIC_URL = '/static/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+    STATICFILES_LOCATION = 'static'
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+    
+    # Media Files
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+    MEDIA_URL = '/images/'
+    
+    # Default primary key field type
+    DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+    
+    DATABASES = {
+        'default': {
+            'ENGINE':'django.db.backends.sqlite3',
+            'NAME':os.path.join(BASE_DIR,'db.sqlite3'),
+        }
+    }
