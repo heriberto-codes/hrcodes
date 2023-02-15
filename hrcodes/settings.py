@@ -173,6 +173,14 @@ MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
+
+DATABASES = {
+        'default': {
+            'ENGINE':'django.db.backends.sqlite3',
+            'NAME':os.path.join(BASE_DIR,'db.sqlite3'),
+        }
+    }
+
 # Configure Django App for Heroku
 django_heroku.settings(locals())
 
