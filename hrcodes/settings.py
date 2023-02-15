@@ -152,9 +152,9 @@ AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
 AWS_QUERYSTRING_AUTH = False
-# AWS_HEADERS = {
-#     'Access-Control-Allow-Origin': '*',
-# }
+AWS_HEADERS = {
+    'Access-Control-Allow-Origin': '*',
+}
     
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
