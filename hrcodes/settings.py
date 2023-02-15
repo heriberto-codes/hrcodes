@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 
 import os
-# import django_heroku
+import django_heroku
 from pathlib import Path
 from dotenv import load_dotenv
 from storages.backends.s3boto3 import S3Boto3Storage
@@ -144,7 +144,7 @@ USE_TZ = True
 
 # AWS Config to S3 Bucket 
 AWS_ACCESS_KEY_ID = str(os.environ.get('AWS_ACCESS_KEY_ID'))
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_SECRET_ACCESS_KEY = str(os.environ.get('AWS_SECRET_ACCESS_KEY'))
 AWS_STORAGE_BUCKET_NAME = str(os.environ.get('AWS_STORAGE_BUCKET_NAME'))
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 AWS_DEFAULT_ACL = 'public-read'
@@ -174,7 +174,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Configure Django App for Heroku
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
 
 if DEBUG is True:
     ALLOWED_HOSTS = ['127.0.0.1']
