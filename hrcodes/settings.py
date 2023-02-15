@@ -153,7 +153,7 @@ AWS_S3_OBJECT_PARAMETERS = {
 }
 AWS_QUERYSTRING_AUTH = False
 AWS_HEADERS = {
-    'Access-Control-Allow-Origin': '*'
+    'Access-Control-Allow-Origin': '*',
 }
     
 # Static files (CSS, JavaScript, Images)
