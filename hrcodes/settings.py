@@ -172,6 +172,14 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # Configure Django App for Heroku
 django_heroku.settings(locals())
 
+
+DATABASES = {
+        'default': {
+            'ENGINE':'django.db.backends.sqlite3',
+            'NAME':os.path.join(BASE_DIR,'db.sqlite3'),
+        }
+    }
+
 if DEBUG is True:
     ALLOWED_HOSTS = ['127.0.0.1', 'gentle-fortress-58982.onrender.com']
     # Static files (CSS, JavaScript, Images)
