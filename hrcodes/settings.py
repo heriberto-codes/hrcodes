@@ -35,7 +35,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['https://gentle-fortress-58982.onrender.com', 'hroman.codes', 'www.hroman.codes']
 
@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     # project apps
     'apps.pages',
     'apps.archive',
-    'apps.blog',
+    # 'apps.blog',
 ]
 
 MIDDLEWARE = [
@@ -172,7 +172,6 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # Configure Django App for Heroku
 django_heroku.settings(locals())
 
-
 DATABASES = {
         'default': {
             'ENGINE':'django.db.backends.sqlite3',
@@ -181,7 +180,7 @@ DATABASES = {
     }
 
 if DEBUG is True:
-    ALLOWED_HOSTS = ['127.0.0.1', 'gentle-fortress-58982.onrender.com']
+    ALLOWED_HOSTS = ['127.0.0.1']
     # Static files (CSS, JavaScript, Images)
     # https://docs.djangoproject.com/en/4.0/howto/static-files/ 
     STATIC_URL = '/static/'
