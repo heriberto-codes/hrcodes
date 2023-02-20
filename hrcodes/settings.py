@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 
 import os
-import django_heroku
 from pathlib import Path
 from dotenv import load_dotenv
 from storages.backends.s3boto3 import S3Boto3Storage
@@ -37,7 +36,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://gentle-fortress-58982.onrender.com', 'hroman.codes', 'www.hroman.codes']
+ALLOWED_HOSTS = ['hroman.codes', 'www.hroman.codes']
 
 # test 
 
@@ -94,22 +93,16 @@ WSGI_APPLICATION = 'hrcodes.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-# import dj_database_url
-# DATABASES['default'] = dj_database_url.config(conn_max_age=600)
-
-#TODO Add Postgres DB via render.com
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql_psycopg2",
-#         "NAME": env.str('POSTGRES_DB'),
-#         "USER": env.str('POSTGRES_HOST'),
-#         "PASSWORD": env.str('POSTGRES_PASSWORD', 'postgres'),
-#         "HOST": 5432,
-#         "PORT": env.str('POSTGRES_PORT'),
+# DATABASES ={
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'hroman_codes',
+#         'USER': '',
+#         'PASSWORD': '',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
 #     }
 # }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -171,11 +164,8 @@ MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-# Configure Django App for Heroku
-django_heroku.settings(locals())
-
 if DEBUG is True:
-    ALLOWED_HOSTS = ['gentle-fortress-58982.onrender.com', '127.0.0.1', 'https://gentle-fortress-58982.onrender.com']
+    ALLOWED_HOSTS = ['127.0.0.1']
     # Static files (CSS, JavaScript, Images)
     # https://docs.djangoproject.com/en/4.0/howto/static-files/ 
     STATIC_URL = '/static/'
@@ -191,10 +181,20 @@ if DEBUG is True:
     # Default primary key field type
     DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
     
+    # DATABASES = {
+    #     'default': {
+    #         'ENGINE':'django.db.backends.sqlite3',
+    #         'NAME':os.path.join(BASE_DIR,'db.sqlite3'),
+    #     }
+    # }
     DATABASES = {
-        'default': {
-            'ENGINE':'django.db.backends.sqlite3',
-            'NAME':os.path.join(BASE_DIR,'db.sqlite3'),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'hroman_codes',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '5432',
         }
     }
     
