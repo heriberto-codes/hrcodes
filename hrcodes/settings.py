@@ -96,11 +96,11 @@ WSGI_APPLICATION = 'hrcodes.wsgi.application'
 DATABASES ={
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'hroman_codes',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.environ.get('NAME'),
+        'USER': os.environ.get('USER'),
+        'PASSWORD': os.environ.get('PASSWORD'),
+        'HOST': os.environ.get('HOST'),
+        'PORT': os.environ.get('PORT'),
     }
 }
 
@@ -177,8 +177,8 @@ MEDIA_URL = '/images/'
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-if DEBUG is True:
-    ALLOWED_HOSTS = ['infinite-scrubland-19565.herokuapp.com', 'https://infinite-scrubland-19565.herokuapp.com', 'hroman.codes', 'www.hroman.codes', '127.0.0.1', 'localhost']
+# if DEBUG is True:
+#     ALLOWED_HOSTS = ['infinite-scrubland-19565.herokuapp.com', 'https://infinite-scrubland-19565.herokuapp.com', 'hroman.codes', 'www.hroman.codes', '127.0.0.1', 'localhost']
 #     ALLOWED_HOSTS = ['127.0.0.1']
 #     # Static files (CSS, JavaScript, Images)
 #     # https://docs.djangoproject.com/en/4.0/howto/static-files/ 
@@ -201,14 +201,14 @@ if DEBUG is True:
     #         'NAME':os.path.join(BASE_DIR,'db.sqlite3'),
     #     }
     # }
-    DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'hroman_codes',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '5432',
-        }
-    }
+    # DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'hroman_codes',
+    #     'USER': '',
+    #     'PASSWORD': '',
+    #     'HOST': 'localhost',
+    #     'PORT': '5432',
+    #     }
+    # }
 
