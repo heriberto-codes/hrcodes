@@ -14,7 +14,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from storages.backends.s3boto3 import S3Boto3Storage
+# from storages.backends.s3boto3 import S3Boto3Storage
 
 import environ
 
@@ -36,7 +36,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['hroman.codes', 'www.hroman.codes', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['https://infinite-scrubland-19565.herokuapp.com', 'hroman.codes', 'www.hroman.codes', '127.0.0.1', 'localhost']
 
 # test 
 
@@ -194,20 +194,20 @@ if DEBUG is True:
 #     # Default primary key field type
 #     DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
     
+    # DATABASES = {
+    #     'default': {
+    #         'ENGINE':'django.db.backends.sqlite3',
+    #         'NAME':os.path.join(BASE_DIR,'db.sqlite3'),
+    #     }
+    # }
     DATABASES = {
-        'default': {
-            'ENGINE':'django.db.backends.sqlite3',
-            'NAME':os.path.join(BASE_DIR,'db.sqlite3'),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'hroman_codes',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '5432',
         }
     }
-#     DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'hroman_codes',
-#         'USER': '',
-#         'PASSWORD': '',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#         }
-#     }
-    
+
