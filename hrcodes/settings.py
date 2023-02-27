@@ -35,7 +35,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['infinite-scrubland-19565.herokuapp.com', 'https://infinite-scrubland-19565.herokuapp.com', 'hroman.codes', 'www.hroman.codes', '127.0.0.1', 'localhost']
 
@@ -178,7 +178,7 @@ MEDIA_URL = '/images/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-if DEBUG is True:
+# if DEBUG is True:
 #     ALLOWED_HOSTS = ['infinite-scrubland-19565.herokuapp.com', 'https://infinite-scrubland-19565.herokuapp.com', 'hroman.codes', 'www.hroman.codes', '127.0.0.1', 'localhost']
 #     ALLOWED_HOSTS = ['127.0.0.1']
 #     # Static files (CSS, JavaScript, Images)
@@ -196,12 +196,12 @@ if DEBUG is True:
 #     # Default primary key field type
 #     DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
     
-    DATABASES = {
-        'default': {
-            'ENGINE':'django.db.backends.sqlite3',
-            'NAME':os.path.join(BASE_DIR,'db.sqlite3'),
-        }
-    }
+    # DATABASES = {
+    #     'default': {
+    #         'ENGINE':'django.db.backends.sqlite3',
+    #         'NAME':os.path.join(BASE_DIR,'db.sqlite3'),
+    #     }
+    # }
     
    
 
