@@ -15,6 +15,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 # from storages.backends.s3boto3 import S3Boto3Storage
+import django_heroku
 import dj_database_url
 import psycopg2
 
@@ -93,19 +94,6 @@ WSGI_APPLICATION = 'hrcodes.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-# DATABASES = {
-#     'default':  {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': os.environ.get('NAME'),
-#         'USER': os.environ.get('USER'),
-#         'PASSWORD': os.environ.get('PASSWORD'),
-#         'HOST': os.environ.get('HOST'),
-#         'PORT': os.environ.get('PORT'),
-#         'CONN_MAX_AGE': 500,
-#     }
-# }
-
-
 DATABASES = {'default': {
     'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': os.environ.get('NAME'),
@@ -191,8 +179,10 @@ MEDIA_URL = '/images/'
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# HEROKU 
+django_heroku.settings(locals())
 
-# if DEBUG is True:
+if DEBUG is True:
 #     ALLOWED_HOSTS = ['infinite-scrubland-19565.herokuapp.com', 'https://infinite-scrubland-19565.herokuapp.com', 'hroman.codes', 'www.hroman.codes', '127.0.0.1', 'localhost']
 #     ALLOWED_HOSTS = ['127.0.0.1']
 #     # Static files (CSS, JavaScript, Images)
@@ -210,12 +200,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     # Default primary key field type
 #     DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
     
-    # DATABASES = {
-    #     'default': {
-    #         'ENGINE':'django.db.backends.sqlite3',
-    #         'NAME':os.path.join(BASE_DIR,'db.sqlite3'),
-    #     }
-    # }
+    DATABASES = {
+        'default': {
+            'ENGINE':'django.db.backends.sqlite3',
+            'NAME':os.path.join(BASE_DIR,'db.sqlite3'),
+        }
+    }
     
    
 
