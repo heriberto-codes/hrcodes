@@ -14,6 +14,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+# from storages.backends.s3boto3 import S3Boto3Storage
 import django_heroku
 import dj_database_url
 import psycopg2
@@ -139,6 +140,9 @@ USE_TZ = True
 
 # # Default primary key field type
 # # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
+# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
