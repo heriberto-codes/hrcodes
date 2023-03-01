@@ -14,7 +14,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-# from storages.backends.s3boto3 import S3Boto3Storage
 import django_heroku
 import dj_database_url
 import psycopg2
@@ -37,7 +36,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['infinite-scrubland-19565.herokuapp.com', 'https://infinite-scrubland-19565.herokuapp.com', 'hroman.codes', 'www.hroman.codes', '127.0.0.1', 'localhost']
 
@@ -134,38 +133,12 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
-# AWS Config to S3 Bucket 
-# AWS_ACCESS_KEY_ID = str(os.environ.get('AWS_ACCESS_KEY_ID'))
-# AWS_SECRET_ACCESS_KEY = str(os.environ.get('AWS_SECRET_ACCESS_KEY'))
-# AWS_STORAGE_BUCKET_NAME = str(os.environ.get('AWS_STORAGE_BUCKET_NAME'))
-# AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-# AWS_DEFAULT_ACL = 'public-read'
-# AWS_S3_OBJECT_PARAMETERS = {
-#     'CacheControl': 'max-age=86400',
-# }
-# AWS_QUERYSTRING_AUTH = False
-# AWS_HEADERS = {
-#     'Access-Control-Allow-Origin': '*',
-# }
     
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-# STATICFILES_LOCATION = 'static'
-# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
-# STATIC_URL = f'https://{AWS_STORAGE_BUCKET_NAME}/static/'
-
-# # Media Files
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
-# MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}/media/'
 
 # # Default primary key field type
 # # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
-# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
@@ -182,24 +155,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # HEROKU 
 django_heroku.settings(locals())
 
-if DEBUG is True:
-#     ALLOWED_HOSTS = ['infinite-scrubland-19565.herokuapp.com', 'https://infinite-scrubland-19565.herokuapp.com', 'hroman.codes', 'www.hroman.codes', '127.0.0.1', 'localhost']
-#     ALLOWED_HOSTS = ['127.0.0.1']
-#     # Static files (CSS, JavaScript, Images)
-#     # https://docs.djangoproject.com/en/4.0/howto/static-files/ 
-#     STATIC_URL = '/static/'
-#     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-#     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-#     STATICFILES_LOCATION = 'static'
-#     STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-    
-#     # Media Files
-#     MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
-#     MEDIA_URL = '/images/'
-    
-#     # Default primary key field type
-#     DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-    
+if DEBUG is True:    
     DATABASES = {
         'default': {
             'ENGINE':'django.db.backends.sqlite3',
@@ -207,5 +163,3 @@ if DEBUG is True:
         }
     }
     
-   
-
