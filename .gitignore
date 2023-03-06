@@ -141,3 +141,9 @@ dmypy.json
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+
+# Ignore `bin` dir
+bin/
+# or
+*/bin/*
