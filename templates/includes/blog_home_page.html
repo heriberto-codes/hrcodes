@@ -25,12 +25,18 @@
                                         <span class='badge blogCategory'>{{ category.name }}<span>
                                     </a>&nbsp;
                                 {% endfor %}
-                                <small>
+                                {% comment %} <small>
                                     {{ post.created_on.date}}
-                                </small> 
+                                </small>  {% endcomment %}
+                            </div>
+                            <div class='row'>
+                                <div class='col blogPostMetaData pt-3 pb-3'>
+                                    <small>
+                                        {{ post.created_on.date}}
+                                    </small> 
+                                </div>
                             </div>
                         </div>
-                        
                         <div class='row'>
                             <div class='col'>
                                 <h3 class='pb-2'>
