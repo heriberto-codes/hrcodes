@@ -147,7 +147,3 @@ dmypy.json
 bin/
 # or
 */bin/*
-
-# LOCAL SSL
-cert.pm
-key.pm
