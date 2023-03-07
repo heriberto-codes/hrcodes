@@ -41,10 +41,13 @@ def blog_detail(request, pk):
                 )
                 comment.save()
         
-        comments = Comment.objects.filter(post=post)
+        comments = Comment.objects.filter(post=post).order_by('-created_on')
+        amount_of_comments = len(comments)
+        print(amount_of_comments)
         context = {
             'post': post,
             'comments': comments,
+            'amount_of_comments': amount_of_comments,
             'form': form,
         }
         
@@ -52,3 +55,6 @@ def blog_detail(request, pk):
 
     except Post.DoesNotExist:
         return render(request, 'blog_detail_error_page.html')
+
+#TODO add some color to the blod detail error page and the blog post error page
+#TODO clear the form after I submit a comment
