@@ -532,6 +532,29 @@ EXPERIENCE SECTION
     margin-right: 10px;
 }
 
+.formationBG {
+    overflow: hidden;
+}
+
+.formationBG::before {
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwlXr8XsPfnD6qK_SEsyPxqmIg9U4eleWa8Q&usqp=CAU');
+    background-repeat: no-repeat;
+    background-size: cover;
+    content: '';
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 37px;
+    opacity: 0.1;
+    width: 90%;
+}
+
+.formationBG:hover::before{
+    transition: transform .35s ease;
+    transform: scale(2);
+}
+
 .historyBubble {
     color: white;
     border-radius: 20px;
