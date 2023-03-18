@@ -35,10 +35,11 @@ class Comment(models.Model):
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey('Post', on_delete=models.CASCADE)
-    
-    
+     
 def __str__(self):
     return self.title
+
+# create a django model for replies to comments
 
 
 #TODO: Create a class for Replies to comments
