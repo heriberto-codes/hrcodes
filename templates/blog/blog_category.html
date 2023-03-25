@@ -15,7 +15,7 @@
             {% for post in posts %}
                 <div class='row pb-5'>
                     <div class='col-6'>
-                        <a  href='{% url "blog_detail" post.pk %}'><img style='object-fit: cover; max-width: 100%; height: 100%;' src={{post.image.url}} /></a>
+                        <a  href='{% url "blog_detail" post.pk post.slug %}'><img style='object-fit: cover; max-width: 100%; height: 100%;' src={{post.image.url}} /></a>
                     </div>
 
                     <div class='col-6'>
@@ -35,7 +35,7 @@
                         <div class='row'>
                             <div class='col'>
                                 <h3 class='pb-2'>
-                                    <a style='color: var(--hrColorBeige) !important; font-weight: 900;' href='{% url "blog_detail" post.pk %}'>{{ post.title }}</a>
+                                    <a style='color: var(--hrColorBeige) !important; font-weight: 900;' href='{% url "blog_detail" post.pk post.slug %}'>{{ post.title }}</a>
                                 </h3>
                                 <div style='color: var(--hrTextColorGrey); -webkit-font-smoothing: var(--hrFontSmoothing); word-wrap: break-word;'>
                                     {{ post.snippet|safe}}...

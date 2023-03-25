@@ -27,9 +27,10 @@ def blog_category(request, category):
     }
     return render(request, 'blog/blog_category.html', context)
 
-def blog_detail(request, pk):
+def blog_detail(request, pk, slug):
     try:
         post = Post.objects.get(pk=pk)
+        print('post', post)
         form = CommentForm()
         if request.method == 'POST':
             form = CommentForm(request.POST)
@@ -43,11 +44,12 @@ def blog_detail(request, pk):
         
         comments = Comment.objects.filter(post=post).order_by('-created_on')
         amount_of_comments = len(comments)
-        print(amount_of_comments)
+        slug = post.slug
         context = {
             'post': post,
             'comments': comments,
             'amount_of_comments': amount_of_comments,
+            'slug': slug,
             'form': form,
         }
         

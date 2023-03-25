@@ -30,6 +30,10 @@ class Post(models.Model):
     categories = models.ManyToManyField('Category', related_name='posts', blank=False)
     status = models.IntegerField(choices=STATUS, default=0)
     
+    def get_absolute_url(self):
+        return reverse("blog_detail", kwargs={"slug": self.slug})
+    
+    
 class Comment(models.Model):
     author = models.CharField(max_length=60)
     body = models.TextField()
