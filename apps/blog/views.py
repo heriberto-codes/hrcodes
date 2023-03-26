@@ -30,7 +30,6 @@ def blog_category(request, category):
 def blog_detail(request, pk, slug):
     try:
         post = Post.objects.get(pk=pk)
-        print('post', post)
         form = CommentForm()
         if request.method == 'POST':
             form = CommentForm(request.POST)
@@ -40,7 +39,9 @@ def blog_detail(request, pk, slug):
                     body=form.cleaned_data["body"],
                     post=post
                 )
+                print('comment:', comment)
                 comment.save()
+                form = CommentForm()
         
         comments = Comment.objects.filter(post=post).order_by('-created_on')
         amount_of_comments = len(comments)

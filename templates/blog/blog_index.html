@@ -19,7 +19,7 @@
                 {% if posts and post.status == 1 %}
                     <div class='row pb-5'>
                         <div class='col-12 col-lg-6'>
-                            <a  href='{% url "blog_detail" post.pk %}'><img class='blogImage' src={{post.image.url}} /></a>
+                            <a  href='{% url "blog_detail" post.pk post.slug %}'><img class='blogImage' src={{post.image.url}} /></a>
                         </div>
                         <div class='col-12 col-lg-6'>
                             <div class='row'>
@@ -38,7 +38,7 @@
                             <div class='row'>
                                 <div class='col'>
                                     <h3 class='pb-2'>
-                                        <a class='blogTitle' href='{% url "blog_detail" post.pk %}'>{{ post.title }}</a>
+                                        <a class='blogTitle' href='{% url "blog_detail" post.pk post.slug %}'>{{ post.title }}</a>
                                     </h3>
                                     <div class='blogSnippet'>
                                         {{ post.snippet|safe}}...
