@@ -37,7 +37,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['infinite-scrubland-19565.herokuapp.com', 'https://infinite-scrubland-19565.herokuapp.com', 'hroman.codes', 'www.hroman.codes']
 
@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     #3rd party apps
     'ckeditor',
     'storages',
+    'coverage',
 
     # project apps
     'apps.pages',

@@ -12,4 +12,4 @@ class HomePageView(TemplateView):
             'posts': posts,
         }
         return context
- 
+    
