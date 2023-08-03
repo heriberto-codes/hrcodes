@@ -39,7 +39,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['infinite-scrubland-19565.herokuapp.com', 'https://infinite-scrubland-19565.herokuapp.com', 'hroman.codes', 'www.hroman.codes']
+ALLOWED_HOSTS = ['https://hromancodes.herokuapp.com/']
 
 # Application definition
 INSTALLED_APPS = [
