@@ -58,4 +58,4 @@ def blog_detail(request, pk, slug):
     except Post.DoesNotExist:
         return render(request, 'blog_detail_error_page.html') 
 
-#TODO add some color to the blod detail error page and the blog post error page
+#TODO add some color to the blog detail error page and the blog post error page

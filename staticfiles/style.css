@@ -76,30 +76,35 @@ BASE NAV
 nav {
     border-bottom: 1px solid #F9E9D5;
     letter-spacing: var(--letterSpacing);
-  }
+    -webkit-font-smoothing: var(--hrFontSmoothing);
+}
+
+#navbarWrapper {
+    max-width: 100rem;
+}
   
-  #navbar {
+#navbar {
     transition: top 1s;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-  }
+}
   
-  .navbar .navbar-nav .nav-link {
+.navbar .navbar-nav .nav-link {
     color: var(--hrColorBeige) !important;
     font-size: 1.1em;
-  }
-  
-  .navbar .navbar-nav .nav-link:hover{
+}
+
+.navbar .navbar-nav .nav-link:hover{
     color: var(--hrColorOrange) !important;
-  }
-  
-  .navbar-logo-centered .navbar-nav .nav-link{
+}
+
+.navbar-logo-centered .navbar-nav .nav-link{
     padding: .5em 1em;
-  }
-  
-  .custom-toggler.navbar-toggler {
+}
+
+.custom-toggler.navbar-toggler {
     border-color: var(--hrColorOrange) !important;
-  }
+}
   
   .navbar-dark .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(249, 233, 213, 2.0)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important
@@ -542,12 +547,12 @@ EXPERIENCE SECTION
     background-size: cover;
     content: '';
     position: absolute;
-    top: 0px;
+    top: -100px;
     right: 0px;
     bottom: 0px;
-    left: 37px;
+    left: 50px;
     opacity: 0.1;
-    width: 90%;
+    width: 50%;
 }
 
 .formationBG:hover::before{
@@ -581,6 +586,29 @@ EXPERIENCE SECTION
 }
 
 .PicSpotrBG:hover::before{
+    transition: transform .35s ease;
+    transform: scale(2);
+}
+
+.theSeekerBG {
+    overflow: hidden;
+}
+
+.theSeekerBG::before {
+    background-image: url('https://app.brandmark.io/v3/brand/design-svg.php?id=CAB6C4A3F8A14CA9BEB0CF8D71682D23&type=profile-icons&template=transparent');
+    background-repeat: no-repeat;
+    background-size: cover;
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: 0px;
+    bottom: 0px;
+    left: 50px;
+    opacity: 0.1;
+    width: 50%;
+}
+
+.theSeekerBG:hover::before{
     transition: transform .35s ease;
     transform: scale(2);
 }
@@ -1036,6 +1064,10 @@ BLOG SECTION
 @media all and (max-width: 576px) {
     .container {
         max-width: 500px !important;
+    }
+
+    .formationWorkYears {
+        font-size: 1.3rem;
     }
 
     .heroP {
