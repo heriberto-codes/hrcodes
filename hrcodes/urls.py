@@ -20,13 +20,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.generic import TemplateView
-
-from apps.pages.views import HomePageView
+# from apps.pages.views import HomePageView
 
 urlpatterns = [
     path('', include("apps.pages.urls")),
     path('admin/', admin.site.urls),
-    path('archive/', include("apps.archive.urls")),
+    path('archive/', include("apps.archive.urls")), 
     path('blog/', include('apps.blog.urls')),   
 ] 
 

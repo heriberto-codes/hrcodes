@@ -39,7 +39,6 @@ def blog_detail(request, pk, slug):
                     body=form.cleaned_data["body"],
                     post=post
                 )
-                print('comment:', comment)
                 comment.save()
                 form = CommentForm()
         
@@ -57,7 +56,6 @@ def blog_detail(request, pk, slug):
         return render(request, 'blog/blog_detail.html', context)
 
     except Post.DoesNotExist:
-        return render(request, 'blog_detail_error_page.html')
+        return render(request, 'blog_detail_error_page.html') 
 
-#TODO add some color to the blod detail error page and the blog post error page
-#TODO clear the form after I submit a comment
+#TODO add some color to the blog detail error page and the blog post error page

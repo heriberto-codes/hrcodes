@@ -590,6 +590,29 @@ EXPERIENCE SECTION
     transform: scale(2);
 }
 
+.theSeekerBG {
+    overflow: hidden;
+}
+
+.theSeekerBG::before {
+    background-image: url('https://app.brandmark.io/v3/brand/design-svg.php?id=CAB6C4A3F8A14CA9BEB0CF8D71682D23&type=profile-icons&template=transparent');
+    background-repeat: no-repeat;
+    background-size: cover;
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: 0px;
+    bottom: 0px;
+    left: 50px;
+    opacity: 0.1;
+    width: 50%;
+}
+
+.theSeekerBG:hover::before{
+    transition: transform .35s ease;
+    transform: scale(2);
+}
+
 .LiHEBG {
     overflow: hidden;
 }
