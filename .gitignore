@@ -79,11 +79,11 @@ hrcodes/staticfiles/
 staticfiles
 
 # Media and Static directories
-/media/
-!/media/.gitkeep
+# /media/
+# !/media/.gitkeep
 
-/static/
-!/static/.gitkeep
+# /static/
+# !/static/.gitkeep
 
 # Flask stuff:
 instance/
