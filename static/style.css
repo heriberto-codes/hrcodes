@@ -221,26 +221,20 @@ footer {
     padding-block: var(--hrFooterSectionPaddingBlock);
 }
 
-#hMobileFooter {
-    z-index: 1;
-    position: relative;
+.footerSectionText {
+    font-size: 0.7rem;
 }
 
-.topLabel {
-    position: relative;
-    top: -38px;
-    z-index: 2;
-    color: #F9E9D5;
-    width: 50px;
-    height: 2vh;
-    margin: 0 auto;
+.bi-youtube {
+    color: #FF0301;
 }
 
-.topLabel:hover {
-    -webkit-transform: translateX(40px);
-    transform: translateX(50px);
-    transition: all .3s ease;
-    color: #192A51;
+.bi-linkedin {
+    color: #0966C2;
+}
+
+.bi-github {
+    color: #000409;
 }
 /* ======================================
 BANNER SECTION
