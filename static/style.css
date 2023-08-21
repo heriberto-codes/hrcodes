@@ -69,6 +69,11 @@ html {
         height: 300px;
     }
 }
+
+p {
+    color: var(--hrTextColorGrey);
+    font-size: 1rem;
+}
  
 /* ======================================
 BASE NAV
@@ -334,7 +339,6 @@ strong {
 
 .heroBlurb {
     margin: 20px 0px 0px;
-    color: var(--hrTextColorGrey);
     -webkit-font-smoothing: var(--hrFontSmoothing);
     font-size: 1rem;
 }
@@ -440,7 +444,6 @@ ABOUT SECTION
 }
 
 .aboutBlurb {
-    color: var(--hrTextColorGrey);
     -webkit-font-smoothing: var(--hrFontSmoothing);
     word-wrap: break-word;
 }
@@ -954,10 +957,37 @@ BLOG SECTION
 }
 
 .blogSnippet {
-    color: var(--hrTextColorGrey);
     -webkit-font-smoothing: var(--hrFontSmoothing);
     word-wrap: break-word;
 }
+
+/* ======================================
+CONTACT SECTION
+========================================= */
+.contactSection {
+    max-width: var(--hrSectionMaxWidth);
+    margin: var(--hrSectionMargin);
+    padding-block: var(--experienceSectionPaddingBlock);
+    -webkit-font-smoothing: var(--hrFontSmoothing);
+}
+
+.contactHeading {
+    color: var(--hrColorBeige);
+    font-size: 2rem;
+}
+
+.contactHeading {
+    color: var(--hrColorBeige) !important;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.contactHeading::before {
+    counter-increment: section 6;
+    content: "0" counter(section) ".";
+    margin-right: 10px;
+}
+
 /*=========================================
     Media Queries
 /* ======================================

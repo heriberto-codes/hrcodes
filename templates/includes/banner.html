@@ -1,4 +1,4 @@
-<p class='banner mb-0 pt-1 pe-0 pb-1 ps-0 text-center'>👆 Yes I know site is not secure once I secure a SWE role I will gladly pay for a Dyno on Heroku!</p>
+<p id='demo' class='banner mb-0 pt-1 pe-0 pb-1 ps-0 text-center'></p>
 
 <style>
 
@@ -27,3 +27,22 @@
   }
 
 </style>
+
+<script>
+let i = 0;
+let text = "Currently open for work! 💰 🧳";
+let speed = 100;
+
+function typeWriter(button) {
+  // console.log(button.id);
+  
+   if(i < text.length) {
+       document.getElementById("demo").innerHTML += text.charAt(i);
+       i++;
+       setTimeout(typeWriter, speed);
+   }
+}
+
+typeWriter()
+
+</script>
