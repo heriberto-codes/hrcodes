@@ -29,9 +29,19 @@ class Post(models.Model):
     last_modified = models.DateTimeField(auto_now_add=True)
     categories = models.ManyToManyField('Category', related_name='posts', blank=False)
     status = models.IntegerField(choices=STATUS, default=0)
+    #TODO this line is new
+    # likes = models.ManyToManyField('Like', related_name='liked_posts')
     
     def get_absolute_url(self):
         return reverse("blog_detail", kwargs={"slug": self.slug})
+
+# class Like(models.Model):
+#     #TODO this line is new
+#     post = models.ForeignKey('Post', on_delete=models.CASCADE)
+    
+#     def __str__(self):
+#         return f'Like for {self.post.title}'
+    
     
     
 class Comment(models.Model):
@@ -42,8 +52,3 @@ class Comment(models.Model):
      
 def __str__(self):
     return self.title
-
-# create a django model for replies to comments
-
-
-#TODO: Create a class for Replies to comments
