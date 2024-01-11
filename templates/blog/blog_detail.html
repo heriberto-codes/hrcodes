@@ -19,6 +19,12 @@
                             <small>
                                 {{ post.created_on.date}}
                             </small> 
+                            <a href="{% url 'like_post' post.id post.slug %}"">
+                                <i class="{% if post_was_liked %}fa-solid{% else %}fa-regular{% endif %} fa-thumbs-up"></i>
+                            </a>
+                            <small>
+                                {{ like.like }}
+                            </small>
                         </div>
                     </div>
                     
@@ -37,28 +43,6 @@
             <div class='row'>
                 <div class='col'>
                     <p>{{ post.body|safe }}</p>
-                    <h3>Leave a comment:</h3>
-                    <form action='/blog/{{ post.pk }}/{{ post.slug }}' method='post'>
-                        {% csrf_token %}
-                        <div class='form-group'>
-                            {{ form.author }}
-                        </div>
-                        <div class='form-group'>
-                            {{ form.body }}
-                        </div>
-                        <button type='submit' class='btn btn-primary'>Submit</button>
-                    </form>
-                    <h3>{{  amount_of_comments }} Comments:</h3>
-                    {% for comment in comments %}
-                        <p>
-                            <h5><b>{{ comment.author }}</b></h5>
-                            <h6>{{ comment.created_on.date }} @ {{ comment.created_on.time }}</h6>
-                            <div class='comment-body'>
-                                <p>{{ comment.body }}</p>
-                            </div>
-                        </p>
-                        <hr>
-                    {% endfor %}
                 </div>
             </div>
             

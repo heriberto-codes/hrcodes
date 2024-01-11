@@ -1,8 +1,9 @@
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from requests import request
-from apps.blog.models import Post, Comment
-from .forms import CommentForm
+from apps.blog.models import Post, Like
+from django.http import HttpResponseRedirect, JsonResponse
+from django.urls import reverse
 
 # Create your views here.
 def blog_index(request):
@@ -32,59 +33,41 @@ def blog_category(request, category):
 def blog_detail(request, pk, slug):
     try:
         post = Post.objects.get(pk=pk)
-        print('post', post)
-        print('post', post.__dict__)
-        form = CommentForm()
-        if request.method == 'POST':
-            form = CommentForm(request.POST)
-            if form.is_valid():
-                comment = Comment(
-                    author=form.cleaned_data["author"],
-                    body=form.cleaned_data["body"],
-                    post=post
-                )
-                comment.save()
-                form = CommentForm()
-        
-        comments = Comment.objects.filter(post=post).order_by('-created_on')
-        amount_of_comments = len(comments)
+        like, created = Like.objects.get_or_create(post=post)
         slug = post.slug
+        post_was_liked = 'liked' in request.GET and request.GET['liked'] == 'true'
+        
         context = {
             'post': post,
-            'comments': comments,
-            'amount_of_comments': amount_of_comments,
             'slug': slug,
-            'form': form,
+            'like': like,
+            'post_was_liked': post_was_liked
         }
         
         return render(request, 'blog/blog_detail.html', context)
 
+    except Like.DoesNotExist:
+        return render(request, 'blog_detail_error_page.html')
+    
     except Post.DoesNotExist:
         return render(request, 'blog_detail_error_page.html') 
-    
-# def like_post(rerquest, post_id):
-#     # We get the post and if its not avaiable spit out a 404
-#     post = get_object_or_404(Post, id=post_id)
-    
-#     # if the liked post is not in the current seesion create it 
-#     if 'liked_posts' not in request.session:
-#         request.session['liked_posts'] = []
-       
-#     # init a variable to keep track of liked post in the current session     
-#     liked_posts = request.session['liked_posts']
-    
-#     # if the current post id exist in the liked post arra/list 
-#     if post_id in liked_posts:
-#         # the user already liked the post, so unlike it 
-#         liked_posts.remove(post.id)
-#     else: 
-#         # user hasn't liked the post so like it 
-#         liked_posts.append(post_id)
-     
-#     # inform Django that changes have been made to the session object  
-#     request.session.modified = True
-    
-#     return redirect('blog+detail', slug=post.slug)
 
+
+def like_post(request, pk, slug):
+    # get the post by id 
+    post = get_object_or_404(Post, pk=pk)
+    # get the set of liked post from the session or create an empty set 
+    liked_posts = list(request.session.get('liked_posts', set()))
+    # check if the post has already been liked in the current session 
+    if post.pk not in liked_posts:
+        # if not liked, create a like instance and increment the like 
+        liked, created = Like.objects.get_or_create(post=post) 
+        liked.increment_likes()
+        # add the post to the set of liked posts in the session 
+        liked_posts.append(post.pk)
+        request.session['liked_posts'] = liked_posts
+
+    # return HttpResponseRedirect(reverse('blog_detail', args=[pk, slug]))
+    return HttpResponseRedirect(reverse('blog_detail', args=[pk, slug]) + '?liked=true')
 
 #TODO add some color to the blog detail error page and the blog post error page

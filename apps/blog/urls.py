@@ -8,6 +8,7 @@ urlpatterns = [
     path('', views.blog_index, name='blog_index'),
     path('<int:pk>/<slug:slug>', views.blog_detail, name='blog_detail'),
     path('<category>/', views.blog_category, name='blog_category'),
+    path('liked/<int:pk>/<slug:slug>', views.like_post, name='like_post'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

@@ -2,6 +2,10 @@ a {
     color: #fff !important;
 }
 
+a:hover {
+    text-decoration: none !important;
+}
+
 img {
     max-width: 100%;
     object-fit: contain;

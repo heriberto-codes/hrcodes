@@ -7,7 +7,6 @@ STATUS = (
     (1, 'Publish')
 )
 
-# Create a class for Categories 
 class Category(models.Model):
     name = models.CharField(max_length=20)
     slug = models.SlugField(max_length=225, unique=False, null=True)
@@ -18,7 +17,6 @@ class Category(models.Model):
     def get_absolute_url(self):
         return reverse('blog_category', kwargs={'slug': self.slug})
 
-# Create a class for Post 
 class Post(models.Model):
     title = models.CharField(max_length=225)
     slug = models.SlugField(max_length=225, unique=True)
@@ -29,26 +27,20 @@ class Post(models.Model):
     last_modified = models.DateTimeField(auto_now_add=True)
     categories = models.ManyToManyField('Category', related_name='posts', blank=False)
     status = models.IntegerField(choices=STATUS, default=0)
-    #TODO this line is new
-    # likes = models.ManyToManyField('Like', related_name='liked_posts')
     
     def get_absolute_url(self):
         return reverse("blog_detail", kwargs={"slug": self.slug})
 
-# class Like(models.Model):
-#     #TODO this line is new
-#     post = models.ForeignKey('Post', on_delete=models.CASCADE)
-    
-#     def __str__(self):
-#         return f'Like for {self.post.title}'
-    
-    
-    
-class Comment(models.Model):
-    author = models.CharField(max_length=60)
-    body = models.TextField()
-    created_on = models.DateTimeField(auto_now_add=True)
+class Like(models.Model):
     post = models.ForeignKey('Post', on_delete=models.CASCADE)
+    like = models.PositiveIntegerField(default=0)
+     
+    def increment_likes(self):
+        self.like += 1
+        self.save()
+    
+    def __str__(self):
+        return f'Liked for {self.post.title}'
      
 def __str__(self):
     return self.title
