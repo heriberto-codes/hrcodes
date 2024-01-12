@@ -27,11 +27,21 @@
                                 {% endfor %}
                             </div>
                         </div>
-                        <div class='row'>
-                            <div class='col blogPostMetaData pt-3 pb-3'>
+                        <div class='row pb-1'>
+                            <div class='col-12 col-lg-12'>
+                                 <small>
+                                     {{ post.created_on.date}}
+                                 </small>
+                            </div>
+                        </div>
+                        <div class='row pb-2'>
+                            <div class='col-12 col-lg-12'>
+                                <a href="{% url 'like_post' post.id post.slug %}">
+                                    Like <i class="{% if post_was_liked %}fa-solid{% else %}fa-regular{% endif %} fa-thumbs-up fa-lg"></i>
+                                </a>
                                 <small>
-                                    {{ post.created_on.date}}
-                                </small> 
+                                    {{ like.like }}
+                                </small>
                             </div>
                         </div>
                         <div class='row'>
