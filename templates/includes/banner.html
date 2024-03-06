@@ -1,11 +1,22 @@
-<p id='demo' class='banner mb-0 pt-1 pe-0 pb-1 ps-0 text-center'></p>
+<div class='test'>
+  <p id='demo' class='banner mb-0 pt-1 pe-0 pb-1 ps-0 text-center'>
+    <a href='https://hromancodes.s3.amazonaws.com/static/pages/about_hroman_codes.pdf'>
+      --> 📂 2024 Media Kit 📂 
+    </a>
+  </p> 
+</div>
 
 <style>
 
+
 .banner {
     background-color: var(--hrColorBeige); 
-    font-size: 14px;
+    font-size: 16px;
     color: var(--hrbgColor);
+}
+
+.banner a {
+  color: var(--hrbgColor) !important;
 }
 
 /*=========================================
@@ -30,12 +41,10 @@
 
 <script>
 let i = 0;
-let text = "Currently open for work! 💰 🧳";
+let text = `<--- Check out my 2024 Media Kit currently open for work! 💰 🧳 🤝`;
 let speed = 100;
 
 function typeWriter(button) {
-  // console.log(button.id);
-  
    if(i < text.length) {
        document.getElementById("demo").innerHTML += text.charAt(i);
        i++;
