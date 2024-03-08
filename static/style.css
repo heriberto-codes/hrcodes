@@ -1033,6 +1033,20 @@ CONTACT SECTION
     margin-right: 10px;
 }
 
+/* ======================================
+404 SECTION
+========================================= */
+.fourZeroFourSection {
+    max-width: var(--hrSectionMaxWidth);
+    margin: var(--hrSectionMargin);
+    padding-block: var(--experienceSectionPaddingBlock);
+    -webkit-font-smoothing: var(--hrFontSmoothing);
+}
+
+.fourZeroFouremoji {
+    font-size: 26px;
+}
+
 /*=========================================
     Media Queries
 /* ======================================

@@ -1,6 +1,25 @@
 {% extends 'base.html' %}
+{% load static %}
+
 
 {% block content %}
-<h1>you got a 404 bruh</h1>
+{% include 'includes/alternate_navbar.html'%}
+<section class='fourZeroFourSection text-center'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col'>
+                <a href="#">
+                    <img alt="hroman_codes logo" src="{% static 'pages/images/H.svg' %}">
+                </a>
+                <p class='fourZeroFouremoji'>😲 Oh no! You hit a snag! 😲</p>
+            </div>
+        </div>
+        <div class='row pt-4'>
+            <div class='col text-center'>
+                <button class="text-center"><a class="nav-link text-uppercase" href="mailto:romanh99@gmail.com?subject=Heriberto we would like to hire you, let's talk." target='_blank'>MESSAGE ME</a></button>
+            </div>
+        </div>
+    </div>
+</section>
 
 {% endblock %}
