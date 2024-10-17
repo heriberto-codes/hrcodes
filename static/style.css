@@ -776,6 +776,29 @@ EXPERIENCE SECTION
     transition: transform .35s ease;
     transform: scale(2);
 }
+
+.rubix {
+    overflow: hidden;
+}
+
+.rubix::before {
+    background-image: url('https://hromancodes.s3.amazonaws.com/Logo-Beige.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    content: '';
+    position: absolute;
+    top: -25px;
+    right: 0px;
+    bottom: 0px;
+    left: 50px;
+    opacity: 0.1;
+    width: 50%;
+}
+
+.rubix:hover::before{
+    transition: transform .35s ease;
+    transform: scale(2);
+}
 /* ======================================
 TOOLING SECTION
 ========================================= */
