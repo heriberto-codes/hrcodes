@@ -39,7 +39,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://hromancodes.herokuapp.com/', 'hromancodes.herokuapp.com/']
+ALLOWED_HOSTS = ['https://hromancodes.herokuapp.com/', 'hromancodes.herokuapp.com/', '.elasticbeanstalk.com', 'http://hrcodes-env.eba-ipnn2wpz.us-east-1.elasticbeanstalk.com']
 
 # Application definition
 INSTALLED_APPS = [
