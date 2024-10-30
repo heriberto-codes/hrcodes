@@ -1,7 +1,10 @@
 asgiref==3.8.1
 awscli==1.35.16
+awsebcli==3.21.0
+blessed==1.20.0
 boto3==1.35.42
 botocore==1.35.50
+cement==2.10.14
 certifi==2024.8.30
 charset-normalizer==3.4.0
 colorama==0.4.6
@@ -15,8 +18,11 @@ django-heroku==0.3.1
 django-js-asset==2.2.0
 django-storages==1.14.4
 docutils==0.16
+gunicorn==23.0.0
 idna==3.10
 jmespath==1.0.1
+packaging==24.1
+pathspec==0.10.1
 pillow==11.0.0
 psycopg2==2.9.10
 pyasn1==0.6.1
@@ -26,10 +32,13 @@ PyYAML==6.0.2
 requests==2.32.3
 rsa==4.7.2
 s3transfer==0.10.3
+semantic-version==2.10.0
 setuptools==75.2.0
 six==1.16.0
 sqlparse==0.5.1
+termcolor==2.5.0
 typing_extensions==4.12.2
-urllib3==2.2.3
+urllib3==1.26.20
+wcwidth==0.2.13
 wheel==0.44.0
 whitenoise==6.7.0
