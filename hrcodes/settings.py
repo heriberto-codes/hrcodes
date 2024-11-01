@@ -37,6 +37,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = os.environ.get('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = ['https://hromancodes.herokuapp.com/', 'hromancodes.herokuapp.com/', '.elasticbeanstalk.com', 'http://hrcodes-env.eba-ipnn2wpz.us-east-1.elasticbeanstalk.com']
@@ -175,7 +176,7 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
 if DEBUG is True:
-    ALLOWED_HOSTS = ['127.0.0.1']
+    ALLOWED_HOSTS = ['127.0.0.1', 'http://127.0.0.1:8000', 'https://127.0.0.1:8000']
     
     STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -186,7 +187,6 @@ if DEBUG is True:
     SECURE_SSL_REDIRECT = False
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
-    SECURE_SSL_REDIRECT = False 
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     
     DATABASES = {
