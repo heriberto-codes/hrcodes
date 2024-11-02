@@ -37,10 +37,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.environ.get('SECRET_KEY')
-DEBUG = True
+DEBUG = os.environ.get('SECRET_KEY')
 
-ALLOWED_HOSTS = ['https://hromancodes.herokuapp.com/', 'hromancodes.herokuapp.com/', '.elasticbeanstalk.com', 'http://hrcodes-env.eba-ipnn2wpz.us-east-1.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['https://hromancodes.herokuapp.com/', 'hromancodes.herokuapp.com/', '.fly.dev']
+
+CSRF_TRUSTED_ORIGINS = ['https://*.fly.dev']
 
 # Application definition
 INSTALLED_APPS = [
