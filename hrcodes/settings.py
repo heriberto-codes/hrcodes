@@ -39,7 +39,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('SECRET_KEY')
 
-ALLOWED_HOSTS = ['https://hromancodes.herokuapp.com/', 'hromancodes.herokuapp.com/', '.fly.dev']
+ALLOWED_HOSTS = ['.fly.dev']
 
 CSRF_TRUSTED_ORIGINS = ['https://*.fly.dev']
 
@@ -98,17 +98,17 @@ WSGI_APPLICATION = 'hrcodes.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-DATABASES = {'default': {
-    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('NAME'),
-        'USER': os.environ.get('USER'),
-        'PASSWORD': os.environ.get('PASSWORD'),
-        'HOST': os.environ.get('HOST'),
-        'PORT': os.environ.get('PORT'),
-        'CONN_MAX_AGE': 500,
-}}
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+# DATABASES = {'default': {
+#     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.environ.get('NAME'),
+#         'USER': os.environ.get('USER'),
+#         'PASSWORD': os.environ.get('PASSWORD'),
+#         'HOST': os.environ.get('HOST'),
+#         'PORT': os.environ.get('PORT'),
+#         'CONN_MAX_AGE': 500,
+# }}
+# db_from_env = dj_database_url.config(conn_max_age=500)
+# DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -177,7 +177,7 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
 if DEBUG is True:
-    ALLOWED_HOSTS = ['127.0.0.1', 'http://127.0.0.1:8000', 'https://127.0.0.1:8000']
+    ALLOWED_HOSTS = ['127.0.0.1', 'http://127.0.0.1:8000', 'https://127.0.0.1:8000', '.fly.dev']
     
     STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
