@@ -15,7 +15,6 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 from storages.backends.s3boto3 import S3Boto3Storage
-import django_heroku
 import dj_database_url
 import psycopg2
 
@@ -37,7 +36,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('SECRET_KEY')
+DEBUG = True
 
 ALLOWED_HOSTS = ['.fly.dev']
 
@@ -50,8 +49,12 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    "whitenoise.runserver_nostatic",
     'django.contrib.staticfiles',
+    
+    # Middleware/static related
+    "whitenoise.runserver_nostatic",
+    
+    # Development tools
     'django_extensions',
     
     #3rd party apps
@@ -169,15 +172,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles/images')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-# HEROKU 
-django_heroku.settings(locals())
-
 # SSL 
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
 if DEBUG is True:
+    
     ALLOWED_HOSTS = ['127.0.0.1', 'http://127.0.0.1:8000', 'https://127.0.0.1:8000', '.fly.dev']
     
     STATIC_URL = '/static/'
