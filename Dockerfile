@@ -28,6 +28,9 @@ RUN set -ex && \
     rm -rf /root/.cache/
 COPY . /code
 
+# Add default DATABASE_URL for building purposes
+ENV DATABASE_URL "postgres://user:password@localhost/dbname"
+
 # ENV SECRET_KEY "jaPopy4oqXFucNCbNHK9IG6Km5k8dJltVLblrbCQuU9rogQtYO"
 ENV SECRET_KEY "non-secret-key-for-building-purposes"
 RUN python manage.py collectstatic --noinput
