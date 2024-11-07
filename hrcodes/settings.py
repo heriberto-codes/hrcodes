@@ -120,7 +120,8 @@ WSGI_APPLICATION = 'hrcodes.wsgi.application'
 
 DATABASES = {
     # read os.environ['DATABASE_URL']
-    'default': env.db()
+    # 'default': env.db()
+    'default': env('DATABASE_URL')
 }
 
 # Password validation
