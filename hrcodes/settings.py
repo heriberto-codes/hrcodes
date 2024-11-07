@@ -15,32 +15,37 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 from storages.backends.s3boto3 import S3Boto3Storage
+from django.core.management.utils import get_random_secret_key
 import dj_database_url
 import psycopg2
-
 import environ
 
-env = environ.Env()
-
-environ.Env.read_env()
-
-load_dotenv()  # take environment variables from .env.
+env = environ.Env(  # <-- Updated!
+    # set casting, default value
+    DEBUG=(bool, False),
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Take environment variables from .env file
+environ.Env.read_env(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+# SECRET_KEY = env('SECRET_KEY')
+
+# fly.io config for secret key
+SECRET_KEY = env.str('SECRET_KEY', default=get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['.fly.dev']
+ALLOWED_HOSTS = ['.fly.dev', 'https://hrcodes.fly.dev']
 
-CSRF_TRUSTED_ORIGINS = ['https://*.fly.dev']
+CSRF_TRUSTED_ORIGINS = ['https://*.fly.dev', 'https://hrcodes.fly.dev']
 
 # Application definition
 INSTALLED_APPS = [
@@ -70,8 +75,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -101,18 +106,22 @@ WSGI_APPLICATION = 'hrcodes.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-DATABASES = {'default': {
-    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('NAME'),
-        'USER': os.environ.get('USER'),
-        'PASSWORD': os.environ.get('PASSWORD'),
-        'HOST': os.environ.get('HOST'),
-        'PORT': os.environ.get('PORT'),
-        'CONN_MAX_AGE': 500,
-}}
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+# DATABASES = {'default': {
+#     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.environ.get('NAME'),
+#         'USER': os.environ.get('USER'),
+#         'PASSWORD': os.environ.get('PASSWORD'),
+#         'HOST': os.environ.get('HOST'),
+#         'PORT': os.environ.get('PORT'),
+#         'CONN_MAX_AGE': 500,
+# }}
+# db_from_env = dj_database_url.config(conn_max_age=500)
+# DATABASES['default'].update(db_from_env)
 
+DATABASES = {
+    # read os.environ['DATABASE_URL']
+    'default': env.db()
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -161,7 +170,14 @@ AWS_DEFAULT_ACL = 'public-read'
 AWS_LOCATION = 'static'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# Using this because of FLY.io 
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # <-- Updated!
+
+# This one was used to deploy when I had Heroku
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# This one is used to deploy on Fly.io 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
 
 # Media Files
@@ -179,7 +195,7 @@ CSRF_COOKIE_SECURE = True
 
 if DEBUG is True:
     
-    ALLOWED_HOSTS = ['127.0.0.1', 'http://127.0.0.1:8000', 'https://127.0.0.1:8000', '.fly.dev']
+    ALLOWED_HOSTS = ['127.0.0.1', 'http://127.0.0.1:8000', 'https://127.0.0.1:8000', 'localhost', '.fly.dev']
     
     STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

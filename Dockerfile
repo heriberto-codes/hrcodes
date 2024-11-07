@@ -15,6 +15,12 @@ RUN mkdir -p /code
 
 WORKDIR /code
 
+# install psycopg2 dependencies
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*  # <-- Updated!
+
 COPY requirements.txt /tmp/requirements.txt
 RUN set -ex && \
     pip install --upgrade pip && \
@@ -22,7 +28,8 @@ RUN set -ex && \
     rm -rf /root/.cache/
 COPY . /code
 
-ENV SECRET_KEY "jaPopy4oqXFucNCbNHK9IG6Km5k8dJltVLblrbCQuU9rogQtYO"
+# ENV SECRET_KEY "jaPopy4oqXFucNCbNHK9IG6Km5k8dJltVLblrbCQuU9rogQtYO"
+ENV SECRET_KEY "non-secret-key-for-building-purposes"
 RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
