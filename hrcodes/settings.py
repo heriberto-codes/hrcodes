@@ -20,7 +20,7 @@ import dj_database_url
 import psycopg2
 import environ
 
-env = environ.Env(  # <-- Updated!
+env = environ.Env(  #
     # set casting, default value
     DEBUG=(bool, False),
 )
