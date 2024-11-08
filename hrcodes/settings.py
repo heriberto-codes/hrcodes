@@ -44,9 +44,11 @@ SECRET_KEY = env.str('SECRET_KEY', default=get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-sentry_sdk.init(
-    dsn=env.str('SENTRY_DSN')
-)
+if env.str('SENTRY_DSN', default=''):
+    sentry_sdk.init(
+        dsn=env.str('SENTRY_DSN')
+    )
+
 
 ALLOWED_HOSTS = ['.fly.dev', 'https://hrcodes.fly.dev']
 

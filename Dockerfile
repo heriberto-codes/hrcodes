@@ -32,7 +32,6 @@ COPY . /code
 ENV DATABASE_URL "postgres://user:password@localhost/dbname"
 ENV SENTRY_DSN "non-secret-key-for-building-purposes"
 
-# ENV SECRET_KEY "jaPopy4oqXFucNCbNHK9IG6Km5k8dJltVLblrbCQuU9rogQtYO"
 ENV SECRET_KEY "non-secret-key-for-building-purposes"
 RUN python manage.py collectstatic --noinput
 
