@@ -50,7 +50,7 @@ sentry_sdk.init(
 )
 
 
-ALLOWED_HOSTS = ['https://hrcodes.fly.dev']
+ALLOWED_HOSTS = ['https://hrcodes.fly.dev', 'hrcodes.fly.dev']
 
 CSRF_TRUSTED_ORIGINS = ['https://*.fly.dev', 'https://hrcodes.fly.dev']
 
