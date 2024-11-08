@@ -44,6 +44,10 @@ SECRET_KEY = env.str('SECRET_KEY', default=get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
+sentry_sdk.init(
+    dsn=env.str('SENTRY_DSN')
+)
+
 ALLOWED_HOSTS = ['.fly.dev', 'https://hrcodes.fly.dev']
 
 CSRF_TRUSTED_ORIGINS = ['https://*.fly.dev', 'https://hrcodes.fly.dev']
@@ -193,9 +197,6 @@ SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
-sentry_sdk.init(
-    dsn=env('SENTRY_DSN')
-)
 
 if DEBUG is True:
     
