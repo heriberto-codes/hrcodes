@@ -20,11 +20,16 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
+# Sentry Test 
+def trigger_error(request):
+    division_by_zero = 1 / 0
+
 urlpatterns = [
     path('', include("apps.pages.urls")),
     path('admin/', admin.site.urls),
     path('archive/', include("apps.archive.urls")), 
-    path('blog/', include('apps.blog.urls')),   
+    path('blog/', include('apps.blog.urls')),
+    path('sentry-debug/', trigger_error),
 ] 
 
 urlpatterns += staticfiles_urlpatterns()

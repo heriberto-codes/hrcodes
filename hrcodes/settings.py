@@ -19,6 +19,7 @@ from django.core.management.utils import get_random_secret_key
 import dj_database_url
 import psycopg2
 import environ
+import sentry_sdk
 
 env = environ.Env(  #
     # set casting, default value
@@ -192,6 +193,10 @@ SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
+sentry_sdk.init(
+    dsn=env('DSN')
+)
+
 if DEBUG is True:
     
     ALLOWED_HOSTS = ['127.0.0.1', 'http://127.0.0.1:8000', 'https://127.0.0.1:8000', 'localhost', '.fly.dev']
@@ -213,5 +218,4 @@ if DEBUG is True:
             'NAME':os.path.join(BASE_DIR,'db.sqlite3'),
         }
     }
-    
-    
+ 
