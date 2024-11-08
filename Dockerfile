@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*  # <-- Updated!
 
 COPY requirements.txt /tmp/requirements.txt
-COPY .env /code/.env
+# COPY .env /code/.env
 
 RUN set -ex && \
     pip install --upgrade pip && \
