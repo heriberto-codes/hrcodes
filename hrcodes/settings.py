@@ -50,7 +50,7 @@ sentry_sdk.init(
 )
 
 
-ALLOWED_HOSTS = ['.fly.dev', 'https://hrcodes.fly.dev']
+ALLOWED_HOSTS = ['https://hrcodes.fly.dev']
 
 CSRF_TRUSTED_ORIGINS = ['https://*.fly.dev', 'https://hrcodes.fly.dev']
 
@@ -195,9 +195,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # SSL 
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 if DEBUG is True:
