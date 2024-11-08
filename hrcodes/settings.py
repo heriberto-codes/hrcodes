@@ -194,7 +194,7 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
 sentry_sdk.init(
-    dsn=env('DSN')
+    dsn=env('SENTRY_DSN')
 )
 
 if DEBUG is True:
