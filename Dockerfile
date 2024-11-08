@@ -22,6 +22,8 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*  # <-- Updated!
 
 COPY requirements.txt /tmp/requirements.txt
+COPY .env /code/.env
+
 RUN set -ex && \
     pip install --upgrade pip && \
     pip install -r /tmp/requirements.txt && \
@@ -30,9 +32,9 @@ COPY . /code
 
 # Add default DATABASE_URL for building purposes
 ENV DATABASE_URL "postgres://user:password@localhost/dbname"
-ENV SENTRY_DSN "non-secret-key-for-building-purposes"
-
+ENV SENTRY_DSN "https://example@sentry.io/4508264119730176"
 ENV SECRET_KEY "non-secret-key-for-building-purposes"
+
 RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
