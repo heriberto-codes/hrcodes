@@ -112,7 +112,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'hrcodes.wsgi.application'
 
 # Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+# https://docs.djangoproject.com/en/4.0/ref/settings/#databases    kk
 # DATABASES = {'default': {
 #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #         'NAME': os.environ.get('NAME'),
