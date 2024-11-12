@@ -23,7 +23,7 @@ jobs:
           echo "SENTRY_DSN=${{ secrets.AWS_STORAGE_BUCKET_NAME }}" >> $GITHUB_ENV
       - name: Run collectstatic
         run: |
-          source env/bin/activate
+          source venv/bin/activate
           python manage.py collectstatic --noinput
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
