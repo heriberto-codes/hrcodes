@@ -6,6 +6,32 @@ on:
     branches:
       - main
       
+# jobs:
+#   deploy:
+#     name: Deploy app
+#     runs-on: ubuntu-latest
+#     concurrency: deploy-group    # optional: ensure only one action runs at a time
+#     steps:
+#       - uses: actions/checkout@v4
+#       - name: Set Environment Variables
+#         run: |
+#           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
+#           echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
+#           echo "SENTRY_DSN=${{ secrets.SENTRY_DSN }}" >> $GITHUB_ENV
+#           echo "SENTRY_DSN=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
+#           echo "SENTRY_DSN=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
+#           echo "SENTRY_DSN=${{ secrets.AWS_STORAGE_BUCKET_NAME }}" >> $GITHUB_ENV
+#       - uses: superfly/flyctl-actions/setup-flyctl@master
+#       - run: flyctl deploy --remote-only
+#         env:
+#           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+#           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+#           SECRET_KEY: ${{ secrets.SECRET_KEY }}
+#           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           AWS_STORAGE_BUCKET_NAME: ${{ secrets.AWS_STORAGE_BUCKET_NAME }}
+
 jobs:
   deploy:
     name: Deploy app
@@ -18,14 +44,22 @@ jobs:
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
           echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
           echo "SENTRY_DSN=${{ secrets.SENTRY_DSN }}" >> $GITHUB_ENV
-          echo "SENTRY_DSN=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
-          echo "SENTRY_DSN=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
-          echo "SENTRY_DSN=${{ secrets.AWS_STORAGE_BUCKET_NAME }}" >> $GITHUB_ENV
+          echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
+          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
+          echo "AWS_STORAGE_BUCKET_NAME=${{ secrets.AWS_STORAGE_BUCKET_NAME }}" >> $GITHUB_ENV
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: Install Python Dependencies
+        run: |
+          python -m venv env
+          source env/bin/activate
+          pip install -r requirements.txt
       - name: Run collectstatic
         run: |
-          source venv/bin/activate
+          source env/bin/activate
           python manage.py collectstatic --noinput
-      - uses: superfly/flyctl-actions/setup-flyctl@master
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
       - run: flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
@@ -35,3 +69,4 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_STORAGE_BUCKET_NAME: ${{ secrets.AWS_STORAGE_BUCKET_NAME }}
+
