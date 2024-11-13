@@ -186,6 +186,10 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # This was used when I deployed to Heroku 
 # STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
 
+
+STATIC_URL = '/static/'
+
+
 # Media Files
 MEDIA_URL = '/images/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles/images')
