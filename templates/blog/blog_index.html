@@ -18,10 +18,7 @@
             {% for post in posts %}
                 {% if posts and post.status == 1 %}
                     <div class='row pb-5'>
-                        <div class='col-12 col-lg-6'>
-                            <a  href='{% url "blog_detail" post.pk post.slug %}'><img class='blogImage' src={{post.image.url}} /></a>
-                        </div>
-                        <div class='col-12 col-lg-6'>
+                        <div class='col-12 col-lg-12'>
                             <div class='row'>
                                 <div class='col blogPostMetaData pt-3 pb-3'>
                                     {% for category in post.categories.all %}
