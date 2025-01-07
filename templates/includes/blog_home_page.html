@@ -14,9 +14,6 @@
         {% for post in posts %}
             {% if posts and post.status == 1 %}
                 <div class='row pb-5'>
-                    {% comment %} <div class='col-12 col-lg-6'>
-                        <a  href='{% url "blog_detail" post.pk post.slug %}'><img class='blogImage' src={{post.image.url}} /></a>
-                    </div> {% endcomment %}
                     <div class='col-12 col-lg-12'>
                         <div class='row'>
                             <div class='col blogPostMetaData pt-3 pb-3'>
