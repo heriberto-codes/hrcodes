@@ -1,7 +1,7 @@
 ![Hroman.codes gif](./static/pages/images/HromanCodesDemo.gif)
 
 ## Live Demo
-[https://hromancodes.herokuapp.com/](https://hromancodes.herokuapp.com/)
+[https://hroman.codes](https://hromancodes.herokuapp.com/)
 
 ## Process
 ##### ```Agile Software Development```
