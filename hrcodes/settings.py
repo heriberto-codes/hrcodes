@@ -177,6 +177,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # Using this because of FLY.io 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+
 # This one was used to deploy when I had Heroku
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
