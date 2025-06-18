@@ -1,0 +1,40 @@
+<div class='test'>
+  <p id='demo' class='banner_two mb-0 pt-1 pe-0 pb-1 ps-0 text-center'>
+    <a href='#work'>
+      👉 Explore my latest project: cThink – a multisensory coding platform 👈
+    </a>
+  </p> 
+</div>
+
+<style>
+
+
+.banner_two {
+    background-color: var(--hrColorOrange); 
+    font-size: 16px;
+    color: var(--hrbgColor);
+}
+
+.banner_two a {
+  color: var(--hrbgColor) !important;
+}
+
+/*=========================================
+  Media Queries
+/* ======================================
+  Breakpoint	      Purpose
+  (default)	          Mobile-portrait
+  max-width: 480px	  Mobile-landscape (and larger)
+  max-width: 576px	  Mobile-landscape (and larger)
+  max-width: 768px	  Tablet-portrait (and larger)
+  max-width: 992px	  Tablet-landscape (and larger)
+  max-width: 1200px	  Laptops (and larger)
+  max-width: 1400px	  Laptops (and larger)
+========================================= */
+@media all and (max-width: 991px) {
+    .banner_two {
+      display: none;
+    }
+  }
+
+</style>
