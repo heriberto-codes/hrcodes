@@ -206,7 +206,7 @@ button:active {
 /* When hovering over the wrapper, the logo and text will "translate" up 40px */
 .logo_wrapper:hover img,
 .logo_wrapper:hover .logo_text {
-    transform: translateY(-50px);
+    transform: translateY(-42px);
 }
 
 .hDesktop {
