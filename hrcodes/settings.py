@@ -47,9 +47,9 @@ sentry_sdk.init(
 )
 
 
-ALLOWED_HOSTS = ['https://hrcodes.fly.dev', 'hrcodes.fly.dev', 'https://hroman.codes', 'http://hroman.codes', 'hroman.codes', 'www.hroman.codes' ]
+ALLOWED_HOSTS = ['https://hrcodes.fly.dev', 'hrcodes.fly.dev', 'https://heriberto.codes', 'http://heriberto.codes', 'heriberto.codes', 'www.heriberto.codes' ]
 
-CSRF_TRUSTED_ORIGINS = ['https://*.fly.dev', 'https://hrcodes.fly.dev', 'https://hroman.codes', 'http://hroman.codes', 'https://hroman.codes', 'https://www.hroman.codes',]
+CSRF_TRUSTED_ORIGINS = ['https://*.fly.dev', 'https://hrcodes.fly.dev', 'https://heriberto.codes', 'http://heriberto.codes', 'https://heriberto.codes', 'https://www.heriberto.codes',]
 
 # Application definition
 INSTALLED_APPS = [
