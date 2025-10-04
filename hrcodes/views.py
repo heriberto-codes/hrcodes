@@ -5,3 +5,4 @@ def four_zero_four_page_not_found_view(request, exception):
 
 def five_zero_five_page_not_found_view(request, exception):
     return render(request, '404.html', status=500)
+
