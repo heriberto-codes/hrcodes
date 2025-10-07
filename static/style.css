@@ -241,6 +241,16 @@ footer {
     font-size: 0.7rem;
 }
 
+.footerSocialLink {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    line-height: 1;
+    text-decoration: none;
+}
+
 .bi-youtube {
     color: #FF0301;
 }
