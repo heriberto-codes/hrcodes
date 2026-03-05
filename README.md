@@ -26,3 +26,5 @@
 ##### ```Animation```
 - animate.css
 
+
+[![Fly Deploy](https://github.com/heriberto-codes/hrcodes/actions/workflows/fly-deploy.yml/badge.svg)](https://github.com/heriberto-codes/hrcodes/actions/workflows/fly-deploy.yml)
