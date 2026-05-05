@@ -923,6 +923,10 @@ WORK SECTION
     color: var(--hrColorWhite) !important;
 }
 
+.workSection .archiveLink {
+    text-decoration: underline;
+}
+
 /* FIX THE CARD A HOVER TO BADGE JUST ON THE CARDS NOT GLOBALLY.  */
 
 
