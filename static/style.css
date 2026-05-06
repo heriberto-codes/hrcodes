@@ -1012,37 +1012,6 @@ WORK SECTION
     border-color: transparent transparent transparent #F8F8F8;
 }
 
-/* EFFECTS
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-
-.timeline ul li::after {
-    transition: background .5s ease-in-out;
-}
-
-.timeline ul li.in-view::after {
-    background: var(--hrColorWhite);
-}
-
-.timeline ul li div {
-    visibility: hidden;
-    opacity: 0;
-    transition: all .5s ease-in-out;
-}
-
-.timeline ul li:nth-child(odd) div {
-    transform: translate3d(200px, 0, 0);
-}
-
-.timeline ul li:nth-child(even) div {
-    transform: translate3d(-200px, 0, 0);
-}
-
-.timeline ul li.in-view div {
-    transform: none;
-    visibility: visible;
-    opacity: 1;
-}
-
 .workSection {
     max-width: var(--hrSectionMaxWidth);
     margin: var(--hrSectionMargin);
