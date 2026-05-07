@@ -1,7 +1,10 @@
+[![Fly Deploy](https://github.com/heriberto-codes/hrcodes/actions/workflows/fly-deploy.yml/badge.svg)](https://github.com/heriberto-codes/hrcodes/actions/workflows/fly-deploy.yml)
+[![wakatime](https://wakatime.com/badge/user/3a78d911-a08a-40c2-bf2c-782c4d20eb23/project/1682f28b-b9f7-452f-b0b2-e931f33d3524.svg)](https://wakatime.com/badge/user/3a78d911-a08a-40c2-bf2c-782c4d20eb23/project/1682f28b-b9f7-452f-b0b2-e931f33d3524)
+
 ![Hroman.codes gif](./static/pages/images/HromanCodesDemo.gif)
 
 ## Live Demo
-[https://hroman.codes](https://hromancodes.herokuapp.com/)
+[https://heriberto.codes](https://heriberto.codes)
 
 ## Process
 ##### ```Agile Software Development```
@@ -25,6 +28,3 @@
 - Heroku 
 ##### ```Animation```
 - animate.css
-
-
-[![Fly Deploy](https://github.com/heriberto-codes/hrcodes/actions/workflows/fly-deploy.yml/badge.svg)](https://github.com/heriberto-codes/hrcodes/actions/workflows/fly-deploy.yml)
