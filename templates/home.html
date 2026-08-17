@@ -4,8 +4,11 @@
 {% block content_wrapper %}
 
   {% block content %}
-    {% include 'includes/banner_one.html' %}
-    {% include 'includes/banner_two.html' %}
+    {% comment %}
+      Top banners are temporarily disabled for desktop and mobile views.
+      {% include 'includes/banner_one.html' %}
+      {% include 'includes/banner_two.html' %}
+    {% endcomment %}
     {% include 'includes/navbar.html' %}
     {% include 'includes/hero.html' %}
     {% include 'includes/about.html' %}
@@ -18,4 +21,3 @@
   {% endblock %}
 
 {% endblock %}
- 
