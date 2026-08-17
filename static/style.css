@@ -154,6 +154,10 @@ button:active {
     background: #F9E9D5;
 }
 
+.resumeButton {
+    border-radius: 8px;
+}
+
 @keyframes wiggle {
 
     0%,
@@ -391,6 +395,52 @@ strong {
     margin: 20px 0px 0px;
     -webkit-font-smoothing: var(--hrFontSmoothing);
     font-size: 1rem;
+}
+
+.heroActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.heroCta {
+    align-items: center;
+    border: 2px solid var(--hrColorOrange);
+    border-radius: 8px;
+    display: inline-flex;
+    font-size: 1.1rem;
+    font-weight: 600;
+    justify-content: center;
+    letter-spacing: 0.05em;
+    min-height: 58px;
+    padding: 0 2rem;
+    text-align: center;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.heroCtaPrimary {
+    background-color: var(--hrColorOrange);
+    color: var(--hrbgColor) !important;
+}
+
+.heroCtaSecondary {
+    background-color: transparent;
+    color: var(--hrColorBeige) !important;
+}
+
+.heroCta:hover {
+    color: var(--hrbgColor) !important;
+    transform: translateY(-2px);
+}
+
+.heroCtaPrimary:hover {
+    background-color: var(--hrColorBeige);
+    border-color: var(--hrColorBeige);
+}
+
+.heroCtaSecondary:hover {
+    background-color: var(--hrColorOrange);
 }
 
 .heroWeb::after {
@@ -1098,6 +1148,10 @@ CONTACT SECTION
     -webkit-font-smoothing: var(--hrFontSmoothing);
 }
 
+.contactSection button {
+    border-radius: 8px;
+}
+
 .contactHeading {
     color: var(--hrColorBeige);
     font-size: 2rem;
@@ -1292,6 +1346,18 @@ CONTACT SECTION
 
     .heroBlurb {
         font-size: 0.8rem;
+    }
+
+    .heroActions {
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .heroCta {
+        font-size: 0.9rem;
+        min-height: 52px;
+        padding: 0 1rem;
+        width: 100%;
     }
 
     .heroWeb::after {
