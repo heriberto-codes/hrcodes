@@ -639,6 +639,83 @@ ABOUT SECTION
     animation-delay: calc(.1s * var(--i));
 }
 
+.skillsetIntro {
+    position: relative;
+    left: 50%;
+    width: 100vw;
+    margin-top: 4.5rem;
+    transform: translateX(-50%);
+}
+
+.skillsetDivider {
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid var(--hrColorOrange);
+}
+
+.skillsetEyebrow {
+    padding: 0.7rem 1.1rem;
+    border: 1px solid var(--hrColorOrange);
+    background-color: var(--hrbgColor);
+    color: var(--hrColorBeige);
+    font-size: 0.9rem;
+    letter-spacing: var(--letterSpacing);
+    transform: translateY(-50%);
+}
+
+.skillsetIntroContent {
+    max-width: var(--hrSectionMaxWidth);
+    margin: 0 auto;
+    padding: 1.2rem 0.75rem 0;
+    text-align: center;
+}
+
+.skillsetHeading {
+    margin-bottom: 0;
+    color: var(--hrColorBeige);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+    letter-spacing: 0.2em;
+}
+
+.skillsetHeadingAccent {
+    width: 4rem;
+    margin: 1rem auto 1.6rem;
+    border: 0;
+    border-top: 4px solid var(--hrColorOrange);
+    opacity: 1;
+}
+
+.skillsetIntroContent p {
+    max-width: 900px;
+    margin: 0 auto;
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.skillsetIntroContent strong {
+    color: var(--hrColorOrange);
+}
+
+.skillsetModelRow {
+    margin-top: 2.5rem;
+}
+
+.skillsetModelRow img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.workVideoDivider {
+    position: relative;
+    left: 50%;
+    width: 100vw;
+    margin-top: 4rem;
+    margin-bottom: 1.5rem;
+    transform: translateX(-50%);
+}
+
 @keyframes forHire {
 
     0%,
@@ -1234,6 +1311,10 @@ CONTACT SECTION
         margin-bottom: 50px;
     }
 
+    .skillsetIntro {
+        margin-top: 3.5rem;
+    }
+
     nav {
         border-bottom: none !important;
     }
@@ -1257,6 +1338,19 @@ CONTACT SECTION
 
     .heroP {
         font-size: 1.3rem;
+    }
+
+    .skillsetIntroContent {
+        padding-inline: 1.5rem;
+    }
+
+    .skillsetHeading {
+        font-size: 2rem;
+        letter-spacing: 0.14em;
+    }
+
+    .skillsetIntroContent p {
+        line-height: 1.65;
     }
 
     .heroH2 {
