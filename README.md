@@ -28,3 +28,23 @@
 - Heroku 
 ##### ```Animation```
 - animate.css
+
+## Turtle AI Workflow
+
+This repository includes [Turtle AI](https://github.com/heriberto-codes/turtle_ai) v1.0.0 as a repo-scoped Codex workflow under `.agents/skills/`.
+
+After opening the repository in Codex, Turtle commands such as `/turtle-plan`, `/turtle-execute`, and `/turtle-verify` are discovered automatically. The required implementation loop is:
+
+```text
+EXECUTE -> VERIFY -> ENGINEER CHECKPOINT -> TEST -> DEBUG if needed -> PLAN STEP UPDATE
+```
+
+Foundation context for this project lives in:
+
+- `agents.md`
+- `architecture.md`
+- `repo_map.md`
+
+Workflow and state rules live in `docs/system/`.
+
+Installed from Turtle AI commit `dc5abf9`.
