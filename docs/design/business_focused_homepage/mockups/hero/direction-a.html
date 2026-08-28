@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=typography-feedback-6">
+  <link rel="stylesheet" href="styles.css?v=period-burst-15">
 </head>
 <body>
   <header class="site-header">
@@ -19,9 +19,8 @@
     <nav class="desktop-nav" aria-label="Primary navigation">
       <a href="#services">Services</a>
       <a href="#proof">Case Studies</a>
-      <a href="#process">Process</a>
+      <a href="#process">Development Process</a>
       <a href="#about">About</a>
-      <a href="#contact">Contact</a>
       <a class="nav-cta" href="#project-fit">Start a project</a>
     </nav>
 
@@ -30,9 +29,8 @@
       <nav aria-label="Mobile navigation">
         <a href="#services">Services</a>
         <a href="#proof">Case Studies</a>
-        <a href="#process">Process</a>
+        <a href="#process">Development Process</a>
         <a href="#about">About</a>
-        <a href="#contact">Contact</a>
         <a href="#project-fit">Start a project</a>
       </nav>
     </details>
@@ -41,13 +39,13 @@
   <main id="top">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <h1 id="hero-title">From business problem to working <em>software.</em></h1>
+        <h1 id="hero-title">From business problem to working <em>software<span class="hero-period"><span class="period-glyph">.</span><span class="period-pixels" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></span></em></h1>
         <p class="hero-intro">
           Principal Software Engineer and founder of HROMAN CODES, LLC. I help small businesses, startups, and growing organizations turn ideas and inefficient workflows into reliable digital products, practical automation, and scalable software.
         </p>
 
         <div class="hero-actions" id="project-fit">
-          <a class="button button-primary" href="#contact">
+          <a class="button button-primary" href="https://calendly.com/heriberto_codes/coffee_chat" target="_blank" rel="noopener noreferrer">
             Book A Call
             <svg class="button-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
               <path d="M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -58,7 +56,7 @@
       </div>
 
       <aside class="founder-proof" id="about" aria-label="About the founder and delivery model">
-        <div class="portrait-frame">
+        <div class="portrait-frame" data-distortion-frame>
           <div class="portrait-grid" aria-hidden="true"></div>
           <img src="../../../../../static/pages/images/aboutMeImage.png" alt="Heriberto Roman, founder of Hroman Codes">
           <span class="availability"><i></i> Accepting select projects</span>
@@ -70,14 +68,14 @@
           <p>Founder + Principal Software Engineer</p>
           <div class="proof-line">
             <span>One accountable partner</span>
-            <span>Strategy through delivery</span>
+            <span>Digital products + practical automation</span>
           </div>
         </div>
       </aside>
     </section>
 
     <section class="capability-rail" id="services" aria-label="Working approach">
-      <p>How the work moves</p>
+      <p>Development Process</p>
       <ol>
         <li><span>01</span>Idea</li>
         <li><span>02</span>Prototype</li>
@@ -93,5 +91,6 @@
       <span id="contact"></span>
     </div>
   </main>
+  <script src="portrait-distortion.js" defer></script>
 </body>
 </html>
