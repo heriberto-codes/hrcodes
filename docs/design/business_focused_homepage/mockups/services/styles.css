@@ -1,0 +1,160 @@
+:root {
+  --navy: #192a51;
+  --navy-deep: #101d3b;
+  --cream: #f9e9d5;
+  --peach: #f29576;
+  --grey: #aeb7ca;
+  --line: rgba(249, 233, 213, 0.24);
+  --focus: #ffd26a;
+  --mono: "IBM Plex Mono", monospace;
+  --max: 1320px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--navy);
+  color: var(--cream);
+  font-family: var(--mono);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+
+.context-bar {
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: var(--max);
+  min-height: 94px;
+  padding: 0 32px;
+}
+
+.context-bar img { display: block; height: auto; width: min(300px, 46vw); }
+.context-bar p { color: var(--grey); font-size: 0.64rem; margin: 0; }
+.context-bar a { text-decoration: none; }
+
+.services {
+  margin: 0 auto;
+  padding: clamp(82px, 9vw, 132px) 32px clamp(88px, 10vw, 144px);
+}
+
+.section-number {
+  align-items: center;
+  color: #b7583e;
+  display: flex;
+  font-size: 0.68rem;
+  font-weight: 700;
+  gap: 16px;
+  letter-spacing: 0.14em;
+  margin: 0 0 20px;
+  text-transform: uppercase;
+}
+
+.section-number::after { background: #b7583e; content: ""; height: 1px; width: 74px; }
+
+h1 {
+  color: var(--navy-deep);
+  font-size: clamp(2.75rem, 5vw, 5rem);
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+  margin: 0;
+  max-width: 830px;
+}
+
+h1 em { color: var(--peach); font-style: normal; }
+
+.services-period {
+  animation: period-glow 2.4s ease-in-out infinite;
+  display: inline-block;
+  position: relative;
+}
+
+.period-glyph { display: inline-block; transition: opacity 70ms ease; }
+
+.period-pixels {
+  height: 1px;
+  left: 50%;
+  pointer-events: none;
+  position: absolute;
+  top: 58%;
+  width: 1px;
+}
+
+.period-pixels i {
+  background: var(--peach);
+  box-shadow: 0 0 5px rgba(242, 149, 118, 0.8);
+  height: 4px;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  transform: translate(-50%, -50%) scale(0.35);
+  width: 4px;
+}
+
+.period-pixels i:nth-child(even) { background: var(--navy-deep); }
+.period-pixels i:nth-child(3n) { height: 3px; width: 3px; }
+.period-pixels i:nth-child(1) { --burst-x: -20px; --burst-y: -18px; --burst-delay: 0ms; }
+.period-pixels i:nth-child(2) { --burst-x: 0px; --burst-y: -27px; --burst-delay: 18ms; }
+.period-pixels i:nth-child(3) { --burst-x: 20px; --burst-y: -18px; --burst-delay: 8ms; }
+.period-pixels i:nth-child(4) { --burst-x: 28px; --burst-y: 1px; --burst-delay: 28ms; }
+.period-pixels i:nth-child(5) { --burst-x: 19px; --burst-y: 21px; --burst-delay: 12ms; }
+.period-pixels i:nth-child(6) { --burst-x: 0px; --burst-y: 29px; --burst-delay: 34ms; }
+.period-pixels i:nth-child(7) { --burst-x: -20px; --burst-y: 20px; --burst-delay: 20ms; }
+.period-pixels i:nth-child(8) { --burst-x: -29px; --burst-y: 1px; --burst-delay: 38ms; }
+
+@media (hover: hover) {
+  .services-period:hover { animation-play-state: paused; }
+  .services-period:hover .period-glyph { opacity: 0; }
+  .services-period:hover .period-pixels i {
+    animation: pixel-burst 560ms cubic-bezier(0.16, 0.84, 0.35, 1) var(--burst-delay) forwards;
+  }
+}
+
+@keyframes period-glow {
+  0%, 100% {
+    text-shadow: 0 0 2px rgba(249, 233, 213, 0.35), 0 0 5px rgba(242, 149, 118, 0.35);
+  }
+  50% {
+    text-shadow: 0 0 5px rgba(249, 233, 213, 0.9), 0 0 13px rgba(242, 149, 118, 0.95), 0 0 22px rgba(242, 149, 118, 0.55);
+  }
+}
+
+@keyframes pixel-burst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+  16% { opacity: 1; }
+  68% { opacity: 0.95; }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate(var(--burst-x), var(--burst-y)) rotate(90deg) scale(0.7);
+  }
+}
+
+a:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
+
+@media (max-width: 700px) {
+  .context-bar { align-items: flex-start; flex-direction: column; gap: 10px; justify-content: center; min-height: 92px; padding: 15px 18px; }
+  .context-bar img { width: min(260px, 72vw); }
+  .services { padding: 64px 18px 80px; }
+  h1 { font-size: clamp(2.55rem, 12vw, 3.65rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+  .services-period {
+    animation: none;
+    text-shadow: 0 0 5px rgba(249, 233, 213, 0.65), 0 0 9px rgba(242, 149, 118, 0.55);
+  }
+  .period-glyph { opacity: 1 !important; }
+  .period-pixels { display: none; }
+}

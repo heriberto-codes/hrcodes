@@ -1,0 +1,48 @@
+:root {
+  --navy: #192a51;
+  --navy-deep: #101d3b;
+  --cream: #f9e9d5;
+  --paper: #fff7ed;
+  --peach: #f29576;
+  --peach-ink: #b7583e;
+  --grey: #aeb7ca;
+  --ink-muted: #58647c;
+  --line-light: rgba(249, 233, 213, 0.24);
+  --line-dark: rgba(16, 29, 59, 0.22);
+  --focus: #ffd26a;
+  --mono: "IBM Plex Mono", monospace;
+  --max: 1320px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--mono); margin: 0; -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+img { max-width: 100%; }
+.context-bar { align-items: center; border-bottom: 1px solid var(--line-light); display: flex; justify-content: space-between; margin: 0 auto; max-width: var(--max); min-height: 94px; padding: 0 32px; }
+.context-bar img { display: block; height: auto; width: min(300px, 46vw); }
+.context-bar p { color: var(--grey); font-size: 0.64rem; margin: 0; }
+.context-bar a { text-decoration: none; }
+.case-studies { margin: 0 auto; max-width: var(--max); padding: clamp(82px, 9vw, 132px) 32px clamp(88px, 10vw, 144px); }
+.section-number { align-items: center; display: flex; font-size: 0.68rem; font-weight: 700; gap: 16px; letter-spacing: 0.14em; margin: 0 0 20px; text-transform: uppercase; }
+.section-number::after { content: ""; height: 1px; width: 74px; }
+.section-heading { font-size: clamp(2.75rem, 5vw, 5rem); letter-spacing: -0.05em; line-height: 0.98; margin: 0; max-width: 940px; }
+.section-heading em { color: var(--peach); font-style: normal; }
+.section-intro { font-size: 0.9rem; line-height: 1.75; margin: 28px 0 0; max-width: 760px; }
+.case-kicker { color: var(--peach-ink); font-size: 0.61rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+.case-link { align-items: center; display: inline-flex; font-size: 0.7rem; font-weight: 700; gap: 14px; text-decoration: none; }
+.case-link span { color: var(--peach); font-size: 1rem; transition: transform 160ms ease; }
+.case-link:hover span { transform: translate(3px, -3px); }
+a:focus-visible, summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
+
+@media (max-width: 700px) {
+  .context-bar { align-items: flex-start; flex-direction: column; gap: 10px; justify-content: center; min-height: 92px; padding: 15px 18px; }
+  .context-bar img { width: min(260px, 72vw); }
+  .case-studies { padding: 64px 18px 80px; }
+  .section-heading { font-size: clamp(2.55rem, 12vw, 3.65rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+}
