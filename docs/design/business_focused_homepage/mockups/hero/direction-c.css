@@ -1,0 +1,129 @@
+.mosaic-frame {
+  background: #09142d;
+  isolation: isolate;
+  padding: 7px;
+}
+
+.mosaic-frame::before {
+  background: radial-gradient(circle at 50% 48%, rgba(249, 233, 213, 0.14), transparent 54%);
+  content: "";
+  inset: 0;
+  opacity: 1;
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.mosaic-frame::after {
+  background: linear-gradient(to top, rgba(7, 16, 38, 0.98), rgba(7, 16, 38, 0.08) 45%, transparent 66%);
+  inset: 7px;
+  z-index: 4;
+}
+
+.mosaic-frame > .mosaic-source {
+  animation: none;
+  bottom: 7px;
+  filter: grayscale(1) contrast(1.35) brightness(0.72);
+  height: calc(100% - 14px);
+  opacity: 0.32;
+  transform: translateX(-50%) scale(1.01);
+  width: calc(100% - 14px);
+}
+
+.mosaic-grid {
+  display: grid;
+  gap: 7px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  inset: 7px;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+}
+
+.mosaic-grid span {
+  animation: mosaic-float 7.2s ease-in-out infinite;
+  background-color: rgba(25, 42, 81, 0.2);
+  background-image: url("assets/heriberto-working.jpg");
+  background-repeat: no-repeat;
+  background-size: 300% 300%;
+  border: 1px solid rgba(249, 233, 213, 0.1);
+  box-shadow: 0 8px 18px rgba(2, 8, 23, 0.28);
+  filter: contrast(1.11) saturate(0.88);
+  transform: translate(0, 0) scale(1);
+}
+
+.mosaic-grid span:nth-child(1) { --tile-x: -3px; --tile-y: -4px; animation-delay: -1.3s; background-position: 0 0; }
+.mosaic-grid span:nth-child(2) { --tile-x: 2px; --tile-y: 5px; animation-delay: -4.8s; background-position: 50% 0; }
+.mosaic-grid span:nth-child(3) { --tile-x: 4px; --tile-y: -2px; animation-delay: -2.2s; background-position: 100% 0; }
+.mosaic-grid span:nth-child(4) { --tile-x: 5px; --tile-y: 2px; animation-delay: -5.6s; background-position: 0 50%; }
+.mosaic-grid span:nth-child(5) { --tile-x: -2px; --tile-y: -5px; animation-delay: -0.6s; background-position: 50% 50%; }
+.mosaic-grid span:nth-child(6) { --tile-x: -5px; --tile-y: 3px; animation-delay: -3.4s; background-position: 100% 50%; }
+.mosaic-grid span:nth-child(7) { --tile-x: 3px; --tile-y: 5px; animation-delay: -4.1s; background-position: 0 100%; }
+.mosaic-grid span:nth-child(8) { --tile-x: -4px; --tile-y: -3px; animation-delay: -1.8s; background-position: 50% 100%; }
+.mosaic-grid span:nth-child(9) { --tile-x: 4px; --tile-y: 3px; animation-delay: -6.2s; background-position: 100% 100%; }
+
+.mosaic-grid span:nth-child(2),
+.mosaic-grid span:nth-child(4),
+.mosaic-grid span:nth-child(8) {
+  background-color: rgba(242, 149, 118, 0.72);
+  background-blend-mode: multiply;
+  filter: grayscale(1) contrast(1.38) brightness(1.08);
+}
+
+.mosaic-grid span:nth-child(3),
+.mosaic-grid span:nth-child(7) {
+  background-color: rgba(25, 42, 81, 0.72);
+  background-blend-mode: color;
+  filter: contrast(1.24) saturate(1.45);
+}
+
+.mosaic-grid span:nth-child(5) {
+  border-color: rgba(242, 149, 118, 0.68);
+  box-shadow: 0 0 0 2px rgba(242, 149, 118, 0.18), 0 12px 26px rgba(2, 8, 23, 0.45);
+  filter: contrast(1.18) saturate(1.2);
+}
+
+.mosaic-readout {
+  align-items: center;
+  background: rgba(9, 20, 45, 0.76);
+  border: 1px solid rgba(249, 233, 213, 0.24);
+  color: var(--cream);
+  display: flex;
+  font-size: 0.51rem;
+  gap: 12px;
+  letter-spacing: 0.11em;
+  padding: 8px 10px;
+  position: absolute;
+  right: 16px;
+  text-transform: uppercase;
+  top: 16px;
+  z-index: 6;
+}
+
+.mosaic-readout b { color: var(--peach); }
+.mosaic-readout i { color: var(--grey); font-style: normal; }
+
+@keyframes mosaic-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(var(--tile-x), var(--tile-y)) scale(1.035); }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mosaic-grid { transition: gap 260ms ease, inset 260ms ease; }
+  .mosaic-frame:hover .mosaic-grid { gap: 12px; inset: 11px; }
+  .mosaic-frame:hover .mosaic-grid span { animation-duration: 3.6s; }
+}
+
+@media (max-width: 480px) {
+  .mosaic-grid { gap: 5px; }
+  .mosaic-readout { right: 12px; top: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mosaic-grid,
+  .mosaic-grid span { animation: none; transition: none; }
+  .mosaic-frame:hover .mosaic-grid { gap: 7px; inset: 7px; }
+  .mosaic-grid span { transform: none; }
+}

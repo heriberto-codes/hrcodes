@@ -1,7 +1,8 @@
 # Business-Focused Homepage Design Audit
 
 - Feature slug: `business_focused_homepage`
-- Audit date: 2026-08-27
+- Initial audit date: 2026-08-27
+- Last updated: 2026-09-07
 - Live URL: `https://heriberto.codes/`
 - Status: ready for `turtle-mockup` once the ideal-client and offer assumptions are confirmed or clearly marked as provisional
 
@@ -25,6 +26,7 @@ The current hero supports this audience inference. The exact ideal-client profil
 - `templates/includes/navbar.html`, `hero.html`, `about.html`, `experience.html`, `tools.html`, `work.html`, `blog_home_page.html`, `contact.html`, and `footer.html`.
 - `static/style.css`: brand tokens, responsive rules, motion, navigation, card, CTA, and contact styling.
 - `apps/pages/views.py` and existing page tests: homepage data boundary and blog-post context.
+- Current selected homepage mockups for Hero, Services, Case Studies, Development Process, About, Start a Project, and Footer, plus their section numbering and navigation order.
 - Authored assets under `static/pages/images/` and `static/images/`.
 - `agents.md`, `architecture.md`, `repo_map.md`, and `docs/system/design-workflow.md`.
 
@@ -155,6 +157,14 @@ The live page was visually inspected at desktop and phone sizes. The linked serv
 **Likely impact:** It is difficult to determine whether visitors understand the offer, where qualified prospects abandon the journey, or whether the redesign improves inquiry quality.
 
 **Recommended design response:** Define the meaningful conversion states during design—such as service evaluation, inquiry start, qualified submission, and scheduled call—so the future experience can be evaluated. This audit does not assume that repository absence proves no external measurement exists.
+
+## Incremental finding: blog placement in the revised journey
+
+**Observed evidence:** The production homepage already renders the two newest posts between Work and Contact, and `HomePageView` supplies that bounded collection. The selected business-focused mockups now establish a numbered journey of Services → Case Studies → Development Process → About → Start a Project, but the blog is absent from that sequence. The existing audit identifies long-form content as optional authority evidence after the core buyer journey is established.
+
+**Likely impact:** Restoring the production blog in its old form or placing it before Services or Case Studies would compete with the offer and primary proof. Omitting it entirely would discard useful evidence of current thinking and maintained expertise. Placing it immediately before Start a Project would also introduce several lower-intent exits at the point of strongest conversion intent.
+
+**Recommended design response:** Add a compact `Insights` section after Development Process and before About. This makes the posts supporting evidence of how Heriberto thinks and works, then preserves the stronger closing sequence of founder trust → qualified inquiry → footer. Show no more than two or three recent or intentionally featured posts, keep metadata light, use a single `View all insights` route, and avoid likes or category-heavy controls on the homepage. Keep `Insights` available from the footer route board; add it to primary navigation only if the final mobile menu remains concise and usable.
 
 ## Existing components, tokens, and assets to reuse
 

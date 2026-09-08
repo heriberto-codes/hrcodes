@@ -3,12 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Editable hero-section design mockup for Hroman Codes.">
-  <title>Hroman Codes Hero — Version A</title>
+  <meta name="description" content="Editable kinetic-mosaic hero design mockup for Hroman Codes.">
+  <title>Hroman Codes Hero — Direction C</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=period-burst-15">
+  <link rel="stylesheet" href="styles.css?v=hero-c-5">
+  <link rel="stylesheet" href="direction-c.css?v=kinetic-mosaic-1">
 </head>
 <body>
   <header class="site-header">
@@ -39,7 +40,7 @@
   <main id="top">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <h1 id="hero-title">From business problem to working <em>software<span class="hero-period"><span class="period-glyph">.</span><span class="period-pixels" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></span></em></h1>
+        <h1 id="hero-title">From business problem to working <em><span class="pixel-word" data-text="software"><span class="pixel-word-text">software</span><canvas class="pixel-word-canvas" aria-hidden="true"></canvas></span><span class="hero-period"><span class="period-glyph">.</span><span class="period-pixels" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></span></em></h1>
         <p class="hero-intro">
           Principal Software Engineer and founder of HROMAN CODES, LLC. I help small businesses, startups, and growing organizations turn ideas and inefficient workflows into reliable digital products, practical automation, and scalable software.
         </p>
@@ -51,14 +52,15 @@
               <path d="M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </a>
-          <a class="button button-secondary" href="#proof">Review case studies</a>
+          <a class="button button-secondary" href="#services">Review Services</a>
         </div>
       </div>
 
       <aside class="founder-proof" id="about" aria-label="About the founder and delivery model">
-        <div class="portrait-frame" data-distortion-frame>
-          <div class="portrait-grid" aria-hidden="true"></div>
-          <img src="../../../../../static/pages/images/aboutMeImage.png" alt="Heriberto Roman, founder of Hroman Codes">
+        <div class="portrait-frame mosaic-frame">
+          <img class="mosaic-source" src="assets/heriberto-working.jpg" alt="Heriberto Roman working at a laptop and external monitor">
+          <div class="mosaic-grid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <span class="mosaic-readout" aria-hidden="true"><b>WORKING_VIEW</b><i>09 TILES</i></span>
           <span class="availability"><i></i> Accepting select projects</span>
         </div>
 
@@ -74,23 +76,11 @@
       </aside>
     </section>
 
-    <section class="capability-rail" id="services" aria-label="Working approach">
-      <p>Development Process</p>
-      <ol>
-        <li><span>01</span>Idea</li>
-        <li><span>02</span>Prototype</li>
-        <li><span>03</span>MVP</li>
-        <li><span>04</span>Product</li>
-        <li><span>05</span>Iterate</li>
-      </ol>
-    </section>
-
     <div class="future-section-anchors" aria-hidden="true">
-      <span id="proof"></span>
-      <span id="process"></span>
-      <span id="contact"></span>
+      <span id="services"></span><span id="proof"></span><span id="process"></span><span id="contact"></span>
     </div>
   </main>
-  <script src="portrait-distortion.js" defer></script>
+  <script src="mobile-nav.js?v=graceful-menu-1"></script>
+  <script src="headline-pixels.js?v=software-particles-4"></script>
 </body>
 </html>
