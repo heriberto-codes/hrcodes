@@ -3,7 +3,10 @@
 .cases-b-rail { align-self: start; position: sticky; top: 32px; }
 .cases-b .section-number { color: var(--peach); }
 .cases-b .section-number::after { background: var(--peach); }
-.cases-b .section-intro { color: var(--grey); }
+.cases-b .section-intro {
+  color: var(--grey);
+  font-size: clamp(0.94rem, 1.3vw, 1.06rem);
+}
 .case-period { animation: case-period-glow 2.4s ease-in-out infinite; display: inline-block; position: relative; }
 .period-glyph { display: inline-block; transition: opacity 70ms ease; }
 .period-pixels { height: 1px; left: 50%; pointer-events: none; position: absolute; top: 58%; width: 1px; }

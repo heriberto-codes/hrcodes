@@ -1,0 +1,103 @@
+:root {
+  --deep: #101d3b;
+  --navy: #192a51;
+  --navy-soft: #223557;
+  --cream: #f9e9d5;
+  --peach: #f29576;
+  --peach-deep: #a84f39;
+  --grey: #aeb7ca;
+  --ink: #374662;
+  --focus: #ffd26a;
+  --mono: "IBM Plex Mono", monospace;
+  --max: 1420px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: var(--mono); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+img { max-width: 100%; }
+h1, h2, h3, p { margin-top: 0; }
+p, li { line-height: 1.75; }
+
+.skip-link {
+  background: var(--focus);
+  color: var(--deep);
+  left: 18px;
+  padding: 14px 18px;
+  position: fixed;
+  top: -120px;
+  z-index: 100;
+}
+.skip-link:focus { top: 14px; }
+
+.review-bar {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: var(--max);
+  min-height: 90px;
+  padding: 18px clamp(20px, 4vw, 58px);
+}
+.review-bar img { display: block; width: min(292px, 52vw); }
+.review-bar p { font-size: 0.61rem; letter-spacing: 0.04em; margin: 0; }
+.review-bar a { text-decoration: none; }
+
+.back-link {
+  align-items: center;
+  display: inline-flex;
+  font-size: 0.68rem;
+  font-weight: 700;
+  gap: 11px;
+  text-decoration: none;
+}
+.back-link span { color: var(--peach); font-size: 1rem; transition: transform 160ms ease; }
+
+.eyebrow {
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.topic-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.topic-list li {
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  padding: 7px 10px;
+}
+
+.article-body h2 { scroll-margin-top: 28px; }
+.article-body ul,
+.article-body ol { padding-left: 1.35rem; }
+.article-body li + li { margin-top: 7px; }
+
+a:focus-visible,
+summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 5px; }
+
+@media (hover: hover) and (pointer: fine) {
+  .back-link:hover span { transform: translateX(-4px); }
+}
+
+@media (max-width: 720px) {
+  .review-bar { align-items: flex-start; flex-direction: column; gap: 9px; justify-content: center; min-height: 100px; }
+  .review-bar img { width: min(250px, 75vw); }
+  .review-bar p { font-size: 0.56rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}

@@ -87,3 +87,9 @@
   min-width: 25px;
   transform: translateY(2px);
 }
+
+/* Browser-feedback refinement: unify supporting-copy sizing. */
+.intro-note > p:last-child,
+.conversation p:last-child {
+  font-size: clamp(0.94rem, 1.3vw, 1.06rem);
+}

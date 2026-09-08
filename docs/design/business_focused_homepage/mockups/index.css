@@ -54,6 +54,8 @@ a { color: inherit; }
 .services-review { border-top: 1px solid rgba(25, 42, 81, 0.2); padding-top: 48px; }
 .case-studies-review { border-top: 1px solid rgba(25, 42, 81, 0.2); padding-top: 48px; }
 .process-review { border-top: 1px solid rgba(25, 42, 81, 0.2); padding-top: 48px; }
+.insights-review { border-top: 1px solid rgba(25, 42, 81, 0.2); padding-top: 48px; }
+.insights-subpage-review { border-top: 1px solid rgba(25, 42, 81, 0.2); padding-top: 48px; }
 .about-review { border-top: 1px solid rgba(25, 42, 81, 0.2); padding-top: 48px; }
 .project-review { border-top: 1px solid rgba(25, 42, 81, 0.2); padding-top: 48px; }
 .footer-review { border-top: 1px solid rgba(25, 42, 81, 0.2); padding-top: 48px; }
@@ -111,6 +113,12 @@ a:focus-visible {
 
 .process-comparison-grid {display:grid;grid-template-columns:1fr;max-width:900px;gap:24px;}
 @media(max-width:760px){.process-comparison-grid{grid-template-columns:1fr}}
+.insights-comparison-grid { display: grid; gap: 24px; grid-template-columns: 1fr; max-width: 900px; }
+.insights-comparison-grid .preview-link img { aspect-ratio: 4 / 3; }
+@media (max-width: 780px) { .insights-comparison-grid { grid-template-columns: 1fr; max-width: 720px; } }
+.insights-subpage-grid { display: grid; gap: 24px; grid-template-columns: 1fr; max-width: 900px; }
+.insights-subpage-grid .preview-link img { aspect-ratio: 4 / 3; }
+@media (max-width: 920px) { .insights-subpage-grid { grid-template-columns: 1fr; max-width: 720px; } }
 .about-comparison-grid { display: grid; gap: 24px; grid-template-columns: 1fr; max-width: 900px; }
 .about-comparison-grid .preview-link img { aspect-ratio: 4 / 3; }
 @media (max-width: 900px) { .about-comparison-grid { grid-template-columns: 1fr; max-width: 720px; } }
