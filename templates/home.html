@@ -1,23 +1,28 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block content_wrapper %}
+{% block title %}Software Development for Growing Businesses | Hroman Codes{% endblock %}
 
-  {% block content %}
-    {% comment %}
-      Top banners are temporarily disabled for desktop and mobile views.
-      {% include 'includes/banner_one.html' %}
-      {% include 'includes/banner_two.html' %}
-    {% endcomment %}
-    {% include 'includes/navbar.html' %}
+{% block meta_description %}Hroman Codes turns business problems into reliable digital products, practical automation, and scalable software.{% endblock %}
+
+{% block page_styles %}
+  <link rel="stylesheet" href="{% static 'pages/home.css' %}">
+{% endblock %}
+
+{% block body_class %}hrBody home-page{% endblock %}
+
+{% block content %}
+  {% include 'includes/navbar.html' %}
+
+  <main id="main-content" class="home-main">
     {% include 'includes/hero.html' %}
+    {% include 'includes/services.html' %}
+    {% include 'includes/case_studies.html' %}
+    {% include 'includes/development_process.html' %}
+    {% include 'includes/insights.html' %}
     {% include 'includes/about.html' %}
-    {% include 'includes/experience.html' %}
-    {% include 'includes/tools.html' %}
-    {% include 'includes/work.html' %}
-    {% include 'includes/blog_home_page.html' %}
-    {% include 'includes/contact.html' %}
-    {% include 'includes/footer.html' %}
-  {% endblock %}
+    {% include 'includes/start_project.html' %}
+  </main>
 
+  {% include 'includes/footer.html' %}
 {% endblock %}

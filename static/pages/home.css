@@ -1,0 +1,70 @@
+.home-page {
+    --navy: #192a51;
+    --navy-deep: #101d3b;
+    --navy-soft: #223557;
+    --cream: #f9e9d5;
+    --paper: #fff9f0;
+    --peach: #f29576;
+    --peach-deep: #b7583e;
+    --ink: #293754;
+    --grey: #aeb7ca;
+    --line-light: rgba(249, 233, 213, 0.24);
+    --line-dark: rgba(16, 29, 59, 0.22);
+    --focus: #ffd26a;
+    --success: #2e6c59;
+    --error: #a83b36;
+    --mono: "IBM Plex Mono", monospace;
+    --page-max-width: 1320px;
+    --page-gutter: clamp(18px, 4vw, 32px);
+    --section-space: clamp(64px, 9vw, 132px);
+    --supporting-copy-size: clamp(0.94rem, 1.3vw, 1.06rem);
+    background: var(--navy);
+    color: var(--cream);
+    font-family: var(--mono);
+    margin: 0;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+.home-page,
+.home-page *,
+.home-page *::before,
+.home-page *::after {
+    box-sizing: border-box;
+}
+
+.home-page .home-main {
+    min-width: 0;
+}
+
+.home-page a:focus-visible,
+.home-page button:focus-visible,
+.home-page input:focus-visible,
+.home-page select:focus-visible,
+.home-page textarea:focus-visible,
+.home-page summary:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+}
+
+@media (max-width: 700px) {
+    .home-page {
+        --page-gutter: 18px;
+        --section-space: 64px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .home-page *,
+    .home-page *::before,
+    .home-page *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
