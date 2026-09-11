@@ -1,44 +1,54 @@
-<section class='heroSection' id='hero'>
-    <div class='container'>
-        <div class='row'>
-            <div class='col content-tertiary'>
-                <p class='heroP animate__animated animate__zoomInUp animate__delay-1s'><span>👋 </span> Hi, my name is</p>
-            </div>     
-        </div>
-        <div class='row'>
-            <div class='col'>
-                <h2 class='heroH2'>Heriberto Roman.</h2>
-            </div>     
-        </div>
-        <div class='row'>
-            <div class='col'>
-                <h3 class='heroH3'>I build for the <span class='heroWeb animate__animated animate__fadeIn animate__delay-2s'>web</span><span class='ball animate__animated animate__fadeIn animate__repeat-1 animate__delay-3s'></span></h3>
-            </div>     
-        </div>
-        <div class='row'>
-            <div class='col col-md-10 col-lg-9'>
-                <p class='heroBlurb animate__animated animate__headShake animate__delay-4s'>
-                    I’m a <strong>Software Engineer</strong> and <strong>founder of HROMAN CODES, LLC</strong>. I help small businesses,
-                    startups, and growing organizations turn ideas and inefficient workflows into reliable digital products,
-                    practical automation, and scalable software.
-                </p>
-                <div class='heroActions'>
-                    <a class='heroCta heroCtaPrimary' href='https://calendly.com/heriberto_codes/coffee_chat' target='_blank' rel='noopener noreferrer'>
-                        Let's Talk
-                    </a>
-                    <a class='heroCta heroCtaSecondary' href='https://hromancodes.s3.us-east-1.amazonaws.com/static/pages/Heriberto_Codes_Services_Deck.pdf' target='_blank' rel='noopener noreferrer'>
-                        Explore Services
-                    </a>
-                </div>
-            </div>     
-        </div>
-    </div>
-</section>
+{% load static %}
 
-<script>
-    $(document).ready(function() {
-        $(window).scroll(function(){
-            $('.scroll-downs').css("opacity", 1- $(window).scrollTop() / 150)
-        })
-    })
-</script>
+<section class="home-hero" id="hero" aria-labelledby="hero-title">
+  <div class="home-hero-copy">
+    <h1 id="hero-title">
+      From business problem to working
+      <em>
+        <span class="home-pixel-word" data-text="software">
+          <span class="home-pixel-word-text">software</span>
+          <canvas class="home-pixel-word-canvas" aria-hidden="true"></canvas>
+        </span><span class="home-hero-period"><span class="home-period-glyph">.</span><span class="home-period-pixels" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></span>
+      </em>
+    </h1>
+
+    <p class="home-hero-intro">
+      Principal Software Engineer and founder of HROMAN CODES, LLC. I help small businesses,
+      startups, and growing organizations turn ideas and inefficient workflows into reliable
+      digital products, practical automation, and scalable software.
+    </p>
+
+    <div class="home-hero-actions">
+      <a class="home-button home-button-primary" href="https://calendly.com/heriberto_codes/coffee_chat" target="_blank" rel="noopener noreferrer" aria-label="Book a call on Calendly (opens in a new tab)">
+        Book A Call
+        <svg class="home-button-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+          <path d="M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </a>
+      <a class="home-button home-button-secondary" href="#services">Review Services</a>
+    </div>
+  </div>
+
+  <aside class="home-founder-proof" aria-label="About the founder and delivery model">
+    <div class="home-portrait-frame home-mosaic-frame">
+      <img class="home-mosaic-source" src="{% static 'pages/images/heriberto-working.jpg' %}" alt="Heriberto Roman working at a laptop and external monitor">
+      <div class="home-mosaic-grid" aria-hidden="true">
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+      <span class="home-mosaic-readout" aria-hidden="true"><b>WORKING_VIEW</b><i>09 TILES</i></span>
+      <span class="home-availability"><i></i> Accepting select projects</span>
+    </div>
+
+    <div class="home-founder-card">
+      <p class="home-card-label">Your partner in the work</p>
+      <h2>Heriberto Roman</h2>
+      <p>Founder + Principal Software Engineer</p>
+      <div class="home-proof-line">
+        <span>One accountable partner</span>
+        <span>Digital products + practical automation</span>
+      </div>
+    </div>
+  </aside>
+</section>

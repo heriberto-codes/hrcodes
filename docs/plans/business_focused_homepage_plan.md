@@ -106,7 +106,7 @@
 ## 13. Step-by-step plan
 
 - [x] Add page-scoped metadata, body, stylesheet, and script extension points in `templates/base.html`; replace `templates/home.html` composition with the approved semantic section order and establish shared responsive tokens in `static/pages/home.css`.
-- [ ] Rebuild `templates/includes/navbar.html` and `templates/includes/hero.html` as the approved native navigation and Hero C mosaic, add the approved working-photo asset under `static/pages/images/`, and implement menu/mosaic/reduced-motion behavior in `static/pages/home.js`.
+- [x] Rebuild `templates/includes/navbar.html` and `templates/includes/hero.html` as the approved native navigation and Hero C mosaic, add the approved working-photo asset under `static/pages/images/`, and implement menu/mosaic/reduced-motion behavior in `static/pages/home.js`.
 - [ ] Add `templates/includes/services.html` with the approved Services B editorial ledger, five verified service categories, progressive disclosure where specified, and internal Start a Project routing.
 - [ ] Add `templates/includes/case_studies.html`, promote the approved evidence assets into `static/pages/images/`, and implement Case Studies B with semantic Client Work / Founder Product views, verified artifact links, and a no-script content fallback.
 - [ ] Add `templates/includes/development_process.html` with Development Process D's five ordered stages, illustrative working canvas, reduced-motion-safe card treatment, and internal project-inquiry route.
