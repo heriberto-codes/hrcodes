@@ -21,6 +21,8 @@ import psycopg2
 import environ
 import sentry_sdk
 
+from hrcodes.sentry_privacy import before_send
+
 env = environ.Env(  #
     # set casting, default value
     DEBUG=(bool, False),
@@ -43,7 +45,8 @@ DEBUG = env('DEBUG')
 
 
 sentry_sdk.init(
-    dsn=env.str('SENTRY_DSN')
+    dsn=env.str('SENTRY_DSN'),
+    before_send=before_send,
 )
 
 
@@ -197,6 +200,43 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles/images')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
+# Project inquiry email
+EMAIL_BACKEND = env.str(
+    'EMAIL_BACKEND',
+    default='django.core.mail.backends.smtp.EmailBackend',
+)
+EMAIL_HOST = env.str('EMAIL_HOST', default='localhost')
+EMAIL_PORT = env.int('EMAIL_PORT', default=25)
+EMAIL_HOST_USER = env.str('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD', default='')
+EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS', default=False)
+EMAIL_USE_SSL = env.bool('EMAIL_USE_SSL', default=False)
+EMAIL_TIMEOUT = env.int('EMAIL_TIMEOUT', default=10)
+DEFAULT_FROM_EMAIL = env.str(
+    'DEFAULT_FROM_EMAIL',
+    default='Hroman Codes <build@heriberto.codes>',
+)
+PROJECT_INQUIRY_RECIPIENT = env.str(
+    'PROJECT_INQUIRY_RECIPIENT',
+    default='build@heriberto.codes',
+)
+PROJECT_INQUIRY_COOLDOWN_SECONDS = env.int(
+    'PROJECT_INQUIRY_COOLDOWN_SECONDS',
+    default=60,
+)
+PROJECT_INQUIRY_THROTTLE_LIMIT = env.int(
+    'PROJECT_INQUIRY_THROTTLE_LIMIT',
+    default=1,
+)
+PROJECT_INQUIRY_THROTTLE_WINDOW_SECONDS = env.int(
+    'PROJECT_INQUIRY_THROTTLE_WINDOW_SECONDS',
+    default=PROJECT_INQUIRY_COOLDOWN_SECONDS,
+)
+PROJECT_INQUIRY_TRUSTED_IP_HEADER = env.str(
+    'PROJECT_INQUIRY_TRUSTED_IP_HEADER',
+    default='' if DEBUG else 'Fly-Client-IP',
+)
+
 # SSL 
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
@@ -225,4 +265,3 @@ if DEBUG is True:
             'NAME':os.path.join(BASE_DIR,'db.sqlite3'),
         }
     }
- 

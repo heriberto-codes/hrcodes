@@ -29,7 +29,10 @@ class Post(models.Model):
     status = models.IntegerField(choices=STATUS, default=0)
     
     def get_absolute_url(self):
-        return reverse("blog_detail", kwargs={"slug": self.slug})
+        return reverse(
+            "blog_detail",
+            kwargs={"pk": self.pk, "slug": self.slug},
+        )
 
 class Like(models.Model):
     post = models.ForeignKey('Post', on_delete=models.CASCADE)

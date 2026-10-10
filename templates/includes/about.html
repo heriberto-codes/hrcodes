@@ -1,98 +1,98 @@
 {% load static %}
 
-<section class='aboutSection' id='about'>
-    <div class='container'>
-        <div class='row'>
-            <div class='col col-md-9 col-lg-6 col-xl-6 d-none d-sm-none d-md-none d-lg-block d-xl-block d-xxl-block'>
-                <div class='aboutPictureWrapper'>
-                    <picture class='pictureTag'>
-                        <img class='aboutMeImage' alt="Picture of Heriberto Roman" src="{% static 'pages/images/aboutMeImage.png' %}">
-                    </picture>
-                </div>
-            </div>
-            <div class='col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6'>
-                <h1 class='aboutHeading'>ABOUT ME <i class="fa-regular fa-hand-wave"></i></h1> 
-                <hr class='hrLineBreak'>
-                <div class='aboutBlurb'>
-                    <p>
-                        👋 Hi, I’m Heriberto Roman, a <strong>Software Engineer and founder of Hroman Codes, LLC</strong>, with a
-                        builder’s mindset and a passion for creating useful, scalable software products.
-                    </p>
-                    
-                    <p>
-                        I come from a family of makers and problem-solvers, and I bring that same spirit to the keyboard. 
-                        Since teaching myself to code in 2014, I’ve worn many hats from technical instructor empowering aspiring
-                        developers to software engineer building real-world products across HealthTech, EdTech, SaaS, and e-commerce.
-                    </p>
-
-                    <p>
-                        Through Hroman Codes, I work with startups and growing organizations to turn ideas and business
-                        problems into production-ready software. My work spans front-end and back-end development using technologies like
-                        Python, Django, React, PostgreSQL, and AWS, along with API integrations and AI-powered tools.
-                    </p>
-
-                    <p>
-                        Whether I’m architecting a backend, building a customer-facing feature, or taking a product from idea to deployment,
-                        I enjoy creating systems that are clean under the hood and intuitive for the people using them.
-                    </p>
-
-                        <p class='forHire'>
-                            <span style="--i:1">I</span>
-                            <span style="--i:2"></span>
-                            <span style="--i:3">a</span>
-                            <span style="--i:4">m</span>
-                            <span style="--i:5"></span>
-                            <span style="--i:6">f</span>
-                            <span style="--i:7">o</span>
-                            <span style="--i:8">r</span>
-                            <span style="--i:9"></span>
-                            <span style="--i:10">h</span>
-                            <span style="--i:11">i</span>
-                            <span style="--i:12">r</span>
-                            <span style="--i:13">e</span>
-                            <span style="--i:14">🤝</span>
-                            <span style="--i:15">🧳</span>
-                        </p>
-                </div>
-            </div>
-            <div class='col-12 col-sm-12 col-md-9 col-lg-6 col-xl-6 d-block d-sm-block d-md-block d-lg-none d-xl-none d-xxl-none m-auto'>
-                <div class='aboutPictureWrapper m-auto'>
-                    <img src="{% static 'pages/images/aboutMeImage.png' %}" class="img-thumbnail hrImgThumbnailMobile" alt="Picture of Heriberto Roman">
-                </div>
-            </div>
-        </div>
-
-        <div class='skillsetIntro'>
-            <div class='skillsetDivider'>
-                <span class='skillsetEyebrow'>// HOW I BUILD</span>
-            </div>
-            <div class='skillsetIntroContent'>
-                <h2 class='skillsetHeading'>MY SKILLSET</h2>
-                <hr class='skillsetHeadingAccent'>
-                <p>
-                    Software engineering is more than writing code. My experience across product development, consulting, and technical
-                    education has shaped how I approach building software—from understanding the problem and designing the solution to
-                    engineering, shipping, and communicating it effectively. This is my <strong>Software Engineer Skillset Model</strong>
-                </p>
-            </div>
-        </div>
-
-        <div class='row skillsetModelRow'>
-            {% comment %} col-md-9 col-lg-6 col-xl-12 d-none d-sm-none d-md-none d-lg-block d-xl-block d-xxl-block {% endcomment %}
-            <div class='col d-none d-sm-none d-md-none d-lg-block d-xl-block d-xxl-block'>
-                <div>
-                    <picture>
-                        <img alt="Picture of MVDSM_large" src="{% static 'pages/images/MVDSM_large.svg' %}">
-                    </picture>
-                </div>
-            </div>
-            <div class='col d-lg-none d-xl-none d-xxl-none'>
-                <div>
-                    <picture>
-                        <img alt="Picture of MVDSM_small" src="{% static 'pages/images/MVDSM_small.svg' %}">
-                    </picture>
-                </div>
-            </div>
-        </div>
+<section class="home-about" id="about" aria-labelledby="home-about-title">
+  <div class="home-about-inner">
+    <div class="home-about-portrait-column">
+      <div class="home-about-portrait-frame">
+        <span class="home-about-portrait-index" aria-hidden="true">HR / 2014—NOW</span>
+        <img src="{% static 'pages/images/aboutMeImage.png' %}" alt="Heriberto Roman, founder of Hroman Codes">
+      </div>
+      <div class="home-about-portrait-caption">
+        <span>Founder + Principal Software Engineer</span>
+        <strong>Heriberto Roman</strong>
+      </div>
     </div>
+
+    <div class="home-about-story">
+      <p class="home-section-number">05 / About Heriberto Roman</p>
+      <h2 id="home-about-title">
+        A builder’s mindset<span class="home-about-period"><span class="home-period-glyph">.</span><span class="home-period-pixels" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></span><br>
+        <em>A business partner’s care<span class="home-about-period"><span class="home-period-glyph">.</span><span class="home-period-pixels" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></span></em>
+      </h2>
+
+      <div class="home-about-story-grid">
+        <p class="home-about-lead">Hi, I’m Heriberto Roman, a Software Engineer and founder of Hroman Codes, LLC, with a builder’s mindset and a passion for creating useful, scalable software products.</p>
+        <p>I come from a family of makers and problem-solvers, and I bring that same spirit to the keyboard. Since teaching myself to code in 2014, I’ve worn many hats from technical instructor empowering aspiring developers to software engineer building real-world products across HealthTech, EdTech, SaaS, and e-commerce.</p>
+        <p>Through Hroman Codes, I work with startups and growing organizations to turn ideas and business problems into production-ready software. My work spans front-end and back-end development using technologies like Python, Django, React, PostgreSQL, and AWS, along with API integrations and AI-powered tools.</p>
+        <p>Whether I’m architecting a backend, building a customer-facing feature, or taking a product from idea to deployment, I enjoy creating systems that are clean under the hood and intuitive for the people using them.</p>
+      </div>
+
+      <section class="home-skillset" aria-labelledby="home-skillset-title">
+        <header class="home-skillset-header">
+          <div>
+            <p class="home-skillset-kicker">// How I build</p>
+            <h3 id="home-skillset-title">My skillset</h3>
+          </div>
+          <p>Software engineering is more than writing code. This model shows the balance I bring across technical execution, product thinking, and collaboration.</p>
+        </header>
+
+        <div class="home-skillset-body">
+          <figure class="home-skillset-chart">
+            <svg class="home-skillset-donut" viewBox="0 0 180 180" role="group" aria-labelledby="home-skill-chart-title home-skill-chart-description">
+              <title id="home-skill-chart-title">Interactive skillset balance</title>
+              <desc id="home-skill-chart-description">Focus or hover a segment to connect it with its corresponding discipline and percentage.</desc>
+              <circle class="home-donut-track" cx="90" cy="90" r="62" pathLength="100"></circle>
+              <a class="home-skill-slice home-skill-coding" href="#home-skill-coding" aria-label="Coding, 25 percent">
+                <g class="home-skill-slice-shape"><circle cx="90" cy="90" r="62" pathLength="100" stroke-dasharray="24.4 75.6" stroke-dashoffset="0" transform="rotate(-90 90 90)"></circle><text class="home-skill-initial" x="134" y="49" aria-hidden="true">CO</text></g>
+              </a>
+              <a class="home-skill-slice home-skill-communication" href="#home-skill-communication" aria-label="Communication, 35 percent">
+                <g class="home-skill-slice-shape"><circle cx="90" cy="90" r="62" pathLength="100" stroke-dasharray="34.4 65.6" stroke-dashoffset="-25" transform="rotate(-90 90 90)"></circle><text class="home-skill-initial" x="118" y="148" aria-hidden="true">CM</text></g>
+              </a>
+              <a class="home-skill-slice home-skill-design" href="#home-skill-design" aria-label="Design, 10 percent">
+                <g class="home-skill-slice-shape"><circle cx="90" cy="90" r="62" pathLength="100" stroke-dasharray="9.4 90.6" stroke-dashoffset="-60" transform="rotate(-90 90 90)"></circle><text class="home-skill-initial" x="40" y="129" aria-hidden="true">DS</text></g>
+              </a>
+              <a class="home-skill-slice home-skill-process" href="#home-skill-process" aria-label="Process, 20 percent">
+                <g class="home-skill-slice-shape"><circle cx="90" cy="90" r="62" pathLength="100" stroke-dasharray="19.4 80.6" stroke-dashoffset="-70" transform="rotate(-90 90 90)"></circle><text class="home-skill-initial" x="31" y="74" aria-hidden="true">PR</text></g>
+              </a>
+              <a class="home-skill-slice home-skill-tools" href="#home-skill-tools" aria-label="Technical tools, 10 percent">
+                <g class="home-skill-slice-shape"><circle cx="90" cy="90" r="62" pathLength="100" stroke-dasharray="9.4 90.6" stroke-dashoffset="-90" transform="rotate(-90 90 90)"></circle><text class="home-skill-initial" x="71" y="34" aria-hidden="true">TT</text></g>
+              </a>
+              <circle class="home-donut-hole" cx="90" cy="90" r="37"></circle>
+              <text class="home-donut-count" x="90" y="84">5</text>
+              <text class="home-donut-label" x="90" y="100"><tspan x="90">CONNECTED</tspan><tspan x="90" dy="10">DISCIPLINES</tspan></text>
+            </svg>
+            <figcaption class="home-visually-hidden">Self-described skillset balance: Coding 25%, Communication 35%, Design 10%, Process 20%, and Technical Tools 10%.</figcaption>
+          </figure>
+
+          <ul class="home-skillset-legend" aria-label="Skillset balance">
+            <li class="home-skill-coding" id="home-skill-coding"><span class="home-skill-swatch" aria-hidden="true"></span><b>Coding</b><span>25%</span></li>
+            <li class="home-skill-communication" id="home-skill-communication"><span class="home-skill-swatch" aria-hidden="true"></span><b>Communication</b><span>35%</span></li>
+            <li class="home-skill-design" id="home-skill-design"><span class="home-skill-swatch" aria-hidden="true"></span><b>Design</b><span>10%</span></li>
+            <li class="home-skill-process" id="home-skill-process"><span class="home-skill-swatch" aria-hidden="true"></span><b>Process</b><span>20%</span></li>
+            <li class="home-skill-tools" id="home-skill-tools"><span class="home-skill-swatch" aria-hidden="true"></span><b>Technical tools</b><span>10%</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="home-watch-build" aria-labelledby="home-watch-build-title">
+        <header class="home-watch-build-header">
+          <div>
+            <p class="home-skillset-kicker">// Watch me build</p>
+            <h3 id="home-watch-build-title">See the process in motion.</h3>
+          </div>
+          <a href="https://www.youtube.com/@heriberto_codes" target="_blank" rel="noopener noreferrer">@heriberto_codes <span aria-hidden="true">↗</span><span class="home-visually-hidden"> (opens in a new tab)</span></a>
+        </header>
+        <div class="home-video-frame">
+          <iframe src="https://www.youtube.com/embed/jU_VX6YShFI?si=eNtdLXrAJ9XMqSOm" title="CodeWars Kata 6 — Find Maximum and Minimum" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </section>
+
+      <footer class="home-profile-footer">
+        <div class="home-profile-actions">
+          <a class="home-about-action home-about-action-secondary" href="https://hromancodes.s3.us-east-1.amazonaws.com/static/pages/HRomandevresume_April_2026.pdf" target="_blank" rel="noopener noreferrer">View résumé <span aria-hidden="true">↗</span><span class="home-visually-hidden"> (opens in a new tab)</span></a>
+          <a class="home-about-action" href="https://calendly.com/heriberto_codes/coffee_chat" target="_blank" rel="noopener noreferrer">Meet Heriberto <span aria-hidden="true">↗</span><span class="home-visually-hidden"> (opens in a new tab)</span></a>
+        </div>
+      </footer>
+    </div>
+  </div>
 </section>

@@ -1,34 +1,59 @@
 {% load static %}
 
-<footer>
-    <section class='footerSection'>
-        <div class='container'>
-            <div class='row'>
-                <div class='col'>
-                    <p class='footerSectionText'>© 2026 Hroman Codes LLC. Built by Heriberto Roman.</p>
-                </div>
-            </div>
-            <div class='row'>
-                <div class='col d-flex justify-content-center'>
-                    <ul class='list-unstyled d-flex fs-4'>
-                        <li class='pr-3'>
-                            <a class="footerSocialLink" target="_blank" href="https://github.com/heriberto-codes" aria-label="GitHub">
-                                <i class="bi bi-github fa-2x" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                        <li class='pr-3'>
-                            <a class="footerSocialLink" target="_blank" href="https://www.linkedin.com/in/heribertoroman/" aria-label="LinkedIn">
-                                <i class="bi bi-linkedin fa-2x" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                        <li class='pr-3'>
-                            <a class="footerSocialLink" target="_blank" href="https://www.youtube.com/@heriberto_codes" aria-label="YouTube">
-                                <i class="bi bi-youtube fa-2x" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                    </ul>  
-                </div>
-            </div>
-        </div>
+<footer class="home-site-footer" id="site-footer" aria-labelledby="home-footer-title">
+  <div class="home-footer-hero">
+    <header class="home-footer-closing">
+      <p class="home-footer-kicker">07 / The closing signal</p>
+      <h2 id="home-footer-title">
+        Make the next version<br>
+        <em>useful<span class="home-footer-period"><span class="home-period-glyph">.</span><span class="home-period-pixels" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></span></em>
+      </h2>
+    </header>
+
+    <aside class="home-footer-signal" aria-labelledby="home-footer-signal-title">
+      <div class="home-footer-signal-top">
+        <span>Ready when you are</span>
+        <span aria-hidden="true">HC—07</span>
+      </div>
+      <h3 id="home-footer-signal-title">Bring the problem.<br>I’ll help shape the next useful step.</h3>
+      <div class="home-footer-status">
+        <span aria-hidden="true"></span>
+        <p>Accepting select projects</p>
+      </div>
+      <div class="home-footer-actions">
+        <a class="home-footer-primary" href="#start-a-project">Start a Project <span class="home-footer-arrow" aria-hidden="true">→</span></a>
+        <a href="https://calendly.com/heriberto_codes/coffee_chat" target="_blank" rel="noopener noreferrer">Book A Call <span class="home-footer-arrow" aria-hidden="true">↗</span><span class="home-visually-hidden"> (opens in a new tab)</span></a>
+      </div>
+    </aside>
+  </div>
+
+  <div class="home-footer-route-board">
+    <section class="home-footer-brand" aria-labelledby="home-footer-brand-title">
+      <img src="{% static 'pages/images/hr.svg' %}" alt="">
+      <h3 id="home-footer-brand-title">Founder-led software product development, design, and practical automation.</h3>
+      <a href="mailto:build@heriberto.codes">build@heriberto.codes <span class="home-footer-arrow" aria-hidden="true">↗</span></a>
     </section>
+
+    <nav class="home-footer-routes" aria-label="Homepage sections">
+      <a href="#services"><span>01</span><b>Services</b><i aria-hidden="true">↗</i></a>
+      <a href="#proof"><span>02</span><b>Case Studies</b><i aria-hidden="true">↗</i></a>
+      <a href="#process"><span>03</span><b>Development Process</b><i aria-hidden="true">↗</i></a>
+      <a href="#insights"><span>04</span><b>Insights</b><i aria-hidden="true">↗</i></a>
+      <a href="#about"><span>05</span><b>About Heriberto</b><i aria-hidden="true">↗</i></a>
+      <a href="#start-a-project"><span>06</span><b>Start a Project</b><i aria-hidden="true">↗</i></a>
+    </nav>
+
+    <nav class="home-footer-social" aria-label="Social links">
+      <p>Follow the work</p>
+      <a href="https://www.linkedin.com/in/heribertoroman/" target="_blank" rel="noopener noreferrer">LinkedIn <span class="home-footer-arrow" aria-hidden="true">↗</span><span class="home-visually-hidden"> (opens in a new tab)</span></a>
+      <a href="https://github.com/heriberto-codes" target="_blank" rel="noopener noreferrer">GitHub <span class="home-footer-arrow" aria-hidden="true">↗</span><span class="home-visually-hidden"> (opens in a new tab)</span></a>
+      <a href="https://www.youtube.com/@heriberto_codes" target="_blank" rel="noopener noreferrer">YouTube <span class="home-footer-arrow" aria-hidden="true">↗</span><span class="home-visually-hidden"> (opens in a new tab)</span></a>
+    </nav>
+  </div>
+
+  <div class="home-footer-base">
+    <p>© 2026 Hroman Codes, LLC.</p>
+    <p>Designed &amp; engineered by Heriberto Roman.</p>
+    <a href="#top">Return to the beginning <span aria-hidden="true">↑</span></a>
+  </div>
 </footer>

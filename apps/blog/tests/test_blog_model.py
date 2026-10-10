@@ -1,8 +1,8 @@
 from django.test import TestCase
 from django.urls import reverse
-from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
-from apps.blog.models import Post, Comment, Category
+
+from apps.blog.models import Post
 
 class TestBlogPost(TestCase):
     def setUp(self) -> None:
@@ -46,7 +46,10 @@ class TestBlogPost(TestCase):
     def test_get_absolute_url(self):
         returned_url = self.post.get_absolute_url()
         
-        expected_url = reverse('blog_detail', kwargs={'slug': self.post.slug})
+        expected_url = reverse(
+            'blog_detail',
+            kwargs={'pk': self.post.pk, 'slug': self.post.slug},
+        )
         
         self.assertEqual(returned_url, expected_url)
         
@@ -69,4 +72,3 @@ class TestBlogPost(TestCase):
         
 #         # make the assertion 
 #         self.assertEqual(returned_url, expected_url)
-        

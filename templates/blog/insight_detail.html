@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ post.title }} | Hroman Codes{% endblock %}
+{% block meta_description %}{{ post.snippet|striptags }}{% endblock %}
+
+{% block page_styles %}
+    <link rel="stylesheet" href="{% static 'blog/insight_detail.css' %}">
+{% endblock %}
+
+{% block body_class %}hrBody insight-detail-page{% endblock %}
+
+{% block content_wrapper %}
+    <a class="insight-skip-link" href="#insight-transcript">Skip to article</a>
+
+    <header class="insight-site-header">
+        <a href="{% url 'home' %}" aria-label="Hroman Codes home">
+            <img src="{% static 'pages/images/hr.svg' %}" alt="Hroman Codes">
+        </a>
+        <p>Insights <span aria-hidden="true">→</span> Signal transcript</p>
+    </header>
+
+    <main id="main-content">
+        <section class="insight-broadcast-shell" aria-labelledby="insight-title">
+            <div class="insight-topline">
+                <a class="insight-back-link" href="{% url 'home' %}#insights">
+                    <span aria-hidden="true">←</span> Return to Insights
+                </a>
+                <p>Channel 88.7 · Long-form transmission</p>
+            </div>
+
+            <header class="insight-hero">
+                <div class="insight-hero-copy">
+                    <div class="insight-hero-meta">
+                        <p>Signal 01 / Guardrails</p>
+                        <time datetime="{{ post.created_on|date:'Y-m-d' }}">
+                            {{ post.created_on|date:'F j, Y' }}
+                        </time>
+                    </div>
+                    <p class="insight-display" aria-hidden="true">AI with<br>judgment<span>.</span></p>
+                    <h1 id="insight-title">{{ post.title }}</h1>
+                    <ul class="insight-topic-list" aria-label="Article topics">
+                        {% for category in post.categories.all %}
+                            <li>{{ category.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="insight-console" aria-hidden="true">
+                    <span class="insight-frequency">88.7</span>
+                    <div class="insight-waveform">
+                        <i></i><i></i><i></i><i></i><i></i><i></i>
+                        <i></i><i></i><i></i><i></i><i></i>
+                    </div>
+                    <div class="insight-console-readout">
+                        <b>Guardrails</b>
+                        <small>Rebuild channel / Active</small>
+                    </div>
+                </div>
+            </header>
+
+            <div class="insight-broadcast-layout">
+                <aside class="insight-receiver">
+                    <div class="insight-receiver-head">
+                        <span>Article map</span>
+                        <b>01—07</b>
+                    </div>
+                    <nav aria-label="Article table of contents">
+                        {% for chapter in insight_chapters %}
+                            <a href="#{{ chapter.id }}">
+                                <span>{{ chapter.number }}</span> {{ chapter.label }}
+                            </a>
+                        {% endfor %}
+                    </nav>
+                    <div class="insight-receiver-status">
+                        <i></i>
+                        <span>Reading signal<br><b>Heriberto Roman</b></span>
+                    </div>
+                </aside>
+
+                <article class="insight-transcript" id="insight-transcript">
+                    <header>
+                        <p>Transmission begins</p>
+                        <strong>{{ post.snippet|striptags }}</strong>
+                        {% if insight_intro %}
+                            <div class="insight-transcript-intro-copy">
+                                {{ insight_intro|safe }}
+                            </div>
+                        {% endif %}
+                    </header>
+
+                    {% for chapter in insight_chapters %}
+                        <section class="insight-chapter insight-chapter-{{ chapter.tone }}" id="{{ chapter.id }}">
+                            <div class="insight-chapter-index">
+                                <span>{{ chapter.number }}</span>
+                                <small>{{ chapter.label }}</small>
+                            </div>
+                            <div class="insight-chapter-copy">
+                                {{ chapter.html|safe }}
+
+                                {% if chapter.number == '01' %}
+                                    <div class="insight-diagnostic-board" aria-label="Legacy system diagnostic">
+                                        <span><b>01</b>Legacy UI</span>
+                                        <span><b>02</b>Auth state</span>
+                                        <span><b>03</b>API shape</span>
+                                        <span><b>04</b>Deploy path</span>
+                                        <span><b>05</b>Demo UX</span>
+                                        <span><b>06</b>Scope</span>
+                                    </div>
+                                {% elif chapter.number == '02' %}
+                                    <div class="insight-loop-track" aria-label="Plan-driven engineering loop">
+                                        <span>Analyze</span><i>→</i><span>Plan</span><i>→</i>
+                                        <span>Execute</span><i>→</i><span>Verify</span><i>→</i>
+                                        <span>Explain</span><i>→</i><span>Test</span>
+                                    </div>
+                                {% elif chapter.number == '03' %}
+                                    <figure class="insight-evidence-frame">
+                                        <img src="{% static 'pages/images/turtleAI.png' %}" alt="Turtle AI workflow showing roles, skills, loop steps, and one shared state system">
+                                        <figcaption>Roles, skills, a gated loop, and one shared state model keep the workflow legible.</figcaption>
+                                    </figure>
+                                {% elif chapter.number == '04' %}
+                                    <div class="insight-shipping-ledger" aria-label="Delivery summary">
+                                        <div><span>Product</span><strong>Analytics · seasons · stat entry · search</strong></div>
+                                        <div><span>Platform</span><strong>Docker · Fly.io · PostgreSQL · health checks</strong></div>
+                                        <div><span>Rule</span><strong>Extend working flows before creating new ones</strong></div>
+                                    </div>
+                                {% elif chapter.number == '06' %}
+                                    <ul class="insight-risk-list" aria-label="Proportional review levels">
+                                        <li><span>Light</span>Presentation and copy changes</li>
+                                        <li><span>Standard</span>Normal application behavior</li>
+                                        <li><span>Deep</span>Authentication, data, and architecture</li>
+                                    </ul>
+                                {% elif chapter.number == '07' %}
+                                    {% if insight_payloads %}
+                                        <div class="insight-payload-links" aria-label="Article project links">
+                                            {% for payload in insight_payloads %}
+                                                <a href="{{ payload.href }}" target="_blank" rel="noopener noreferrer">
+                                                    <span>{{ payload.label }}</span><b>{{ payload.title }}</b><i aria-hidden="true">↗</i>
+                                                </a>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </section>
+
+                        {% if chapter.number == '04' %}
+                            <aside class="insight-broadcast-break">
+                                <span>Working principle / 01</span>
+                                <blockquote>Understanding is part of the deliverable.</blockquote>
+                                <p>The useful friction comes from explaining the implementation, not accepting generated code and moving on.</p>
+                            </aside>
+                        {% endif %}
+                    {% endfor %}
+                </article>
+            </div>
+
+            <section class="insight-next-signals" id="next-signals" aria-labelledby="next-signals-title">
+                <header>
+                    <p>Keep the dial moving</p>
+                    <h2 id="next-signals-title">Next signals.</h2>
+                </header>
+
+                {% if related_signals %}
+                    <div class="insight-next-grid">
+                        {% for signal in related_signals %}
+                            <a href="{{ signal.post.get_absolute_url }}">
+                                <span>{{ signal.frequency }} · {{ signal.name }}</span>
+                                <h3>{{ signal.post.title }}</h3>
+                                <p>{{ signal.post.created_on|date:'F j, Y' }}</p>
+                                <b>Receive signal <span aria-hidden="true">→</span></b>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <a class="insight-archive-link" href="{% url 'blog_index' %}">
+                        Browse the Insights archive <span aria-hidden="true">→</span>
+                    </a>
+                {% endif %}
+            </section>
+        </section>
+    </main>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% autoescape off %}New project brief
+
+Name: {{ name }}
+Email: {{ email }}
+Company: {{ company|default:"Not provided" }}
+Work area: {{ work_area }}
+Project stage: {{ project_stage }}
+Timing: {{ timing|default:"Not provided" }}
+
+Primary goal:
+{{ goal }}
+
+Additional context:
+{{ additional_context|default:"Not provided" }}
+{% endautoescape %}

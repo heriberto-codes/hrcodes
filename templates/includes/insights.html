@@ -1,1 +1,83 @@
-<section id="insights" class="home-section-placeholder" aria-label="Insights"></section>
+<section id="insights" class="home-insights" aria-labelledby="insights-title">
+  <div class="home-insights-inner">
+    <header class="home-insights-intro">
+      <div>
+        <p class="home-section-number">04 / Insights</p>
+        <h2 id="insights-title">Tune into the work behind the work<span class="home-insights-period"><span class="home-period-glyph">.</span><span class="home-period-pixels" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></span></h2>
+      </div>
+      <p>Choose a signal. Each note isolates one lesson from rebuilding, reasoning, and shipping.</p>
+    </header>
+
+    {% if insight_signals %}
+      <div class="home-insight-selector">
+        <fieldset>
+          <legend class="home-visually-hidden">Choose an insight</legend>
+
+          {% for signal in insight_signals %}
+            <input type="radio" name="home-insight-signal" id="home-signal-{{ forloop.counter }}"{% if forloop.first %} checked{% endif %}>
+          {% endfor %}
+
+          <div class="home-insight-tabs" aria-label="Available insight signals">
+            {% for signal in insight_signals %}
+              <label for="home-signal-{{ forloop.counter }}">
+                <span class="home-insight-channel-number">{{ signal.number }}</span>
+                <b>{{ signal.name }}</b>
+                <span class="home-insight-tags">
+                  {% for category in signal.post.categories.all %}<span>{{ category.name }}</span>{% endfor %}
+                </span>
+              </label>
+            {% endfor %}
+          </div>
+
+          <div class="home-insight-stories" aria-live="polite">
+            {% for signal in insight_signals %}
+              <article class="home-insight-story home-insight-story-{{ forloop.counter }}">
+                <div class="home-insight-copy">
+                  <div class="home-insight-meta">
+                    <span>Signal {{ signal.number }} / {{ signal.name }}</span>
+                    <time datetime="{{ signal.post.created_on|date:'Y-m-d' }}">{{ signal.post.created_on|date:'F j, Y' }}</time>
+                  </div>
+                  <h3>{{ signal.post.title }}</h3>
+                  <p>{{ signal.post.snippet }}</p>
+                  <a href="{% url 'blog_detail' signal.post.pk signal.post.slug %}" aria-label="Read the full article: {{ signal.post.title }}">Read full article <span aria-hidden="true">→</span></a>
+                </div>
+
+                <div class="home-insight-visual home-insight-visual-{{ signal.visual }}" aria-hidden="true">
+                  <span class="home-insight-frequency">{{ signal.frequency }}</span>
+                  {% if signal.visual == 'guardrails' %}
+                    <div class="home-insight-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                    <strong>AI<br>WITH<br>JUDGMENT</strong>
+                    <small>REBUILD_CHANNEL</small>
+                  {% elif signal.visual == 'constraints' %}
+                    <div class="home-insight-constraint-grid"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                    <strong>THINK<br>INSIDE<br>THE INPUT</strong>
+                    <small>REASONING_CHANNEL</small>
+                  {% else %}
+                    <div class="home-insight-revival-counter"><b>09</b><span>YEARS / ONE RETURN</span></div>
+                    <strong>OLD CODE<br>NEW<br>DECISIONS</strong>
+                    <small>MAINTENANCE_CHANNEL</small>
+                  {% endif %}
+                </div>
+              </article>
+            {% endfor %}
+          </div>
+        </fieldset>
+      </div>
+
+      <footer class="home-insight-footer">
+        <p><span>{{ insight_signal_count|stringformat:'02d' }} signal{{ insight_signal_count|pluralize }} loaded</span>{% if not insights_complete %} · Some selected notes are temporarily off air.{% else %} · More notes live in the full archive.{% endif %}</p>
+        <a href="{% url 'blog_index' %}">Open all Insights <span aria-hidden="true">→</span></a>
+      </footer>
+    {% else %}
+      <div class="home-insight-empty">
+        <p><strong>No signals are broadcasting right now.</strong> Published notes will return here when they are available.</p>
+        <a href="{% url 'blog_index' %}">Open the Insights archive <span aria-hidden="true">→</span></a>
+      </div>
+    {% endif %}
+
+    <aside class="home-insight-source" aria-label="Content source">
+      <b>Source note</b>
+      <span>Titles, dates, excerpts, topics, and routes come from published Hroman Codes posts.</span>
+    </aside>
+  </div>
+</section>

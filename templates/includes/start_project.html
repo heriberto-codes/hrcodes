@@ -1,1 +1,179 @@
-<section id="start-a-project" class="home-section-placeholder" aria-label="Start a Project"></section>
+<section
+  id="start-a-project"
+  class="home-start-project"
+  aria-labelledby="home-project-title"
+  data-home-project
+>
+  <div class="home-project-inner">
+    <header class="home-project-heading">
+      <div>
+        <p class="home-section-number">06 / Start a Project</p>
+        <h2 id="home-project-title">
+          Build the brief<span class="home-project-period"><span class="home-period-glyph">.</span><span class="home-period-pixels" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></span><br>
+          <em>One decision at a time<span class="home-project-period"><span class="home-period-glyph">.</span><span class="home-period-pixels" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></span></em>
+        </h2>
+      </div>
+      <p>You bring the business context. I’ll use it to understand the shape of the challenge before we decide whether a conversation would be useful.</p>
+    </header>
+
+    <div class="home-brief-builder{% if form.errors %} has-server-errors{% endif %}" data-home-brief-builder>
+      <aside class="home-brief-summary" aria-labelledby="home-brief-summary-title">
+        <span class="home-project-micro-label">Your project signal</span>
+        <h3 id="home-brief-summary-title">A useful starting point, not a technical specification.</h3>
+        <dl aria-live="polite">
+          <div><dt>Work area</dt><dd data-home-summary="area">Not selected yet</dd></div>
+          <div><dt>Current stage</dt><dd data-home-summary="stage">Not selected yet</dd></div>
+          <div><dt>Primary goal</dt><dd data-home-summary="goal">Add in step two</dd></div>
+        </dl>
+        <div class="home-summary-principle">
+          <span aria-hidden="true">↳</span>
+          <p>Start with what is getting in the way. The technology can follow the problem.</p>
+        </div>
+        <a class="home-summary-call" href="https://calendly.com/heriberto_codes/coffee_chat" target="_blank" rel="noopener noreferrer">
+          <span>Prefer a call? Book time</span><span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span>
+        </a>
+      </aside>
+
+      <div class="home-builder-panel">
+        <nav class="home-step-progress" aria-label="Project brief progress" data-home-project-progress>
+          <button type="button" data-home-step-target="1" aria-current="step"><span>01</span> Challenge</button>
+          <button type="button" data-home-step-target="2" disabled><span>02</span> Context</button>
+          <button type="button" data-home-step-target="3" disabled><span>03</span> Connection</button>
+        </nav>
+
+        {% for message in messages %}
+          {% if "success" in message.tags %}
+            <div class="home-project-status" role="status" aria-live="polite" tabindex="-1" data-home-project-success>
+              <span class="home-project-micro-label">Brief sent</span>
+              <strong>Thanks for making the problem clearer.</strong>
+              <p>{{ message }}</p>
+              <button type="button" data-home-reset-project>Start another brief</button>
+            </div>
+          {% endif %}
+        {% endfor %}
+
+        <form
+          class="home-builder-form"
+          method="post"
+          action="#start-a-project"
+          data-home-project-form
+          data-initial-step="{% if form.name.errors or form.email.errors or form.company.errors or form.timing.errors or form.additional_context.errors or form.consent.errors or form.non_field_errors %}3{% elif form.project_stage.errors or form.goal.errors %}2{% else %}1{% endif %}"
+          data-has-errors="{% if form.errors %}true{% else %}false{% endif %}"
+        >
+          {% csrf_token %}
+          {{ form.website }}
+
+          {% if form.non_field_errors %}
+            <div class="home-form-wide-error" role="alert" tabindex="-1" data-home-form-wide-error>
+              {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+            </div>
+          {% endif %}
+
+          <section class="home-builder-step is-active" data-home-step="1" aria-labelledby="home-step-one-title">
+            <div class="home-step-heading">
+              <span>Step 01 of 03</span>
+              <h3 id="home-step-one-title" tabindex="-1">What kind of help feels closest?</h3>
+              <p>Choose the nearest match. “Not sure” is a useful answer too.</p>
+            </div>
+            <fieldset class="home-project-field home-option-fieldset" data-home-field-group>
+              <legend class="sr-only">Choose a work area</legend>
+              <div class="home-work-options">
+                <label><input type="radio" name="work_area" value="mvp_product" data-summary-value="MVP &amp; Product Development" required aria-describedby="home-work-area-error"{% if form.work_area.value == "mvp_product" %} checked{% endif %}{% if form.work_area.errors %} aria-invalid="true"{% endif %}><span><b>01</b><strong>MVP &amp; Product Development</strong><small>Shape and ship a focused first release.</small></span></label>
+                <label><input type="radio" name="work_area" value="web_application" data-summary-value="Custom Web Applications" aria-describedby="home-work-area-error"{% if form.work_area.value == "web_application" %} checked{% endif %}{% if form.work_area.errors %} aria-invalid="true"{% endif %}><span><b>02</b><strong>Custom Web Applications</strong><small>Build software around a real workflow.</small></span></label>
+                <label><input type="radio" name="work_area" value="ux_ui" data-summary-value="UX/UI Design &amp; Prototyping" aria-describedby="home-work-area-error"{% if form.work_area.value == "ux_ui" %} checked{% endif %}{% if form.work_area.errors %} aria-invalid="true"{% endif %}><span><b>03</b><strong>UX/UI Design &amp; Prototyping</strong><small>Clarify the experience before building.</small></span></label>
+                <label><input type="radio" name="work_area" value="automation" data-summary-value="AI &amp; Workflow Automation" aria-describedby="home-work-area-error"{% if form.work_area.value == "automation" %} checked{% endif %}{% if form.work_area.errors %} aria-invalid="true"{% endif %}><span><b>04</b><strong>AI &amp; Workflow Automation</strong><small>Reduce repetitive work and handoffs.</small></span></label>
+                <label><input type="radio" name="work_area" value="maintenance" data-summary-value="Maintenance &amp; Technical Support" aria-describedby="home-work-area-error"{% if form.work_area.value == "maintenance" %} checked{% endif %}{% if form.work_area.errors %} aria-invalid="true"{% endif %}><span><b>05</b><strong>Maintenance &amp; Technical Support</strong><small>Improve or care for an existing product.</small></span></label>
+                <label><input type="radio" name="work_area" value="not_sure" data-summary-value="Not sure yet" aria-describedby="home-work-area-error"{% if form.work_area.value == "not_sure" %} checked{% endif %}{% if form.work_area.errors %} aria-invalid="true"{% endif %}><span><b>?</b><strong>Not sure yet</strong><small>Start from the problem, not the category.</small></span></label>
+              </div>
+              <p class="home-field-error{% if form.work_area.errors %} is-visible{% endif %}" id="home-work-area-error" data-home-field-error{% if not form.work_area.errors %} hidden{% endif %}>{% if form.work_area.errors %}{% for error in form.work_area.errors %}{{ error }}{% endfor %}{% else %}Choose the closest work area to continue.{% endif %}</p>
+            </fieldset>
+            <div class="home-step-actions home-step-actions-end">
+              <button type="button" class="home-next-button" data-home-next-step>Continue to context <span aria-hidden="true">→</span></button>
+            </div>
+          </section>
+
+          <section class="home-builder-step" data-home-step="2" aria-labelledby="home-step-two-title">
+            <div class="home-step-heading">
+              <span>Step 02 of 03</span>
+              <h3 id="home-step-two-title" tabindex="-1">Where is the project today?</h3>
+              <p>This helps separate early exploration from work on an existing product.</p>
+            </div>
+            <fieldset class="home-project-field home-option-fieldset" data-home-field-group>
+              <legend>Current stage <span class="home-required-mark" aria-hidden="true">*</span></legend>
+              <div class="home-stage-options">
+                <label><input type="radio" name="project_stage" value="exploring" data-summary-value="Exploring an idea" required aria-describedby="home-project-stage-error"{% if form.project_stage.value == "exploring" %} checked{% endif %}{% if form.project_stage.errors %} aria-invalid="true"{% endif %}><span>Exploring an idea</span></label>
+                <label><input type="radio" name="project_stage" value="validating" data-summary-value="Validating a direction" aria-describedby="home-project-stage-error"{% if form.project_stage.value == "validating" %} checked{% endif %}{% if form.project_stage.errors %} aria-invalid="true"{% endif %}><span>Validating a direction</span></label>
+                <label><input type="radio" name="project_stage" value="building" data-summary-value="Building now" aria-describedby="home-project-stage-error"{% if form.project_stage.value == "building" %} checked{% endif %}{% if form.project_stage.errors %} aria-invalid="true"{% endif %}><span>Building now</span></label>
+                <label><input type="radio" name="project_stage" value="improving" data-summary-value="Improving an existing product" aria-describedby="home-project-stage-error"{% if form.project_stage.value == "improving" %} checked{% endif %}{% if form.project_stage.errors %} aria-invalid="true"{% endif %}><span>Improving an existing product</span></label>
+              </div>
+              <p class="home-field-error{% if form.project_stage.errors %} is-visible{% endif %}" id="home-project-stage-error" data-home-field-error{% if not form.project_stage.errors %} hidden{% endif %}>{% if form.project_stage.errors %}{% for error in form.project_stage.errors %}{{ error }}{% endfor %}{% else %}Select the current project stage.{% endif %}</p>
+            </fieldset>
+            <div class="home-project-field home-goal-field" data-home-field-group>
+              <label class="home-field-label" for="home-project-goal">What would make this project worthwhile? <span class="home-required-mark" aria-hidden="true">*</span></label>
+              <textarea id="home-project-goal" name="goal" placeholder="Describe the change you want for the business, team, or people using the product." required minlength="20" maxlength="2000" aria-describedby="home-project-goal-help home-project-goal-error"{% if form.goal.errors %} aria-invalid="true"{% endif %}>{{ form.goal.value|default_if_none:"" }}</textarea>
+              <span class="home-field-help" id="home-project-goal-help">Focus on the outcome rather than a feature list.</span>
+              <p class="home-field-error{% if form.goal.errors %} is-visible{% endif %}" id="home-project-goal-error" data-home-field-error{% if not form.goal.errors %} hidden{% endif %}>{% if form.goal.errors %}{% for error in form.goal.errors %}{{ error }}{% endfor %}{% else %}Share at least 20 characters about the goal.{% endif %}</p>
+            </div>
+            <div class="home-step-actions">
+              <button type="button" class="home-back-button" data-home-back-step><span aria-hidden="true">←</span> Back</button>
+              <button type="button" class="home-next-button" data-home-next-step>Continue to connection <span aria-hidden="true">→</span></button>
+            </div>
+          </section>
+
+          <section class="home-builder-step" data-home-step="3" aria-labelledby="home-step-three-title">
+            <div class="home-step-heading">
+              <span>Step 03 of 03</span>
+              <h3 id="home-step-three-title" tabindex="-1">How can I reach you?</h3>
+              <p>Add the practical context I should have before reviewing the brief.</p>
+            </div>
+            <div class="home-connection-grid">
+              <div class="home-project-field" data-home-field-group>
+                <label class="home-field-label" for="home-project-name">Your name <span class="home-required-mark" aria-hidden="true">*</span></label>
+                <input id="home-project-name" name="name" value="{{ form.name.value|default_if_none:'' }}" autocomplete="name" maxlength="120" required aria-describedby="home-project-name-error"{% if form.name.errors %} aria-invalid="true"{% endif %}>
+                <p class="home-field-error{% if form.name.errors %} is-visible{% endif %}" id="home-project-name-error" data-home-field-error{% if not form.name.errors %} hidden{% endif %}>{% if form.name.errors %}{% for error in form.name.errors %}{{ error }}{% endfor %}{% else %}Please enter your name.{% endif %}</p>
+              </div>
+              <div class="home-project-field" data-home-field-group>
+                <label class="home-field-label" for="home-project-email">Work email <span class="home-required-mark" aria-hidden="true">*</span></label>
+                <input id="home-project-email" name="email" type="email" value="{{ form.email.value|default_if_none:'' }}" autocomplete="email" placeholder="you@company.com" maxlength="320" required aria-describedby="home-project-email-error"{% if form.email.errors %} aria-invalid="true"{% endif %}>
+                <p class="home-field-error{% if form.email.errors %} is-visible{% endif %}" id="home-project-email-error" data-home-field-error{% if not form.email.errors %} hidden{% endif %}>{% if form.email.errors %}{% for error in form.email.errors %}{{ error }}{% endfor %}{% else %}Enter a valid email address.{% endif %}</p>
+              </div>
+              <div class="home-project-field" data-home-field-group>
+                <label class="home-field-label" for="home-project-company">Company <span>optional</span></label>
+                <input id="home-project-company" name="company" value="{{ form.company.value|default_if_none:'' }}" autocomplete="organization" maxlength="160"{% if form.company.errors %} aria-describedby="home-project-company-error" aria-invalid="true"{% endif %}>
+                {% if form.company.errors %}<p class="home-field-error is-visible" id="home-project-company-error" data-home-field-error>{% for error in form.company.errors %}{{ error }}{% endfor %}</p>{% endif %}
+              </div>
+              <div class="home-project-field" data-home-field-group>
+                <label class="home-field-label" for="home-project-timing">Timing <span>optional</span></label>
+                <select id="home-project-timing" name="timing"{% if form.timing.errors %} aria-describedby="home-project-timing-error" aria-invalid="true"{% endif %}>
+                  <option value=""{% if not form.timing.value %} selected{% endif %}>No timeline selected</option>
+                  <option value="soon"{% if form.timing.value == "soon" %} selected{% endif %}>Ready to start soon</option>
+                  <option value="one_to_three_months"{% if form.timing.value == "one_to_three_months" %} selected{% endif %}>Within 1–3 months</option>
+                  <option value="future"{% if form.timing.value == "future" %} selected{% endif %}>Exploring a future project</option>
+                  <option value="not_sure"{% if form.timing.value == "not_sure" %} selected{% endif %}>I’m not sure yet</option>
+                </select>
+                {% if form.timing.errors %}<p class="home-field-error is-visible" id="home-project-timing-error" data-home-field-error>{% for error in form.timing.errors %}{{ error }}{% endfor %}</p>{% endif %}
+              </div>
+            </div>
+            <div class="home-project-field home-final-context" data-home-field-group>
+              <label class="home-field-label" for="home-project-context">Anything else I should know? <span>optional</span></label>
+              <textarea id="home-project-context" name="additional_context" maxlength="3000" placeholder="Existing links, constraints, collaborators, or questions that would make the review more useful." aria-describedby="home-project-context-help{% if form.additional_context.errors %} home-project-context-error{% endif %}"{% if form.additional_context.errors %} aria-invalid="true"{% endif %}>{{ form.additional_context.value|default_if_none:"" }}</textarea>
+              <span class="home-field-help" id="home-project-context-help">Please avoid passwords, private access details, or sensitive customer data.</span>
+              {% if form.additional_context.errors %}<p class="home-field-error is-visible" id="home-project-context-error" data-home-field-error>{% for error in form.additional_context.errors %}{{ error }}{% endfor %}</p>{% endif %}
+            </div>
+            <div class="home-project-field" data-home-field-group>
+              <label class="home-builder-consent">
+                <input type="checkbox" name="consent" required aria-describedby="home-project-consent-error"{% if form.consent.value %} checked{% endif %}{% if form.consent.errors %} aria-invalid="true"{% endif %}>
+                <span>I understand these details will be used to respond to my project inquiry.</span>
+              </label>
+              <p class="home-field-error home-consent-error{% if form.consent.errors %} is-visible{% endif %}" id="home-project-consent-error" data-home-field-error{% if not form.consent.errors %} hidden{% endif %}>{% if form.consent.errors %}{% for error in form.consent.errors %}{{ error }}{% endfor %}{% else %}Please confirm before sending.{% endif %}</p>
+            </div>
+            <div class="home-step-actions">
+              <button type="button" class="home-back-button" data-home-back-step><span aria-hidden="true">←</span> Back</button>
+              <button type="submit" class="home-submit-button">Send My Brief <span aria-hidden="true">→</span></button>
+            </div>
+          </section>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

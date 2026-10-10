@@ -63,6 +63,69 @@
 })();
 
 (() => {
+    const section = document.querySelector("[data-home-case-studies]");
+    if (!section) return;
+
+    const tabs = [...section.querySelectorAll("[role='tab']")];
+    const panels = [...section.querySelectorAll("[data-home-case-panel]")];
+    const indexes = [...section.querySelectorAll("[data-home-case-index]")];
+    if (!tabs.length || tabs.length !== panels.length) return;
+
+    const selectTab = (tab, { moveFocus = false, preserveViewport = false } = {}) => {
+        const tabTop = preserveViewport ? tab.getBoundingClientRect().top : 0;
+
+        tabs.forEach((item) => {
+            const selected = item === tab;
+            item.setAttribute("aria-selected", String(selected));
+            item.tabIndex = selected ? 0 : -1;
+        });
+
+        panels.forEach((panel) => {
+            panel.hidden = panel.id !== tab.getAttribute("aria-controls");
+        });
+
+        indexes.forEach((index) => {
+            index.hidden = index.dataset.homeCaseIndex !== tab.id;
+        });
+
+        if (moveFocus) tab.focus({ preventScroll: preserveViewport });
+
+        if (preserveViewport) {
+            window.requestAnimationFrame(() => {
+                const scrollCorrection = tab.getBoundingClientRect().top - tabTop;
+                if (Math.abs(scrollCorrection) > 1) {
+                    window.scrollBy({ top: scrollCorrection, left: 0, behavior: "instant" });
+                }
+            });
+        }
+    };
+
+    tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => selectTab(tab, { preserveViewport: true }));
+        tab.addEventListener("keydown", (event) => {
+            if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+
+            event.preventDefault();
+            let nextIndex = index;
+            if (event.key === "ArrowLeft") nextIndex = (index - 1 + tabs.length) % tabs.length;
+            if (event.key === "ArrowRight") nextIndex = (index + 1) % tabs.length;
+            if (event.key === "Home") nextIndex = 0;
+            if (event.key === "End") nextIndex = tabs.length - 1;
+            selectTab(tabs[nextIndex], { moveFocus: true, preserveViewport: true });
+        });
+    });
+
+    const selectTabForHash = () => {
+        const selectedTab = window.location.hash === "#case-cthink" ? tabs[1] : tabs[0];
+        selectTab(selectedTab);
+    };
+
+    section.classList.add("is-enhanced");
+    selectTabForHash();
+    window.addEventListener("hashchange", selectTabForHash);
+})();
+
+(() => {
     const word = document.querySelector(".home-pixel-word");
     const canvas = word?.querySelector(".home-pixel-word-canvas");
     const text = word?.dataset.text;
@@ -265,4 +328,199 @@
     } else {
         prepare();
     }
+})();
+
+(() => {
+    const section = document.querySelector("[data-home-project]");
+    if (!section) return;
+
+    const builder = section.querySelector("[data-home-brief-builder]");
+    const form = section.querySelector("[data-home-project-form]");
+    if (!builder || !form) return;
+
+    const steps = [...form.querySelectorAll("[data-home-step]")];
+    const progress = section.querySelector("[data-home-project-progress]");
+    const progressButtons = [...section.querySelectorAll("[data-home-step-target]")];
+    const success = section.querySelector("[data-home-project-success]");
+    const summary = {
+        area: section.querySelector('[data-home-summary="area"]'),
+        stage: section.querySelector('[data-home-summary="stage"]'),
+        goal: section.querySelector('[data-home-summary="goal"]'),
+    };
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const parsedInitialStep = Number(form.dataset.initialStep);
+    let currentStep = Number.isInteger(parsedInitialStep) && parsedInitialStep >= 1 && parsedInitialStep <= steps.length
+        ? parsedInitialStep
+        : 1;
+    let furthestStep = currentStep;
+
+    const panelFor = (stepNumber) => steps.find((step) => Number(step.dataset.homeStep) === stepNumber);
+
+    const controlsFor = (panel) => [...panel.querySelectorAll("input, select, textarea")]
+        .filter((control) => control.type !== "hidden" && !control.disabled)
+        .filter((control) => control.type !== "radio" || control.required);
+
+    const controlsInGroup = (control, group) => {
+        if (control.type !== "radio" || !control.name) return [control];
+        return [...group.querySelectorAll(`input[type="radio"][name="${control.name}"]`)];
+    };
+
+    const updateFieldState = (control, invalid) => {
+        const group = control.closest("[data-home-field-group]");
+        if (!group) return;
+
+        group.classList.toggle("has-error", invalid);
+        controlsInGroup(control, group).forEach((field) => {
+            if (invalid) field.setAttribute("aria-invalid", "true");
+            else field.removeAttribute("aria-invalid");
+        });
+
+        const error = group.querySelector("[data-home-field-error]");
+        if (error) {
+            error.hidden = !invalid;
+            error.classList.toggle("is-visible", invalid);
+        }
+    };
+
+    const validatePanel = (panel, { focus = true } = {}) => {
+        if (!panel) return true;
+
+        let firstInvalid = null;
+        controlsFor(panel).forEach((control) => {
+            const invalid = !control.checkValidity();
+            updateFieldState(control, invalid);
+            if (invalid && !firstInvalid) firstInvalid = control;
+        });
+
+        if (firstInvalid && focus) firstInvalid.focus();
+        return !firstInvalid;
+    };
+
+    const showStep = (stepNumber, { focusHeading = false, scroll = false } = {}) => {
+        currentStep = stepNumber;
+        furthestStep = Math.max(furthestStep, currentStep);
+
+        steps.forEach((step) => {
+            const active = Number(step.dataset.homeStep) === currentStep;
+            step.hidden = !active;
+            step.classList.toggle("is-active", active);
+        });
+
+        progressButtons.forEach((button) => {
+            const target = Number(button.dataset.homeStepTarget);
+            const active = target === currentStep;
+            button.disabled = target > furthestStep;
+            button.classList.toggle("is-active", active);
+            if (active) button.setAttribute("aria-current", "step");
+            else button.removeAttribute("aria-current");
+        });
+
+        const activePanel = panelFor(currentStep);
+        if (focusHeading) activePanel?.querySelector("h3")?.focus({ preventScroll: true });
+        if (scroll) activePanel?.scrollIntoView({ behavior: reducedMotion.matches ? "auto" : "smooth", block: "nearest" });
+    };
+
+    const updateChoiceSummary = (name, target) => {
+        const selected = form.querySelector(`input[name="${name}"]:checked`);
+        if (target) target.textContent = selected?.dataset.summaryValue || "Not selected yet";
+    };
+
+    const updateGoalSummary = () => {
+        const goal = form.elements.goal;
+        if (!goal || !summary.goal) return;
+        const value = goal.value.trim();
+        summary.goal.textContent = value ? `${value.slice(0, 72)}${value.length > 72 ? "…" : ""}` : "Add in step two";
+    };
+
+    const updateSummary = () => {
+        updateChoiceSummary("work_area", summary.area);
+        updateChoiceSummary("project_stage", summary.stage);
+        updateGoalSummary();
+    };
+
+    builder.classList.add("is-enhanced");
+    form.noValidate = true;
+    showStep(currentStep);
+    updateSummary();
+
+    form.addEventListener("click", (event) => {
+        const next = event.target.closest("[data-home-next-step]");
+        const back = event.target.closest("[data-home-back-step]");
+
+        if (next && validatePanel(panelFor(currentStep))) {
+            showStep(Math.min(steps.length, currentStep + 1), { focusHeading: true, scroll: true });
+        }
+        if (back) showStep(Math.max(1, currentStep - 1), { focusHeading: true, scroll: true });
+    });
+
+    progressButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            const target = Number(button.dataset.homeStepTarget);
+            if (target <= furthestStep) showStep(target, { focusHeading: true, scroll: true });
+        });
+    });
+
+    form.addEventListener("change", (event) => {
+        const control = event.target;
+        if (!(control instanceof HTMLInputElement || control instanceof HTMLSelectElement || control instanceof HTMLTextAreaElement)) return;
+
+        if (control.name === "work_area") updateChoiceSummary("work_area", summary.area);
+        if (control.name === "project_stage") updateChoiceSummary("project_stage", summary.stage);
+        if (control.checkValidity()) updateFieldState(control, false);
+    });
+
+    form.addEventListener("input", (event) => {
+        const control = event.target;
+        if (!(control instanceof HTMLInputElement || control instanceof HTMLTextAreaElement)) return;
+
+        if (control.name === "goal") updateGoalSummary();
+        if (control.checkValidity()) updateFieldState(control, false);
+    });
+
+    form.addEventListener("submit", (event) => {
+        let firstInvalidStep = null;
+        let firstInvalidControl = null;
+
+        steps.forEach((step) => {
+            const valid = validatePanel(step, { focus: false });
+            if (!valid && firstInvalidStep === null) {
+                firstInvalidStep = Number(step.dataset.homeStep);
+                firstInvalidControl = controlsFor(step).find((control) => !control.checkValidity());
+            }
+        });
+
+        if (firstInvalidStep !== null) {
+            event.preventDefault();
+            showStep(firstInvalidStep, { scroll: true });
+            firstInvalidControl?.focus({ preventScroll: true });
+        }
+    });
+
+    if (success) {
+        builder.classList.add("is-complete");
+        window.requestAnimationFrame(() => success.focus({ preventScroll: true }));
+    } else if (form.dataset.hasErrors === "true") {
+        window.requestAnimationFrame(() => {
+            const wideError = form.querySelector("[data-home-form-wide-error]");
+            const invalid = panelFor(currentStep)?.querySelector('[aria-invalid="true"]');
+            (wideError || invalid)?.focus({ preventScroll: true });
+        });
+    }
+
+    section.querySelector("[data-home-reset-project]")?.addEventListener("click", () => {
+        form.reset();
+        form.querySelectorAll("[data-home-field-group]").forEach((group) => group.classList.remove("has-error"));
+        form.querySelectorAll('[aria-invalid="true"]').forEach((control) => control.removeAttribute("aria-invalid"));
+        form.querySelectorAll("[data-home-field-error]").forEach((error) => {
+            error.hidden = true;
+            error.classList.remove("is-visible");
+        });
+        success.hidden = true;
+        builder.classList.remove("is-complete");
+        currentStep = 1;
+        furthestStep = 1;
+        updateSummary();
+        showStep(1, { focusHeading: true });
+        progress?.scrollIntoView({ behavior: reducedMotion.matches ? "auto" : "smooth", block: "nearest" });
+    });
 })();
