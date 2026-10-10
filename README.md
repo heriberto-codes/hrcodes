@@ -47,4 +47,4 @@ Foundation context for this project lives in:
 
 Workflow and state rules live in `docs/system/`.
 
-Installed from Turtle AI commit `5f5de00`.
+Installed from Turtle AI commit `d087c95` (branch `codex/turtle-design-workflow`).
