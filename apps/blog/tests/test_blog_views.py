@@ -1,8 +1,11 @@
+from django.template.loader import render_to_string
 from django.test import Client, TestCase
 from django.templatetags.static import static
 from django.urls import reverse
+from django.utils.html import escape
 
-from apps.blog.models import Post
+from apps.blog.models import Like, Post
+from apps.blog.tests.test_like_views import LikeFormParser
 from apps.blog.views import (
     GUARDRAILS_CHAPTERS,
     GUARDRAILS_INSIGHT_SLUG,
@@ -89,6 +92,144 @@ class TestBlogViews(TestCase):
         self.assertTemplateUsed(response, 'blog/blog_detail.html')
         self.assertTemplateNotUsed(response, 'blog/insight_detail.html')
 
+    def test_article_reads_preserve_missing_zero_and_positive_likes(self):
+        for count in (None, 0, 5):
+            for feedback in (False, True):
+                with self.subTest(count=count, feedback=feedback):
+                    Like.objects.all().delete()
+                    like = None if count is None else Like.objects.create(
+                        post=self.standard_post, like=count,
+                    )
+                    client = Client(enforce_csrf_checks=True)
+                    session = client.session
+                    session['liked_posts'] = [self.standard_post.pk]
+                    session['unrelated_value'] = 'preserve-me'
+                    session.save()
+                    session_before = dict(client.session)
+                    rows_before = list(Like.objects.values_list(
+                        'pk', 'post_id', 'like',
+                    ))
+                    url = self.blog_detail_url
+                    if feedback:
+                        url += '?liked=true'
+
+                    for method in ('get', 'get', 'head'):
+                        response = getattr(client, method)(url)
+
+                        self.assertEqual(response.status_code, 200)
+                        self.assertTemplateUsed(
+                            response, 'blog/blog_detail.html',
+                        )
+                        self.assertEqual(response.context['like'], like)
+                        self.assertEqual(
+                            response.context['post_was_liked'], feedback,
+                        )
+                        if method == 'get':
+                            self.assertContains(
+                                response, f'<small>{count or 0}</small>',
+                                html=True,
+                            )
+                            icon = LikeFormParser(
+                                response.content.decode(),
+                            ).forms[0]['icons'][0]
+                            self.assertIn(
+                                'fa-solid' if feedback else 'fa-regular',
+                                icon['class'].split(),
+                            )
+                        else:
+                            self.assertEqual(response.content, b'')
+                        self.assertEqual(
+                            list(Like.objects.values_list(
+                                'pk', 'post_id', 'like',
+                            )),
+                            rows_before,
+                        )
+                        self.assertEqual(dict(client.session), session_before)
+
+    def assert_like_forms(self, content, posts):
+        parsed = LikeFormParser(content)
+        expected_actions = [
+            reverse('like_post', args=[post.pk, post.slug]) for post in posts
+        ]
+        self.assertCountEqual(
+            [form['action'] for form in parsed.forms], expected_actions,
+        )
+        self.assertFalse(any(
+            anchor.get('href', '').startswith('/blog/liked/')
+            for anchor in parsed.anchors
+        ))
+        by_action = {form['action']: form for form in parsed.forms}
+        for post, action in zip(posts, expected_actions):
+            form = by_action[action]
+            self.assertEqual(form['method'], 'post')
+            tokens = [
+                field for field in form['inputs']
+                if field.get('name') == 'csrfmiddlewaretoken'
+            ]
+            self.assertEqual(len(tokens), 1)
+            self.assertEqual(tokens[0]['type'], 'hidden')
+            self.assertTrue(tokens[0].get('value'))
+            self.assertEqual(len(form['buttons']), 1)
+            button = form['buttons'][0]
+            self.assertEqual(button['type'], 'submit')
+            self.assertIn('blog-like-button', button['class'].split())
+            self.assertEqual(button['aria-label'], f'Like {post.title}')
+            self.assertIn(f'aria-label="Like {escape(post.title)}"', content)
+            self.assertEqual(len(form['icons']), 1)
+            self.assertEqual(form['icons'][0]['aria-hidden'], 'true')
+        return parsed.forms
+
+    def test_all_like_callers_render_working_internal_post_forms(self):
+        self.standard_post.title = 'Article "quoted" <b>& text'
+        self.standard_post.save(update_fields=['title'])
+        draft = Post.objects.create(
+            title='Draft without a Like control', slug='draft-without-like',
+            snippet='Draft.', status=0,
+        )
+        draft_action = reverse('like_post', args=[draft.pk, draft.slug])
+
+        for surface in ('detail', 'index', 'legacy_include'):
+            with self.subTest(surface=surface):
+                Like.objects.all().delete()
+                client = Client(enforce_csrf_checks=True)
+                url = (
+                    self.blog_detail_url if surface == 'detail'
+                    else self.base_url
+                )
+                response = client.get(url)
+                self.assertEqual(response.status_code, 200)
+                content = response.content.decode()
+                if surface == 'legacy_include':
+                    content = render_to_string(
+                        'includes/blog_home_page.html',
+                        {'posts': [self.standard_post, draft]},
+                        request=response.wsgi_request,
+                    )
+                forms = self.assert_like_forms(content, [self.standard_post])
+                self.assertNotIn(draft_action, content)
+                self.assertFalse(Like.objects.exists())
+                self.assertNotIn('liked_posts', client.session)
+                token = next(
+                    field['value'] for field in forms[0]['inputs']
+                    if field.get('name') == 'csrfmiddlewaretoken'
+                )
+
+                submitted = client.post(
+                    forms[0]['action'], {'csrfmiddlewaretoken': token},
+                    HTTP_ORIGIN='http://testserver',
+                )
+
+                self.assertRedirects(
+                    submitted, f'{self.blog_detail_url}?liked=true',
+                    fetch_redirect_response=False,
+                )
+                self.assertEqual(
+                    Like.objects.get(post=self.standard_post).like, 1,
+                )
+                self.assertEqual(
+                    client.session['liked_posts'], [self.standard_post.pk],
+                )
+
     def test_blog_detail_rejects_mismatched_slug(self):
         mismatched_url = reverse(
             'blog_detail',
@@ -120,6 +261,7 @@ class TestBlogViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'blog/insight_detail.html')
         self.assertTemplateNotUsed(response, 'blog/blog_detail.html')
+        self.assertEqual(LikeFormParser(response.content.decode()).forms, [])
         self.assertContains(
             response,
             f'href="{static("blog/insight_detail.css")}"',

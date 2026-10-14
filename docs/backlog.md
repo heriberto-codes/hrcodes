@@ -4,7 +4,7 @@
 
 - [x] Implement the approved business-focused homepage and Guardrails Insights article experience (`business_focused_homepage`)
 - [x] Protect project-brief submissions with session-independent abuse throttling
-- [ ] Secure blog likes with CSRF-protected POST actions limited to exact published posts
+- [x] Secure blog likes with CSRF-protected POST actions limited to exact published posts
 - [x] Prevent project-brief data and client identifiers from reaching Sentry (`project_brief_sentry_privacy`)
 
 ## Architecture Improvements

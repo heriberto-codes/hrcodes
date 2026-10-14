@@ -25,3 +25,37 @@ img {
     color: #000000;
     margin-bottom: 0px;
 }
+
+.blog-like-form {
+    display: inline-block;
+    margin: 0;
+    vertical-align: middle;
+}
+
+.blog-like-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0.375rem 0.5rem;
+    border: 0;
+    background: transparent;
+    color: var(--hrColorWhite);
+    font: inherit;
+    letter-spacing: normal;
+    animation: none;
+    transition: none;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.blog-like-button:hover,
+.blog-like-button:active {
+    background: transparent;
+    box-shadow: none;
+}
+
+.blog-like-button:focus {
+    outline: 2px solid var(--hrColorOrange);
+    outline-offset: 3px;
+}

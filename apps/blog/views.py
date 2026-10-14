@@ -4,7 +4,7 @@ from html import unescape
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.utils.html import strip_tags
-from django.urls import reverse
+from django.views.decorators.http import require_POST
 
 from apps.blog.models import Like, Post
 
@@ -210,7 +210,7 @@ def blog_detail(request, pk, slug):
             },
         )
 
-    like, created = Like.objects.get_or_create(post=post)
+    like = Like.objects.filter(post=post).first()
     post_was_liked = request.GET.get('liked') == 'true'
     context = {
         'post': post,
@@ -222,9 +222,10 @@ def blog_detail(request, pk, slug):
     return render(request, 'blog/blog_detail.html', context)
 
 
+@require_POST
 def like_post(request, pk, slug):
-    # get the post by id 
-    post = get_object_or_404(Post, pk=pk)
+    # Resolve the exact published post before reading session state.
+    post = get_object_or_404(Post, pk=pk, slug=slug, status=1)
     # get the set of liked post from the session or create an empty set 
     liked_posts = list(request.session.get('liked_posts', set()))
     # check if the post has already been liked in the current session 
@@ -236,7 +237,6 @@ def like_post(request, pk, slug):
         liked_posts.append(post.pk)
         request.session['liked_posts'] = liked_posts
 
-    # return HttpResponseRedirect(reverse('blog_detail', args=[pk, slug]))
-    return HttpResponseRedirect(reverse('blog_detail', args=[pk, slug]) + '?liked=true')
+    return HttpResponseRedirect(f'{post.get_absolute_url()}?liked=true')
 
 #TODO add some color to the blog detail error page and the blog post error page

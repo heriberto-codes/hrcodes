@@ -27,11 +27,9 @@
                     </div>
                     <div class='row pb-5'>
                         <div class='col-12 col-lg-12'>
-                            <a href="{% url 'like_post' post.id post.slug %}">
-                                Like <i class="{% if post_was_liked %}fa-solid{% else %}fa-regular{% endif %} fa-thumbs-up fa-lg"></i>
-                            </a>
+                            {% include 'blog/includes/like_form.html' with post=post %}
                             <small>
-                                {{ like.like }}
+                                {{ like.like|default:"0" }}
                             </small>
                         </div>
                      </div>                    

@@ -1,0 +1,6 @@
+<form class="blog-like-form" method="post" action="{% url 'like_post' post.pk post.slug %}">
+    {% csrf_token %}
+    <button class="blog-like-button" type="submit" aria-label="Like {{ post.title }}">
+        Like <i class="{% if post_was_liked %}fa-solid{% else %}fa-regular{% endif %} fa-thumbs-up fa-lg" aria-hidden="true"></i>
+    </button>
+</form>
