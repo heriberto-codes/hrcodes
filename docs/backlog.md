@@ -9,7 +9,7 @@
 
 ## Architecture Improvements
 
-- [ ] Centralize published-post filtering across public blog and homepage queries
+- [x] Centralize published-post filtering across public blog and homepage queries
 - [ ] Add security regression coverage for inquiry throttling, like mutations, and draft exposure
 - [ ] Preserve the admin-only rich-text trust boundary and validate external URL schemes if authoring expands
 

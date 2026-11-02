@@ -217,6 +217,16 @@ class TestLikeViews(TestCase):
 
         self.assert_rejected_without_mutation(url)
 
+    def test_unsupported_status_rejected_without_mutation(self):
+        self.draft.status = 2
+        self.draft.save(update_fields=['status'])
+        url = reverse(
+            'like_post',
+            kwargs={'pk': self.draft.pk, 'slug': self.draft.slug},
+        )
+
+        self.assert_rejected_without_mutation(url, post=self.draft)
+
     def test_invalid_csrf_posts_never_mutate_likes_or_session(self):
         cases = (
             'missing_cookie', 'missing_token', 'invalid_token', 'bad_origin',

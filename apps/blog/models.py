@@ -17,6 +17,11 @@ class Category(models.Model):
     def get_absolute_url(self):
         return reverse('blog_category', kwargs={'slug': self.slug})
 
+class PostQuerySet(models.QuerySet):
+    def published(self):
+        return self.filter(status=1)
+
+
 class Post(models.Model):
     title = models.CharField(max_length=225)
     slug = models.SlugField(max_length=225, unique=True)
@@ -27,6 +32,8 @@ class Post(models.Model):
     last_modified = models.DateTimeField(auto_now_add=True)
     categories = models.ManyToManyField('Category', related_name='posts', blank=False)
     status = models.IntegerField(choices=STATUS, default=0)
+
+    objects = PostQuerySet.as_manager()
     
     def get_absolute_url(self):
         return reverse(

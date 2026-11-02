@@ -1,10 +1,13 @@
+from datetime import timedelta
+
 from django.template.loader import render_to_string
 from django.test import Client, TestCase
 from django.templatetags.static import static
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.html import escape
 
-from apps.blog.models import Like, Post
+from apps.blog.models import Category, Like, Post
 from apps.blog.tests.test_like_views import LikeFormParser
 from apps.blog.views import (
     GUARDRAILS_CHAPTERS,
@@ -253,6 +256,34 @@ class TestBlogViews(TestCase):
 
         self.assertEqual(response.status_code, 404)
 
+    def test_detail_rejects_non_published_standard_and_guardrails_posts(self):
+        guardrails_post = self.create_guardrails_post()
+        for post in (self.standard_post, guardrails_post):
+            for status in (0, 2):
+                with self.subTest(slug=post.slug, status=status):
+                    post.status = status
+                    post.save(update_fields=['status'])
+
+                    response = self.client.get(post.get_absolute_url())
+
+                    self.assertEqual(response.status_code, 404)
+                    self.assertNotContains(response, post.body, status_code=404)
+
+    def test_detail_preserves_category_prefetch(self):
+        category = Category.objects.create(name='Engineering')
+        for post in (self.standard_post, self.create_guardrails_post()):
+            with self.subTest(slug=post.slug):
+                post.categories.add(category)
+
+                response = self.client.get(post.get_absolute_url())
+
+                self.assertEqual(response.status_code, 200)
+                with self.assertNumQueries(0):
+                    self.assertEqual(
+                        list(response.context['post'].categories.all()),
+                        [category],
+                    )
+
     def test_guardrails_post_uses_signal_transcript_contract(self):
         guardrails_post = self.create_guardrails_post()
 
@@ -306,15 +337,24 @@ class TestBlogViews(TestCase):
             ],
             [channel['slug'] for channel in RELATED_INSIGHT_CHANNELS],
         )
+        with self.assertNumQueries(0):
+            for signal in response.context['related_signals']:
+                self.assertEqual(list(signal['post'].categories.all()), [])
 
-        second_post.status = 0
-        second_post.save(update_fields=['status'])
-        response = self.client.get(guardrails_post.get_absolute_url())
+        for status in (0, 2):
+            with self.subTest(status=status):
+                second_post.status = status
+                second_post.save(update_fields=['status'])
+                response = self.client.get(guardrails_post.get_absolute_url())
 
-        self.assertEqual(
-            [signal['post'] for signal in response.context['related_signals']],
-            [first_post],
-        )
+                self.assertEqual(
+                    [
+                        signal['post']
+                        for signal in response.context['related_signals']
+                    ],
+                    [first_post],
+                )
+                self.assertNotContains(response, second_post.get_absolute_url())
 
     def test_guardrails_uses_archive_fallback_without_related_posts(self):
         guardrails_post = self.create_guardrails_post()
@@ -329,6 +369,110 @@ class TestBlogViews(TestCase):
         response = self.client.get(self.blog_category_url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'blog/blog_category.html')
+
+
+class TestPublishedPostListings(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.category = Category.objects.create(
+            name='Python engineering', slug='different-slug',
+        )
+        cls.other_category = Category.objects.create(
+            name='Other', slug='Python',
+        )
+
+    def create_post(self, slug, status, category, days_ago=0):
+        post = Post.objects.create(
+            title=f'{slug} title', slug=slug,
+            snippet=f'{slug} snippet', body=f'<p>{slug} body</p>',
+            status=status,
+        )
+        post.categories.add(category)
+        Post.objects.filter(pk=post.pk).update(
+            created_on=timezone.now() - timedelta(days=days_ago),
+        )
+        return post
+
+    def listing_routes(self):
+        return (
+            (reverse('blog_index'), 'blog/blog_index.html'),
+            (
+                reverse('blog_category', kwargs={'category': 'Python'}),
+                'blog/blog_category.html',
+            ),
+        )
+
+    def test_listings_show_only_published_posts_in_newest_first_order(self):
+        newer = self.create_post('newer-published', 1, self.category)
+        older = self.create_post('older-published', 1, self.category, 3)
+        draft = self.create_post('private-draft', 0, self.category)
+        unsupported = self.create_post('private-unsupported', 2, self.category)
+        unrelated = self.create_post(
+            'unrelated-published', 1, self.other_category, 1,
+        )
+        all_posts = [newer, older, draft, unsupported, unrelated]
+
+        for url, template in self.listing_routes():
+            with self.subTest(url=url):
+                expected = (
+                    [newer, unrelated, older]
+                    if template == 'blog/blog_index.html' else [newer, older]
+                )
+
+                response = self.client.get(url)
+
+                self.assertEqual(response.status_code, 200)
+                self.assertTemplateUsed(response, template)
+                self.assertQuerySetEqual(response.context['posts'], expected)
+                for post in all_posts:
+                    assertion = (
+                        self.assertContains if post in expected
+                        else self.assertNotContains
+                    )
+                    for value in (
+                        post.title, post.snippet, post.get_absolute_url(),
+                    ):
+                        assertion(response, value)
+                for post in (draft, unsupported):
+                    self.assertNotContains(response, post.body)
+                    self.assertNotContains(
+                        response,
+                        reverse('like_post', args=[post.pk, post.slug]),
+                    )
+                self.assertNotContains(
+                    response, 'Chill ✋ the blogs are coming soon.',
+                )
+                if template == 'blog/blog_category.html':
+                    self.assertEqual(response.context['category'], 'Python')
+
+    def assert_empty_listings(self):
+        for url, template in self.listing_routes():
+            with self.subTest(url=url):
+                response = self.client.get(url)
+
+                self.assertEqual(response.status_code, 200)
+                self.assertTemplateUsed(response, template)
+                self.assertQuerySetEqual(response.context['posts'], [])
+                if template == 'blog/blog_index.html':
+                    self.assertContains(
+                        response, 'Chill ✋ the blogs are coming soon.', count=1,
+                    )
+                for post in Post.objects.all():
+                    for value in (
+                        post.title, post.snippet, post.body,
+                        post.get_absolute_url(),
+                        reverse('like_post', args=[post.pk, post.slug]),
+                    ):
+                        self.assertNotContains(response, value)
+
+    def test_listings_with_no_posts_return_empty_results(self):
+        self.assert_empty_listings()
+
+    def test_listings_with_only_drafts_return_empty_results(self):
+        self.create_post('first-private-draft', 0, self.category)
+        self.create_post('second-private-draft', 0, self.category)
+
+        self.assert_empty_listings()
 
 
 class TestGuardrailsTranscript(TestCase):

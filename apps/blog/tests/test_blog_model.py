@@ -1,8 +1,97 @@
-from django.test import TestCase
+from django.contrib import admin
+from django.test import RequestFactory, TestCase
 from django.urls import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 from apps.blog.models import Post
+
+
+class TestPublishedPostQuerySet(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.first_published = Post.objects.create(
+            title='Selected first', slug='selected-a', snippet='First.',
+            status=1,
+        )
+        cls.second_published = Post.objects.create(
+            title='Selected second', slug='selected-b', snippet='Second.',
+            status=1,
+        )
+        cls.other_published = Post.objects.create(
+            title='Other published', slug='other', snippet='Other.',
+            status=1,
+        )
+        cls.draft = Post.objects.create(
+            title='Selected draft', slug='selected-draft', snippet='Draft.',
+            status=0,
+        )
+        cls.unsupported = Post.objects.create(
+            title='Selected unsupported', slug='selected-unsupported',
+            snippet='Unsupported status.', status=2,
+        )
+        cls.all_posts = [
+            cls.first_published, cls.second_published, cls.other_published,
+            cls.draft, cls.unsupported,
+        ]
+
+    def test_published_returns_only_exact_published_status_without_writes(self):
+        statuses_before = dict(Post.objects.values_list('pk', 'status'))
+
+        self.assertQuerySetEqual(
+            Post.objects.published(),
+            [self.first_published, self.second_published, self.other_published],
+            ordered=False,
+        )
+
+        self.assertEqual(
+            dict(Post.objects.values_list('pk', 'status')), statuses_before,
+        )
+
+    def test_published_composes_with_filters_and_preserves_ordering(self):
+        querysets = (
+            Post.objects.filter(title__startswith='Selected')
+            .published().order_by('-slug'),
+            Post.objects.published()
+            .filter(title__startswith='Selected').order_by('-slug'),
+            Post.objects.filter(title__startswith='Selected')
+            .order_by('-slug').published(),
+        )
+
+        for index, queryset in enumerate(querysets):
+            with self.subTest(chain=index):
+                self.assertQuerySetEqual(
+                    queryset, [self.second_published, self.first_published],
+                )
+
+    def test_published_handles_empty_and_unpublished_only_querysets(self):
+        querysets = (
+            Post.objects.none().published(),
+            Post.objects.filter(
+                pk__in=[self.draft.pk, self.unsupported.pk],
+            ).published(),
+        )
+
+        for index, queryset in enumerate(querysets):
+            with self.subTest(case=index):
+                self.assertQuerySetEqual(queryset, [])
+
+    def test_ordinary_default_and_base_managers_keep_all_posts_visible(self):
+        for manager in (
+            Post.objects, Post._default_manager, Post._base_manager,
+        ):
+            with self.subTest(manager=manager.name):
+                self.assertQuerySetEqual(
+                    manager.all(), self.all_posts, ordered=False,
+                )
+
+    def test_registered_admin_queryset_keeps_drafts_visible(self):
+        request = RequestFactory().get(reverse('admin:blog_post_changelist'))
+        post_admin = admin.site.get_model_admin(Post)
+
+        self.assertQuerySetEqual(
+            post_admin.get_queryset(request), self.all_posts, ordered=False,
+        )
+
 
 class TestBlogPost(TestCase):
     def setUp(self) -> None:

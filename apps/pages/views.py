@@ -65,9 +65,8 @@ class HomePageView(FormView):
         slugs = [channel['slug'] for channel in FEATURED_INSIGHT_CHANNELS]
         published_posts = {
             post.slug: post
-            for post in Post.objects.filter(
+            for post in Post.objects.published().filter(
                 slug__in=slugs,
-                status=1,
             ).prefetch_related('categories')
         }
         insight_signals = [

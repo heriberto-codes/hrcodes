@@ -151,7 +151,7 @@ def _guardrails_transcript(body):
 
 def blog_index(request):
     try: 
-        posts = Post.objects.all().order_by('-created_on')
+        posts = Post.objects.published().order_by('-created_on')
         context = {
             'posts': posts,
         }
@@ -161,7 +161,7 @@ def blog_index(request):
         return render(request, 'blog_post_error_page.html')
 
 def blog_category(request, category):
-    posts = Post.objects.filter(
+    posts = Post.objects.published().filter(
         categories__name__contains=category
     ).order_by(
         '-created_on'
@@ -174,10 +174,9 @@ def blog_category(request, category):
 
 def blog_detail(request, pk, slug):
     post = get_object_or_404(
-        Post.objects.prefetch_related('categories'),
+        Post.objects.published().prefetch_related('categories'),
         pk=pk,
         slug=slug,
-        status=1,
     )
 
     if post.slug == GUARDRAILS_INSIGHT_SLUG:
@@ -186,11 +185,10 @@ def blog_detail(request, pk, slug):
         )
         related_posts_by_slug = {
             related_post.slug: related_post
-            for related_post in Post.objects.filter(
+            for related_post in Post.objects.published().filter(
                 slug__in=[
                     channel['slug'] for channel in RELATED_INSIGHT_CHANNELS
                 ],
-                status=1,
             ).prefetch_related('categories')
         }
         related_signals = [
@@ -225,7 +223,7 @@ def blog_detail(request, pk, slug):
 @require_POST
 def like_post(request, pk, slug):
     # Resolve the exact published post before reading session state.
-    post = get_object_or_404(Post, pk=pk, slug=slug, status=1)
+    post = get_object_or_404(Post.objects.published(), pk=pk, slug=slug)
     # get the set of liked post from the session or create an empty set 
     liked_posts = list(request.session.get('liked_posts', set()))
     # check if the post has already been liked in the current session 

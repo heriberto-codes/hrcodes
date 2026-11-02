@@ -152,6 +152,15 @@ class TestViews(TestCase):
         form = response.context['form']
         self.assertIsInstance(form, ProjectBriefForm)
         self.assertFalse(form.is_bound)
+        self.assertEqual(response.context['posts'], [])
+        self.assertEqual(response.context['insight_signals'], [])
+        self.assertEqual(response.context['insight_signal_count'], 0)
+        self.assertFalse(response.context['insights_complete'])
+        self.assertEqual(
+            response.context['missing_insight_channels'],
+            list(self.INSIGHT_NAMES),
+        )
+        self.assertContains(response, 'No signals are broadcasting right now.')
 
     def test_home_renders_start_project_brief_contract(self):
         response = self.client.get(self.base_url)
@@ -701,6 +710,13 @@ class TestViews(TestCase):
                 'categories',
                 signal['post']._prefetched_objects_cache,
             )
+            self.assertEqual(signal['post'].status, 1)
+            with self.assertNumQueries(0):
+                categories = signal['post'].categories.all()
+                self.assertEqual(
+                    [category.name for category in categories],
+                    [f'Topic {index + 1}'],
+                )
             self.assertContains(response, post.title)
             self.assertContains(response, post.snippet)
             self.assertContains(response, f"Topic {index + 1}")
@@ -740,41 +756,53 @@ class TestViews(TestCase):
             status=1,
         )
 
-        response = self.client.get(self.base_url)
-        insight_signals = response.context['insight_signals']
+        for status in (0, 2):
+            with self.subTest(status=status):
+                draft.status = status
+                draft.save(update_fields=['status'])
 
-        self.assertEqual(
-            [signal['post'].slug for signal in insight_signals],
-            [available_first.slug, available_third.slug],
-        )
-        self.assertEqual(
-            [signal['name'] for signal in insight_signals],
-            ['Guardrails', 'Revival'],
-        )
-        self.assertEqual(response.context['insight_signal_count'], 2)
-        self.assertFalse(response.context['insights_complete'])
-        self.assertEqual(
-            response.context['missing_insight_channels'],
-            ['Constraints'],
-        )
-        self.assertContains(response, available_first.title)
-        self.assertContains(response, available_third.title)
-        self.assertNotContains(response, draft.title)
-        self.assertNotContains(response, unrelated.title)
-        self.assertContains(
-            response,
-            'name="home-insight-signal"',
-            count=2,
-        )
-        self.assertContains(response, '02 signals loaded')
-        self.assertContains(
-            response,
-            'Some selected notes are temporarily off air.',
-        )
-        self.assertNotContains(
-            response,
-            'No signals are broadcasting right now.',
-        )
+                response = self.client.get(self.base_url)
+                insight_signals = response.context['insight_signals']
+
+                self.assertEqual(
+                    [signal['post'] for signal in insight_signals],
+                    [available_first, available_third],
+                )
+                self.assertEqual(
+                    response.context['posts'],
+                    [available_first, available_third],
+                )
+                self.assertEqual(
+                    [signal['name'] for signal in insight_signals],
+                    ['Guardrails', 'Revival'],
+                )
+                self.assertEqual(response.context['insight_signal_count'], 2)
+                self.assertFalse(response.context['insights_complete'])
+                self.assertEqual(
+                    response.context['missing_insight_channels'],
+                    ['Constraints'],
+                )
+                for post in (available_first, available_third):
+                    self.assertContains(response, post.title)
+                    self.assertContains(response, post.snippet)
+                for post in (draft, unrelated):
+                    self.assertNotContains(response, post.title)
+                    self.assertNotContains(response, post.snippet)
+                    self.assertNotContains(response, post.get_absolute_url())
+                self.assertContains(
+                    response,
+                    'name="home-insight-signal"',
+                    count=2,
+                )
+                self.assertContains(response, '02 signals loaded')
+                self.assertContains(
+                    response,
+                    'Some selected notes are temporarily off air.',
+                )
+                self.assertNotContains(
+                    response,
+                    'No signals are broadcasting right now.',
+                )
 
     def test_home_renders_empty_insights_fallback_without_tuner_controls(self):
         draft = self.create_insight_post(0, status=0)
@@ -795,8 +823,10 @@ class TestViews(TestCase):
             response.context['missing_insight_channels'],
             list(self.INSIGHT_NAMES),
         )
-        self.assertNotContains(response, draft.title)
-        self.assertNotContains(response, unrelated.title)
+        for post in (draft, unrelated):
+            self.assertNotContains(response, post.title)
+            self.assertNotContains(response, post.snippet)
+            self.assertNotContains(response, post.get_absolute_url())
         self.assertNotContains(response, 'name="home-insight-signal"')
         self.assertNotContains(response, 'class="home-insight-selector"')
         self.assertContains(
@@ -805,6 +835,80 @@ class TestViews(TestCase):
         )
         self.assertContains(response, 'Open the Insights archive')
         self.assertContains(response, reverse('blog_index'))
+
+    def test_form_redisplay_preserves_published_insights(self):
+        available_third = self.create_insight_post(2)
+        available_first = self.create_insight_post(0)
+        draft = self.create_insight_post(1, status=0)
+        cases = (
+            ('invalid', {'goal': 'Too short'}, True, 0),
+            ('delivery_failure', {}, True, 1),
+            ('throttled', {}, False, 0),
+        )
+
+        for name, overrides, allowed, send_count in cases:
+            with self.subTest(redisplay=name):
+                with (
+                    patch(
+                        'apps.pages.views.consume_project_inquiry_throttle',
+                        return_value=allowed,
+                    ),
+                    patch(
+                        'apps.pages.views.EmailMessage.send', return_value=0,
+                    ) as send,
+                ):
+                    response = self.client.post(
+                        self.base_url,
+                        data=self.project_brief_data(**overrides),
+                    )
+
+                self.assertEqual(response.status_code, 200)
+                self.assertTemplateUsed(response, 'home.html')
+                self.assertTrue(response.context['form'].is_bound)
+                self.assertTrue(response.context['form'].errors)
+                self.assertEqual(
+                    response.context['posts'],
+                    [available_first, available_third],
+                )
+                signals = response.context['insight_signals']
+                self.assertEqual(
+                    [signal['post'] for signal in signals],
+                    [available_first, available_third],
+                )
+                self.assertEqual(
+                    [signal['name'] for signal in signals],
+                    ['Guardrails', 'Revival'],
+                )
+                self.assertEqual(response.context['insight_signal_count'], 2)
+                self.assertFalse(response.context['insights_complete'])
+                self.assertEqual(
+                    response.context['missing_insight_channels'],
+                    ['Constraints'],
+                )
+                with self.assertNumQueries(0):
+                    categories = [
+                        list(signal['post'].categories.all())
+                        for signal in signals
+                    ]
+                    self.assertEqual(
+                        [[category.name for category in group]
+                         for group in categories],
+                        [['Topic 1'], ['Topic 3']],
+                    )
+                self.assertContains(response, available_first.title)
+                self.assertContains(response, available_third.title)
+                self.assertNotContains(response, draft.title)
+                self.assertNotContains(response, draft.snippet)
+                self.assertNotContains(response, draft.get_absolute_url())
+                self.assertContains(
+                    response,
+                    'Some selected notes are temporarily off air.',
+                )
+                self.assertNotContains(
+                    response,
+                    'No signals are broadcasting right now.',
+                )
+                self.assertEqual(send.call_count, send_count)
 
     def test_home_insights_css_preserves_tuner_accessibility_and_layout(self):
         home_css_path = finders.find('pages/home.css')
