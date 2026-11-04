@@ -10,8 +10,9 @@
 ## Architecture Improvements
 
 - [x] Centralize published-post filtering across public blog and homepage queries
-- [ ] Add security regression coverage for inquiry throttling, like mutations, and draft exposure
+- [x] Add security regression coverage for inquiry throttling, like mutations, and draft exposure
 - [ ] Preserve the admin-only rich-text trust boundary and validate external URL schemes if authoring expands
+- [ ] Nice to have: load blog category labels together to reduce database queries; revisit if listings become slow or the blog grows substantially beyond the expected 20 posts.
 
 ## Client Improvements
 

@@ -445,6 +445,72 @@ class TestPublishedPostListings(TestCase):
                 if template == 'blog/blog_category.html':
                     self.assertEqual(response.context['category'], 'Python')
 
+    def test_unpublishing_removes_previously_visible_public_content(self):
+        target = self.create_post(
+            RELATED_INSIGHT_CHANNELS[0]['slug'], 1, self.category,
+        )
+        companion = self.create_post(
+            RELATED_INSIGHT_CHANNELS[1]['slug'], 1, self.category, 1,
+        )
+        guardrails = self.create_post(
+            GUARDRAILS_INSIGHT_SLUG, 1, self.category, 2,
+        )
+
+        for status in (1, 0):
+            with self.subTest(status=status):
+                target.status = status
+                target.save(update_fields=['status'])
+                expected_posts = (
+                    [target, companion, guardrails] if status == 1
+                    else [companion, guardrails]
+                )
+                target_assertion = (
+                    self.assertContains if status == 1
+                    else self.assertNotContains
+                )
+
+                for url, template in self.listing_routes():
+                    with self.subTest(url=url):
+                        response = self.client.get(url)
+
+                        self.assertTemplateUsed(response, template)
+                        self.assertQuerySetEqual(
+                            response.context['posts'], expected_posts,
+                        )
+                        for value in (
+                            target.title, target.snippet,
+                            target.get_absolute_url(),
+                        ):
+                            target_assertion(response, value)
+                        for post in (companion, guardrails):
+                            for value in (
+                                post.title, post.snippet,
+                                post.get_absolute_url(),
+                            ):
+                                self.assertContains(response, value)
+
+                detail = self.client.get(target.get_absolute_url())
+                if status == 1:
+                    self.assertEqual(detail.context['post'], target)
+                    self.assertContains(detail, target.title)
+                    self.assertContains(detail, target.body)
+                else:
+                    for value in (target.title, target.snippet, target.body):
+                        self.assertNotContains(detail, value, status_code=404)
+
+                related = self.client.get(guardrails.get_absolute_url())
+                self.assertTemplateUsed(related, 'blog/insight_detail.html')
+                self.assertEqual(related.context['post'], guardrails)
+                self.assertEqual(
+                    [signal['post']
+                     for signal in related.context['related_signals']],
+                    [target, companion] if status == 1 else [companion],
+                )
+                for value in (target.title, target.get_absolute_url()):
+                    target_assertion(related, value)
+                self.assertContains(related, companion.title)
+                self.assertContains(related, companion.get_absolute_url())
+
     def assert_empty_listings(self):
         for url, template in self.listing_routes():
             with self.subTest(url=url):

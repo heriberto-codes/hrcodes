@@ -1,8 +1,10 @@
+from contextlib import nullcontext
 from datetime import datetime, timedelta, timezone as datetime_timezone
 from html.parser import HTMLParser
 from pathlib import Path
 from unittest.mock import patch
 
+from django.conf import settings
 from django.contrib.messages import get_messages
 from django.contrib.staticfiles import finders
 from django.core import mail
@@ -16,7 +18,7 @@ from django.urls import reverse
 from apps.blog.models import Category, Post
 from apps.pages.forms import ProjectBriefForm
 from apps.pages.models import ProjectInquiryThrottle
-from apps.pages.throttling import ProjectInquiryThrottleError
+from apps.pages.throttling import ProjectInquiryThrottleError, derive_bucket_key
 from apps.pages.views import (
     PROJECT_INQUIRY_COOLDOWN_SESSION_KEY,
     PROJECT_INQUIRY_DELIVERY_ERROR,
@@ -71,6 +73,28 @@ class HomepageContinuityParser(HTMLParser):
             self.fragment_targets.append(href[1:])
         if tag == 'h1':
             self.heading_one_count += 1
+
+
+class ProjectBriefTokenParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.in_project_form = False
+        self.tokens = []
+
+    def handle_starttag(self, tag, attrs):
+        attributes = dict(attrs)
+        if tag == 'form':
+            self.in_project_form = 'data-home-project-form' in attributes
+        elif (
+            self.in_project_form
+            and tag == 'input'
+            and attributes.get('name') == 'csrfmiddlewaretoken'
+        ):
+            self.tokens.append(attributes.get('value'))
+
+    def handle_endtag(self, tag):
+        if tag == 'form':
+            self.in_project_form = False
 
 
 @override_settings(
@@ -135,6 +159,19 @@ class TestViews(TestCase):
         }
         data.update(overrides)
         return data
+
+    def rendered_project_brief_token(self, client):
+        response = client.get(self.base_url, secure=True)
+        self.assertEqual(response.status_code, 200)
+        parser = ProjectBriefTokenParser()
+        parser.feed(response.content.decode())
+        self.assertEqual(len(parser.tokens), 1)
+        self.assertTrue(parser.tokens[0])
+        self.assertIn(settings.CSRF_COOKIE_NAME, client.cookies)
+        return parser.tokens[0]
+
+    def inquiry_throttle_rows(self):
+        return list(ProjectInquiryThrottle.objects.order_by('pk').values())
 
     def test_can_load_base_template(self):
         response = self.client.get(self.base_url)
@@ -406,11 +443,49 @@ class TestViews(TestCase):
         self.assertEqual(ProjectInquiryThrottle.objects.get().attempt_count, 1)
 
     def test_fresh_sessions_share_throttle_only_for_same_client_address(self):
-        first_response = self.client.post(
-            self.base_url,
-            data=self.project_brief_data(),
+        first_client = Client(
+            enforce_csrf_checks=True,
+            HTTP_FLY_CLIENT_IP='203.0.113.20',
         )
-        fresh_client = Client(HTTP_FLY_CLIENT_IP='203.0.113.20')
+        first_token = self.rendered_project_brief_token(first_client)
+        first_response = first_client.post(
+            self.base_url,
+            data=self.project_brief_data(csrfmiddlewaretoken=first_token),
+            secure=True,
+            HTTP_ORIGIN='https://testserver',
+        )
+        self.assertRedirects(
+            first_response,
+            f'{self.base_url}#start-a-project',
+            fetch_redirect_response=False,
+        )
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(ProjectInquiryThrottle.objects.get().attempt_count, 1)
+        self.assertEqual(
+            first_client.session[PROJECT_INQUIRY_COOLDOWN_SESSION_KEY],
+            self.now.timestamp(),
+        )
+        self.assertIn(
+            'Your project brief was sent. Thank you for the context.',
+            [
+                str(message)
+                for message in get_messages(first_response.wsgi_request)
+            ],
+        )
+        rows_before = self.inquiry_throttle_rows()
+
+        fresh_client = Client(
+            enforce_csrf_checks=True,
+            HTTP_FLY_CLIENT_IP='203.0.113.20',
+        )
+        session = fresh_client.session
+        session['unrelated_value'] = 'preserve-me'
+        session.save()
+        fresh_token = self.rendered_project_brief_token(fresh_client)
+        session_before = dict(fresh_client.session)
+        self.assertNotEqual(
+            first_client.session.session_key, fresh_client.session.session_key,
+        )
         changed_brief = self.project_brief_data(
             email='grace@example.com',
             goal='Build a different product for a different business.',
@@ -418,10 +493,11 @@ class TestViews(TestCase):
 
         blocked_response = fresh_client.post(
             self.base_url,
-            data=changed_brief,
+            data={**changed_brief, 'csrfmiddlewaretoken': fresh_token},
+            secure=True,
+            HTTP_ORIGIN='https://testserver',
         )
 
-        self.assertEqual(first_response.status_code, 302)
         self.assertEqual(blocked_response.status_code, 200)
         self.assertEqual(len(mail.outbox), 1)
         self.assertIn(
@@ -436,12 +512,21 @@ class TestViews(TestCase):
             PROJECT_INQUIRY_COOLDOWN_SESSION_KEY,
             fresh_client.session,
         )
-        self.assertEqual(ProjectInquiryThrottle.objects.get().attempt_count, 1)
+        self.assertEqual(dict(fresh_client.session), session_before)
+        self.assertEqual(self.inquiry_throttle_rows(), rows_before)
+        self.assertNotContains(blocked_response, 'data-home-project-success')
+        self.assertEqual(list(get_messages(blocked_response.wsgi_request)), [])
 
-        different_client = Client(HTTP_FLY_CLIENT_IP='203.0.113.21')
+        different_client = Client(
+            enforce_csrf_checks=True,
+            HTTP_FLY_CLIENT_IP='203.0.113.21',
+        )
+        different_token = self.rendered_project_brief_token(different_client)
         allowed_response = different_client.post(
             self.base_url,
-            data=changed_brief,
+            data={**changed_brief, 'csrfmiddlewaretoken': different_token},
+            secure=True,
+            HTTP_ORIGIN='https://testserver',
         )
 
         self.assertRedirects(
@@ -643,20 +728,59 @@ class TestViews(TestCase):
             float,
         )
 
+    @override_settings(PROJECT_INQUIRY_THROTTLE_LIMIT=3)
     def test_project_brief_post_requires_csrf_token(self):
-        csrf_client = Client(
-            enforce_csrf_checks=True,
-            HTTP_FLY_CLIENT_IP='203.0.113.20',
+        ProjectInquiryThrottle.objects.create(
+            bucket_key=derive_bucket_key(
+                '203.0.113.20', int(self.now.timestamp()) // 60,
+            ),
+            attempt_count=1,
+            expires_at=self.now + timedelta(seconds=1),
         )
-
-        response = csrf_client.post(
-            self.base_url,
-            data=self.project_brief_data(),
+        cases = (
+            'missing_cookie', 'missing_token', 'malformed_token', 'bad_origin',
         )
+        for case in cases:
+            with self.subTest(case=case):
+                csrf_client = Client(
+                    enforce_csrf_checks=True,
+                    HTTP_FLY_CLIENT_IP='203.0.113.20',
+                )
+                session = csrf_client.session
+                session['unrelated_value'] = 'preserve-me'
+                session[PROJECT_INQUIRY_COOLDOWN_SESSION_KEY] = (
+                    self.now.timestamp() - 60
+                )
+                session.save()
+                token = self.rendered_project_brief_token(csrf_client)
+                data = self.project_brief_data(csrfmiddlewaretoken=token)
+                origin = 'https://testserver'
+                if case == 'missing_cookie':
+                    del csrf_client.cookies[settings.CSRF_COOKIE_NAME]
+                elif case == 'missing_token':
+                    del data['csrfmiddlewaretoken']
+                elif case == 'malformed_token':
+                    data['csrfmiddlewaretoken'] = 'invalid-token'
+                else:
+                    origin = 'https://untrusted.example'
+                rows_before = self.inquiry_throttle_rows()
+                session_before = dict(csrf_client.session)
 
-        self.assertEqual(response.status_code, 403)
-        self.assertEqual(mail.outbox, [])
-        self.assertFalse(ProjectInquiryThrottle.objects.exists())
+                response = csrf_client.post(
+                    self.base_url,
+                    data=data,
+                    secure=True,
+                    HTTP_ORIGIN=origin,
+                )
+
+                self.assertEqual(response.status_code, 403)
+                self.assertEqual(mail.outbox, [])
+                self.assertEqual(self.inquiry_throttle_rows(), rows_before)
+                self.assertEqual(dict(csrf_client.session), session_before)
+                self.assertEqual(list(get_messages(response.wsgi_request)), [])
+                self.assertNotContains(
+                    response, 'data-home-project-success', status_code=403,
+                )
 
     def test_successful_project_brief_renders_confirmation_after_redirect(self):
         response = self.client.post(
@@ -804,6 +928,59 @@ class TestViews(TestCase):
                     'No signals are broadcasting right now.',
                 )
 
+    def test_home_removes_previously_visible_insight_after_unpublishing(self):
+        first, target, third = [
+            self.create_insight_post(index) for index in range(3)
+        ]
+
+        for status in (1, 0):
+            with self.subTest(status=status):
+                target.status = status
+                target.save(update_fields=['status'])
+
+                response = self.client.get(self.base_url)
+
+                expected_posts = (
+                    [first, target, third] if status == 1 else [first, third]
+                )
+                self.assertEqual(response.context['posts'], expected_posts)
+                self.assertEqual(
+                    [signal['post']
+                     for signal in response.context['insight_signals']],
+                    expected_posts,
+                )
+                self.assertEqual(
+                    response.context['insight_signal_count'],
+                    len(expected_posts),
+                )
+                self.assertEqual(
+                    response.context['insights_complete'], status == 1,
+                )
+                self.assertEqual(
+                    response.context['missing_insight_channels'],
+                    [] if status == 1 else ['Constraints'],
+                )
+                target_assertion = (
+                    self.assertContains if status == 1
+                    else self.assertNotContains
+                )
+                for value in (
+                    target.title, target.snippet, target.get_absolute_url(),
+                ):
+                    target_assertion(response, value)
+                for post in (first, third):
+                    for value in (
+                        post.title, post.snippet, post.get_absolute_url(),
+                    ):
+                        self.assertContains(response, value)
+                fallback_assertion = (
+                    self.assertNotContains if status == 1
+                    else self.assertContains
+                )
+                fallback_assertion(
+                    response, 'Some selected notes are temporarily off air.',
+                )
+
     def test_home_renders_empty_insights_fallback_without_tuner_controls(self):
         draft = self.create_insight_post(0, status=0)
         unrelated = Post.objects.create(
@@ -841,21 +1018,28 @@ class TestViews(TestCase):
         available_first = self.create_insight_post(0)
         draft = self.create_insight_post(1, status=0)
         cases = (
-            ('invalid', {'goal': 'Too short'}, True, 0),
-            ('delivery_failure', {}, True, 1),
-            ('throttled', {}, False, 0),
+            ('invalid', {'goal': 'Too short'}, True, 0, None),
+            ('delivery_failure', {}, True, 1, None),
+            ('throttled', {}, False, 0, None),
+            (
+                'limiter_exception', {}, True, 0,
+                ProjectInquiryThrottleError('Synthetic limiter failure'),
+            ),
         )
 
-        for name, overrides, allowed, send_count in cases:
+        for name, overrides, allowed, send_count, error in cases:
             with self.subTest(redisplay=name):
                 with (
                     patch(
                         'apps.pages.views.consume_project_inquiry_throttle',
                         return_value=allowed,
-                    ),
+                        side_effect=error,
+                    ) as consume,
                     patch(
                         'apps.pages.views.EmailMessage.send', return_value=0,
                     ) as send,
+                    self.assertLogs('apps.pages.views', level='ERROR')
+                    if error else nullcontext(),
                 ):
                     response = self.client.post(
                         self.base_url,
@@ -909,6 +1093,17 @@ class TestViews(TestCase):
                     'No signals are broadcasting right now.',
                 )
                 self.assertEqual(send.call_count, send_count)
+                if error:
+                    consume.assert_called_once()
+                    self.assertEqual(
+                        list(response.context['form'].non_field_errors()),
+                        [PROJECT_INQUIRY_DELIVERY_ERROR],
+                    )
+                    self.assertContains(
+                        response, PROJECT_INQUIRY_DELIVERY_ERROR,
+                    )
+                    self.assertNotContains(response, str(error))
+                    self.assertEqual(mail.outbox, [])
 
     def test_home_insights_css_preserves_tuner_accessibility_and_layout(self):
         home_css_path = finders.find('pages/home.css')

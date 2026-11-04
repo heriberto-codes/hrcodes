@@ -75,7 +75,10 @@ class TestLikeViews(TestCase):
         forms = LikeFormParser(response.content.decode()).forms
         self.assertEqual(len(forms), 1)
         form = forms[0]
-        self.assertEqual(form['action'], self.like_url)
+        self.assertEqual(form['action'], reverse(
+            'like_post',
+            kwargs={'pk': self.post.pk, 'slug': self.post.slug},
+        ))
         self.assertEqual(form['method'], 'post')
         tokens = [
             field['value'] for field in form['inputs']
@@ -226,6 +229,113 @@ class TestLikeViews(TestCase):
         )
 
         self.assert_rejected_without_mutation(url, post=self.draft)
+
+    def test_rendered_like_form_rejected_after_unpublishing(self):
+        for existing_like in (False, True):
+            for previously_liked in (False, True):
+                with self.subTest(
+                    existing_like=existing_like,
+                    previously_liked=previously_liked,
+                ):
+                    self.post.status = 1
+                    self.post.save(update_fields=['status'])
+                    Like.objects.all().delete()
+                    Like.objects.create(post=self.other_post, like=3)
+                    if existing_like:
+                        Like.objects.create(post=self.post, like=7)
+                    client = Client(enforce_csrf_checks=True)
+                    session = client.session
+                    session['unrelated_value'] = 'preserve-me'
+                    session['liked_posts'] = [self.other_post.pk]
+                    if previously_liked:
+                        session['liked_posts'].append(self.post.pk)
+                    session.save()
+                    form, token = self.rendered_form(client)
+
+                    self.post.status = 0
+                    self.post.save(update_fields=['status'])
+                    rows_before = self.like_rows()
+                    session_before = dict(client.session)
+
+                    response = client.post(
+                        form['action'], {'csrfmiddlewaretoken': token},
+                        HTTP_ORIGIN='http://testserver',
+                    )
+
+                    self.assertEqual(response.status_code, 404)
+                    self.assert_state_unchanged(
+                        client, rows_before, session_before,
+                    )
+
+    def test_rendered_like_form_rejected_after_slug_change(self):
+        original_slug = self.post.slug
+        for existing_like in (False, True):
+            for previously_liked in (False, True):
+                with self.subTest(
+                    existing_like=existing_like,
+                    previously_liked=previously_liked,
+                ):
+                    self.post.slug = original_slug
+                    self.post.save(update_fields=['slug'])
+                    Like.objects.all().delete()
+                    unrelated_like = Like.objects.create(
+                        post=self.other_post, like=3,
+                    )
+                    if existing_like:
+                        Like.objects.create(post=self.post, like=7)
+                    client = Client(enforce_csrf_checks=True)
+                    session = client.session
+                    session['unrelated_value'] = 'preserve-me'
+                    session['liked_posts'] = [self.other_post.pk]
+                    if previously_liked:
+                        session['liked_posts'].append(self.post.pk)
+                    session.save()
+                    form, token = self.rendered_form(client)
+
+                    self.post.slug = f'{original_slug}-renamed'
+                    self.post.save(update_fields=['slug'])
+                    rows_before = self.like_rows()
+                    session_before = dict(client.session)
+
+                    response = client.post(
+                        form['action'], {'csrfmiddlewaretoken': token},
+                        HTTP_ORIGIN='http://testserver',
+                    )
+
+                    self.assertEqual(response.status_code, 404)
+                    self.assert_state_unchanged(
+                        client, rows_before, session_before,
+                    )
+
+                    canonical_form, canonical_token = self.rendered_form(client)
+                    self.assertNotEqual(
+                        canonical_form['action'], form['action'],
+                    )
+                    allowed_response = client.post(
+                        canonical_form['action'],
+                        {'csrfmiddlewaretoken': canonical_token},
+                        HTTP_ORIGIN='http://testserver',
+                    )
+
+                    self.assert_canonical_redirect(allowed_response)
+                    if previously_liked:
+                        self.assert_state_unchanged(
+                            client, rows_before, session_before,
+                        )
+                    else:
+                        self.assertEqual(Like.objects.count(), 2)
+                        self.assertEqual(
+                            Like.objects.get(post=self.post).like,
+                            8 if existing_like else 1,
+                        )
+                        unrelated_like.refresh_from_db()
+                        self.assertEqual(unrelated_like.like, 3)
+                        self.assertEqual(dict(client.session), {
+                            **session_before,
+                            'liked_posts': [
+                                *session_before['liked_posts'], self.post.pk,
+                            ],
+                        })
 
     def test_invalid_csrf_posts_never_mutate_likes_or_session(self):
         cases = (
