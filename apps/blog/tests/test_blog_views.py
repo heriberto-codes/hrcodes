@@ -95,6 +95,37 @@ class TestBlogViews(TestCase):
         self.assertTemplateUsed(response, 'blog/blog_detail.html')
         self.assertTemplateNotUsed(response, 'blog/insight_detail.html')
 
+    def test_trusted_article_and_snippet_markup_remains_rendered(self):
+        category = Category.objects.create(name='Engineering')
+        self.standard_post.categories.add(category)
+        self.standard_post.body = (
+            '<p>A <strong>formatted</strong> article with '
+            '<a href="https://example.com/resource">a resource</a>.</p>'
+        )
+        self.standard_post.snippet = '<em>A formatted summary.</em>'
+        self.standard_post.save(update_fields=['body', 'snippet'])
+
+        detail = self.client.get(self.blog_detail_url)
+
+        self.assertContains(detail, self.standard_post.body)
+        self.assertNotContains(detail, escape(self.standard_post.body))
+        for url in (
+            self.base_url,
+            reverse('blog_category', kwargs={'category': category.name}),
+        ):
+            with self.subTest(url=url):
+                response = self.client.get(url)
+
+                self.assertContains(response, self.standard_post.snippet)
+                self.assertNotContains(response, escape(self.standard_post.snippet))
+
+        legacy_include = render_to_string(
+            'includes/blog_home_page.html',
+            {'posts': [self.standard_post]}, request=detail.wsgi_request,
+        )
+        self.assertIn(self.standard_post.snippet, legacy_include)
+        self.assertNotIn(escape(self.standard_post.snippet), legacy_include)
+
     def test_article_reads_preserve_missing_zero_and_positive_likes(self):
         for count in (None, 0, 5):
             for feedback in (False, True):
@@ -298,8 +329,12 @@ class TestBlogViews(TestCase):
             f'href="{static("blog/insight_detail.css")}"',
         )
         self.assertEqual(response.content.count(b'<h1'), 1)
+        self.assertContains(response, '<p>Guardrails introduction.</p>')
         for chapter in GUARDRAILS_CHAPTERS:
             self.assertContains(response, f'id="{chapter["id"]}"')
+            self.assertContains(
+                response, f'<p>Chapter {chapter["number"]} copy.</p>',
+            )
         self.assertContains(
             response,
             'target="_blank" rel="noopener noreferrer"',
