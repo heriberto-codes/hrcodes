@@ -1,5 +1,7 @@
 # Turtle AI Design Workflow
 
+[Back to Choose Your Workflow](../../README.md#choose-your-workflow)
+
 The design workflow is an optional pre-planning layer for user-facing features. It turns an existing interface and a product goal into an explicitly approved design direction before implementation planning begins.
 
 ```text
@@ -13,6 +15,34 @@ The workflow preserves Turtle AI's ownership principle: AI may inspect, propose,
 Use the design workflow when a feature materially changes a page, screen, user journey, visual system, or interaction pattern.
 
 Skip it for work with no meaningful design decision, such as backend-only changes, internal refactors, dependency maintenance, or a small copy correction with an already-defined result.
+
+## Getting Started
+
+Start with a goal, for example:
+
+```text
+$turtle-design-next Design an accessible contact form for my portfolio.
+Use feature_slug: contact_form.
+```
+
+A **feature slug** is a short identifier used in filenames: `contact_form` uses lowercase words separated by underscores. In examples such as `docs/design/<feature_slug>/`, replace `<feature_slug>` with that identifier.
+
+Keep invoking `$turtle-design-next`, supplying the requested feedback or approval, to follow this path:
+
+```text
+AUDIT -> SECTION CONFIRMATION -> SECTION MOCKUPS AND SELECTIONS
+      -> PAGE ASSEMBLY -> DESIGN CHECKPOINT -> BACKLOG -> PLAN
+```
+
+Each invocation performs one safe transition and stops. You confirm the sections, choose or revise mockups, and explicitly approve the complete design. A pause is expected: Turtle is waiting for your decision or the next invocation.
+
+Artifacts live in `docs/design/contact_form/`, including isolated mockups and `workflow-state.md`, the file that records the current design stage. For a new interface, supply requirements or references; the audit records missing visual evidence instead of inventing an existing UI.
+
+After approval, continue invoking the controller until it creates or reuses the backlog item and creates the plan. You do not need to run backlog and planning again. The controller stops before production implementation; design approval alone never authorizes application-code changes.
+
+For manual control, the specialist skills are `$turtle-design-audit`, `$turtle-design-mockup`, and `$turtle-design-checkpoint`. See [Stage Contracts](#stage-contracts) for their boundaries and [Automated Mode](#automated-mode) and [Workflow State Contract](#workflow-state-contract) for controller behavior and workspace recovery rules.
+
+Once the plan is ready, continue to [Build One Plan Step at a Time](../guides/planning_workflow.md#build-one-plan-step-at-a-time) in the Engineering Workflow guide. Both paths use the same implementation loop; do not repeat backlog creation or planning.
 
 ## Design Workspace
 
@@ -54,7 +84,7 @@ No design skill may modify production application code. Mockup code must remain 
 
 ## Automated Mode
 
-`/turtle-design-next` is the optional controller for this workflow. Each invocation discovers the active workspace, reads its state, performs exactly one safe transition through the relevant specialist contract, updates `workflow-state.md`, and stops.
+`$turtle-design-next` is the optional controller for this workflow. Each invocation discovers the active workspace, reads its state, performs exactly one safe transition through the relevant specialist contract, updates `workflow-state.md`, and stops.
 
 Use the standalone audit, mockup, checkpoint, backlog, and plan commands when manual control is preferred. A standalone specialist may read workflow state for context but cannot update it.
 
@@ -122,7 +152,7 @@ Controlled workflow status values are:
 
 Controlled section status values are `pending`, `mockup_ready`, `selected`, and `revision_requested`. Assembly is `pending` or `complete`; checkpoint is `not_started`, `under_review`, `changes_requested`, or `approved`; backlog is `not_started` or `ready`; plan is `not_started` or `created`.
 
-Only `/turtle-design-next` writes this file. It preserves confirmed order and completed selections across transitions. If an existing design folder is imported, the controller may derive state only from explicit artifact evidence. It must ask the user to confirm uncertain section matches or selections.
+Only `$turtle-design-next` writes this file. It preserves confirmed order and completed selections across transitions. If an existing design folder is imported, the controller may derive state only from explicit artifact evidence. It must ask the user to confirm uncertain section matches or selections.
 
 If more than one active design workspace exists and no slug is supplied, the controller lists the candidates and asks the user which one to continue. It never chooses by recency or filesystem order.
 
@@ -211,7 +241,7 @@ An approved design is a valid feature source for `turtle-backlog`. The backlog s
 
 When a matching design workspace exists, `turtle-plan` requires `checkpoint.md` and `approved-design.md` to prove approval. It uses the approved design as the source of truth for design decisions. Repository code and `architecture.md` continue to control technical architecture and implementation constraints. Any conflict is recorded in the plan rather than silently resolved.
 
-The automated workflow stops after creating `docs/plans/<feature_slug>_plan.md`. Production implementation begins only through an explicit later `/turtle-execute` invocation.
+The automated workflow stops after creating `docs/plans/<feature_slug>_plan.md`. Production implementation begins only through an explicit later `$turtle-execute` invocation.
 
 ## Invariants
 

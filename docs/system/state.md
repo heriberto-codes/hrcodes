@@ -4,7 +4,7 @@ Turtle AI has two explicit state systems: an optional Design Workflow State for 
 
 ## Design Workflow State
 
-When `/turtle-design-next` is used, the design source of truth is:
+When `$turtle-design-next` is used, the design source of truth is:
 
 ```text
 docs/design/<feature_slug>/workflow-state.md
@@ -62,15 +62,24 @@ Instead of tracking progress manually, Turtle AI determines the current step, ne
 flowchart TD
 A[Plan file: docs/plans/<feature_slug>_plan.md] --> B[Current Step Detector]
 B --> C[EXECUTE]
-C --> D[VERIFY]
-D --> E[ENGINEER CHECKPOINT]
-E --> F[TEST]
-F --> G{Issues?}
-G -- Yes --> H[DEBUG]
-H --> C
-G -- No --> I[PLAN STEP UPDATE]
+C --> D{VERIFY}
+D -- PASS --> E{ENGINEER CHECKPOINT}
+D -- FAIL --> H[DEBUG when diagnosis is needed]
+E -- PASS --> F[TEST]
+E -- FAIL --> J[STOP and revisit understanding or implementation]
+J -- Technical issue --> H
+J -- Retry checkpoint --> E
+F --> G{Validation passes?}
+G -- No --> H
+H -- Code or plan-alignment fix --> C
+H -- Test fix --> F
+G -- Yes --> K{All required gates passed?}
+K -- No --> D
+K -- Yes --> I[PLAN STEP UPDATE]
 I --> A
 ```
+
+DEBUG is conditional diagnosis, not an unconditional phase. Follow the diagnosed repair route and resolve all failed gates before updating the plan. Code fixes repeat VERIFY, ENGINEER CHECKPOINT, and TEST. Test fixes require fresh applicable test results; they do not remove the requirement for explicit checkpoint PASS evidence.
 
 ## Current Step Detector Pattern
 
@@ -102,3 +111,9 @@ Rules:
 - Never skip `PLAN STEP UPDATE`.
 
 This prevents workflow deadlocks and keeps the plan file as the single source of truth when code and plan state are temporarily out of sync.
+
+## Git and Pull Request State
+
+Finalization adds no third Turtle state system. Git owns staging, commits, and published branch refs; GitHub owns PR identity, head/base, open/closed status, and draft state. `$turtle-pull-request` inspects current evidence and may create one PR after the existing gates, or return an exact matching open PR unchanged. It never writes a PR-state file or changes plan, backlog, design, or feature-record state.
+
+Plan/backlog completion describes completed and understood implementation; it does not mean the change has been pushed, reviewed, approved, or merged. PR creation is optional and does not change those completion markers. Draft creation requires the same gates as ready-for-review creation. Preview may describe committed unpublished work and outstanding gates, but performs no remote writes and cannot establish completion or PR readiness.

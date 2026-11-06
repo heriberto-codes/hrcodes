@@ -4,7 +4,7 @@ description: Use this to generate a concise, repo-aligned implementation plan fo
 ---
 
 ## Always read
-- agents.md
+- `AGENTS.md` (or legacy `agents.md` only when `AGENTS.md` is absent)
 - architecture.md
 - repo_map.md
 - docs/backlog.md
@@ -43,7 +43,7 @@ If repository code conflicts with `architecture.md`, do not guess. Call out the 
 - docs/backlog.md
 - architecture.md
 - repo_map.md
-- agents.md
+- `AGENTS.md`
 - repository code
 - `docs/design/<feature_slug>/approved-design.md` when the matching design workspace exists
 
@@ -86,13 +86,13 @@ After resolving `feature_slug`, inspect `docs/design/<feature_slug>/`.
 - If any required approval evidence is missing, stop and report:
 
 ```text
-Planning blocked. Complete /turtle-design-checkpoint for this feature first.
+Planning blocked. Complete $turtle-design-checkpoint for this feature first.
 ```
 
 Use `approved-design.md` as the source of truth for approved user experience, hierarchy, responsive behavior, components, assets, and accepted tradeoffs. Use `architecture.md` and repository code as the source of truth for technical implementation. Record conflicts or unresolved questions in the plan instead of silently overriding either source.
 
 ## Before planning
-- read agents.md, architecture.md, repo_map.md, docs/backlog.md
+- read `AGENTS.md`, `architecture.md`, `repo_map.md`, and `docs/backlog.md`
 - determine `selected_backlog_item` and `feature_slug` using manual inputs or auto-selection
 - extract the current system architecture from `architecture.md`
 - inspect repository structure and conventions
@@ -114,7 +114,7 @@ You are a Staff Software Engineer planning a feature.
 
 Before planning:
 - Inspect repository structure
-- Review architecture.md, repo_map.md, agents.md
+- Review `architecture.md`, `repo_map.md`, and `AGENTS.md`
 - Use these as the source of truth
 
 Responsibilities
@@ -150,11 +150,11 @@ Responsibilities
 - NEVER include backlog status changes as a plan step
 - NEVER generate a step that edits `docs/backlog.md`
 - NEVER generate a step that says to check off, mark complete, or update a backlog item
-- `/turtle-backlog-update` is the ONLY allowed backlog completion mechanism and must NOT appear as a step inside the implementation plan
+- `$turtle-backlog-update` is the ONLY allowed backlog completion mechanism and must NOT appear as a step inside the implementation plan
 - NEVER include final documentation as a plan step
 - NEVER generate a step that edits `docs/features/*`
 - NEVER generate a step that says to document the feature, write final docs, or update feature documentation
-- `/turtle-document` is the ONLY allowed final documentation mechanism and must NOT appear as a step inside the implementation plan
+- `$turtle-document` is the ONLY allowed final documentation mechanism and must NOT appear as a step inside the implementation plan
 
 ## Plan completion rule
 Mark a plan step [x] ONLY after it has passed:
@@ -166,7 +166,7 @@ Mark a plan step [x] ONLY after it has passed:
 
 - This skill must NOT mark steps complete
 - This skill must NOT modify docs/backlog.md
-- Backlog completion is ONLY done via /turtle-backlog-update
+- Backlog completion is ONLY done via $turtle-backlog-update
 
 ## Constraints
 - no new frameworks
@@ -188,13 +188,13 @@ It must never include `docs/backlog.md` edits in the step list.
 Backlog updates are ONLY allowed after full completion of the Plan-Driven State System via:
 
 ```text
-/turtle-backlog-update
+$turtle-backlog-update
 ```
 
 If asked to modify docs/backlog.md, STOP and respond:
 
 ```text
-Backlog update blocked. Run /turtle-backlog-update after the feature is complete.
+Backlog update blocked. Run $turtle-backlog-update after the feature is complete.
 ```
 
 ## Documentation guardrail
@@ -206,13 +206,13 @@ It must never include `docs/features/*` edits in the step list.
 Final documentation is ONLY allowed after full completion of the Plan-Driven State System via:
 
 ```text
-/turtle-document
+$turtle-document
 ```
 
 If asked to include final documentation work in the plan, STOP and respond:
 
 ```text
-Documentation step blocked. Run /turtle-document after the feature is complete.
+Documentation step blocked. Run $turtle-document after the feature is complete.
 ```
 
 ## Output Format

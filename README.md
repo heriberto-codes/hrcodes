@@ -31,7 +31,7 @@
 
 ## Turtle AI Workflow
 
-This repository includes [Turtle AI](https://github.com/heriberto-codes/turtle_ai) v1.0.0 as a repo-scoped Codex workflow under `.agents/skills/`.
+This repository includes [Turtle AI](https://github.com/heriberto-codes/turtle_ai) v1.1.0 as a repo-scoped Codex workflow under `.agents/skills/`.
 
 After opening the repository in Codex, Turtle commands such as `/turtle-plan`, `/turtle-execute`, and `/turtle-verify` are discovered automatically. The required implementation loop is:
 
@@ -47,4 +47,8 @@ Foundation context for this project lives in:
 
 Workflow and state rules live in `docs/system/`.
 
-Installed from Turtle AI commit `d087c95` (branch `codex/turtle-design-workflow`).
+Installed from Turtle AI commit `05e37202dc372940b0c0615ccd0ff16c5e423b9e` (branch `main`).
+
+The installation includes all 25 Turtle skills, the four shared workflow documents in `docs/system/`, and the MIT license notice in `docs/licenses/turtle-ai-LICENSE.txt`. Start a fresh Codex chat in this project to discover the updated skills.
+
+In v1.1.0, `$turtle-commit` creates a commit by default. Use `$turtle-commit message only` to prepare a message without committing. Git finalization uses separately invoked `$turtle-add`, `$turtle-commit`, `$turtle-push`, and optional `$turtle-pull-request` skills.
