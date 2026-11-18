@@ -1500,6 +1500,9 @@
 .home-page .home-form-wide-error { background: rgba(168, 59, 54, 0.09); border: 1px solid var(--error); color: var(--error); font-size: 0.66rem; font-weight: 700; margin-bottom: 28px; padding: 16px 18px; }
 .home-page .home-form-wide-error p { margin: 0; }
 .home-page .home-form-wide-error p + p { margin-top: 8px; }
+.home-page .home-form-wide-error .home-inquiry-recovery { color: var(--navy-deep); font-size: 0.875rem; line-height: 1.65; overflow-wrap: anywhere; }
+.home-page .home-form-wide-error .home-inquiry-recovery a { color: var(--navy-deep) !important; text-decoration: underline; text-underline-offset: 0.18em; }
+.home-page .home-form-wide-error .home-inquiry-recovery a:focus-visible { outline: 3px solid var(--navy-deep); outline-offset: 3px; }
 
 .home-page .home-step-actions { align-items: center; border-top: 1px solid var(--line-dark); display: flex; justify-content: space-between; margin-top: 34px; padding-top: 26px; }
 .home-page .home-step-actions-end { justify-content: flex-end; }

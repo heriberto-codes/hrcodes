@@ -8,6 +8,7 @@ from django.conf import settings
 from django.contrib.messages import get_messages
 from django.contrib.staticfiles import finders
 from django.core import mail
+from django.core.exceptions import NON_FIELD_ERRORS
 from django.db import DatabaseError
 from django.template import engines
 from django.test import Client, TestCase, override_settings
@@ -97,6 +98,69 @@ class ProjectBriefTokenParser(HTMLParser):
             self.in_project_form = False
 
 
+class ProjectBriefRecoveryParser(HTMLParser):
+    void_tags = {
+        'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input',
+        'link', 'meta', 'param', 'source', 'track', 'wbr',
+    }
+
+    def __init__(self):
+        super().__init__()
+        self.elements = []
+        self.stack = []
+        self.sidebar_links = []
+
+    def handle_starttag(self, tag, attrs):
+        attributes = dict(attrs)
+        if (
+            tag == 'a'
+            and 'home-summary-call' in attributes.get('class', '').split()
+        ):
+            self.sidebar_links.append(attributes)
+        if not self.stack and not (
+            tag == 'form' and 'data-home-project-form' in attributes
+        ):
+            return
+
+        element = {
+            'tag': tag, 'attrs': attributes, 'parents': self.stack.copy(),
+            'text': '',
+        }
+        self.elements.append(element)
+        if tag not in self.void_tags:
+            self.stack.append(element)
+
+    def handle_endtag(self, tag):
+        for index in range(len(self.stack) - 1, -1, -1):
+            if self.stack[index]['tag'] == tag:
+                del self.stack[index:]
+                break
+
+    def handle_data(self, data):
+        for element in self.stack:
+            element['text'] += data
+
+    def form_values(self):
+        values = {}
+        for element in self.elements:
+            tag, attrs = element['tag'], element['attrs']
+            if tag == 'input' and 'name' in attrs:
+                if attrs.get('type') in ('radio', 'checkbox'):
+                    if 'checked' not in attrs:
+                        continue
+                default = 'on' if attrs.get('type') == 'checkbox' else ''
+                values[attrs['name']] = attrs.get('value', default)
+            elif tag == 'textarea':
+                values[attrs['name']] = element['text']
+            elif tag == 'option' and 'selected' in attrs:
+                select = next(
+                    parent for parent in reversed(element['parents'])
+                    if parent['tag'] == 'select'
+                )
+                values[select['attrs']['name']] = attrs['value']
+        return values
+
+
 @override_settings(
     DEBUG=False,
     EMAIL_BACKEND='django.core.mail.backends.locmem.EmailBackend',
@@ -173,6 +237,72 @@ class TestViews(TestCase):
     def inquiry_throttle_rows(self):
         return list(ProjectInquiryThrottle.objects.order_by('pk').values())
 
+    def assert_inquiry_recovery(self, response, expected=True):
+        parser = ProjectBriefRecoveryParser()
+        parser.feed(response.content.decode())
+        recoveries = [
+            node for node in parser.elements
+            if 'home-inquiry-recovery' in node['attrs'].get('class', '').split()
+        ]
+        links = [
+            node for node in parser.elements if node['tag'] == 'a'
+            and 'Book a call instead' in node['text']
+        ]
+        self.assertEqual(len(parser.sidebar_links), 1)
+        self.assertEqual(
+            parser.sidebar_links[0]['href'],
+            'https://calendly.com/heriberto_codes/coffee_chat',
+        )
+        if not expected:
+            self.assertEqual(recoveries, [])
+            self.assertEqual(links, [])
+            self.assertNotContains(response, 'This submission was not sent.')
+            return parser
+
+        alerts = [
+            node for node in parser.elements
+            if 'home-form-wide-error' in node['attrs'].get('class', '').split()
+        ]
+        self.assertEqual(len(alerts), 1)
+        alert = alerts[0]
+        self.assertEqual(alert['attrs']['role'], 'alert')
+        self.assertEqual(alert['attrs']['tabindex'], '-1')
+        self.assertIn('data-home-form-wide-error', alert['attrs'])
+        self.assertFalse(any(
+            'data-home-step' in parent['attrs'] for parent in alert['parents']
+        ))
+        self.assertNotIn('hidden', alert['attrs'])
+        self.assertEqual(len(recoveries), 1)
+        self.assertEqual(len(links), 1)
+        self.assertTrue(any(
+            parent is alert for parent in recoveries[0]['parents']
+        ))
+        self.assertTrue(any(
+            parent is alert for parent in links[0]['parents']
+        ))
+        self.assertIn(
+            'Please wait a moment before sending another project brief.',
+            alert['text'],
+        )
+        self.assertIn(
+            'This submission was not sent. Try again later, or',
+            ' '.join(recoveries[0]['text'].split()),
+        )
+        link = links[0]
+        self.assertEqual(
+            link['attrs']['href'],
+            'https://calendly.com/heriberto_codes/coffee_chat',
+        )
+        self.assertEqual(link['attrs']['target'], '_blank')
+        self.assertEqual(
+            set(link['attrs']['rel'].split()), {'noopener', 'noreferrer'},
+        )
+        self.assertEqual(
+            ' '.join(link['text'].split()),
+            'Book a call instead (opens in a new tab)',
+        )
+        return parser
+
     def test_can_load_base_template(self):
         response = self.client.get(self.base_url)
         self.assertEqual(response.status_code, 200)
@@ -185,10 +315,13 @@ class TestViews(TestCase):
 
     def test_home_get_exposes_unbound_project_brief_form(self):
         response = self.client.get(self.base_url)
+        self.assert_inquiry_recovery(response, expected=False)
 
         form = response.context['form']
         self.assertIsInstance(form, ProjectBriefForm)
         self.assertFalse(form.is_bound)
+        self.assertIs(response.context['project_inquiry_throttled'], False)
+        self.assertFalse(form.has_error(NON_FIELD_ERRORS, 'inquiry_throttled'))
         self.assertEqual(response.context['posts'], [])
         self.assertEqual(response.context['insight_signals'], [])
         self.assertEqual(response.context['insight_signal_count'], 0)
@@ -293,9 +426,12 @@ class TestViews(TestCase):
         )
 
         self.assertEqual(response.status_code, 200)
+        self.assert_inquiry_recovery(response, expected=False)
         form = response.context['form']
         self.assertTrue(form.is_bound)
         self.assertIn('goal', form.errors)
+        self.assertIs(response.context['project_inquiry_throttled'], False)
+        self.assertFalse(form.has_error(NON_FIELD_ERRORS, 'inquiry_throttled'))
         self.assertEqual(form.data['name'], 'Ada Lovelace')
         self.assertEqual(form.data['goal'], 'Too short')
         self.assertContains(response, 'data-initial-step="2"')
@@ -328,9 +464,12 @@ class TestViews(TestCase):
             )
 
         self.assertEqual(response.status_code, 200)
+        self.assert_inquiry_recovery(response, expected=False)
         form = response.context['form']
         self.assertEqual(form.data['name'], 'Ada Lovelace')
         self.assertIn(PROJECT_INQUIRY_DELIVERY_ERROR, form.non_field_errors())
+        self.assertIs(response.context['project_inquiry_throttled'], False)
+        self.assertFalse(form.has_error(NON_FIELD_ERRORS, 'inquiry_throttled'))
         self.assertContains(response, 'data-initial-step="3"')
         self.assertContains(response, 'data-home-form-wide-error')
         self.assertContains(response, PROJECT_INQUIRY_DELIVERY_ERROR)
@@ -350,6 +489,11 @@ class TestViews(TestCase):
         )
 
         self.assertEqual(retry_response.status_code, 200)
+        self.assert_inquiry_recovery(retry_response)
+        self.assertIs(retry_response.context['project_inquiry_throttled'], True)
+        self.assertTrue(retry_response.context['form'].has_error(
+            NON_FIELD_ERRORS, 'inquiry_throttled',
+        ))
         self.assertIn(
             'Please wait a moment before sending another project brief.',
             retry_response.context['form'].non_field_errors(),
@@ -370,9 +514,12 @@ class TestViews(TestCase):
         )
 
         self.assertEqual(response.status_code, 200)
+        self.assert_inquiry_recovery(response, expected=False)
         form = response.context['form']
         self.assertEqual(form.data['goal'], self.project_brief_data()['goal'])
         self.assertIn(PROJECT_INQUIRY_DELIVERY_ERROR, form.non_field_errors())
+        self.assertIs(response.context['project_inquiry_throttled'], False)
+        self.assertFalse(form.has_error(NON_FIELD_ERRORS, 'inquiry_throttled'))
         send.assert_called_once_with(fail_silently=False)
         self.assertEqual(mail.outbox, [])
         self.assertNotIn(
@@ -387,6 +534,11 @@ class TestViews(TestCase):
         )
 
         self.assertEqual(retry_response.status_code, 200)
+        self.assert_inquiry_recovery(retry_response)
+        self.assertIs(retry_response.context['project_inquiry_throttled'], True)
+        self.assertTrue(retry_response.context['form'].has_error(
+            NON_FIELD_ERRORS, 'inquiry_throttled',
+        ))
         self.assertIn(
             'Please wait a moment before sending another project brief.',
             retry_response.context['form'].non_field_errors(),
@@ -408,7 +560,14 @@ class TestViews(TestCase):
             PROJECT_INQUIRY_COOLDOWN_SESSION_KEY
         ]
         confirmation_response = self.client.get(first_response.url)
+        self.assert_inquiry_recovery(confirmation_response, expected=False)
         self.assertContains(confirmation_response, 'data-home-project-success')
+        self.assertIs(
+            confirmation_response.context['project_inquiry_throttled'], False,
+        )
+        self.assertFalse(confirmation_response.context['form'].has_error(
+            NON_FIELD_ERRORS, 'inquiry_throttled',
+        ))
 
         second_response = self.client.post(
             self.base_url,
@@ -417,6 +576,18 @@ class TestViews(TestCase):
 
         self.assertEqual(first_response.status_code, 302)
         self.assertEqual(second_response.status_code, 200)
+        parser = self.assert_inquiry_recovery(second_response)
+        rendered_values = parser.form_values()
+        for field, value in self.project_brief_data().items():
+            self.assertEqual(
+                rendered_values[field], 'on' if field == 'consent' else value,
+            )
+        self.assertIs(second_response.context['project_inquiry_throttled'], True)
+        form = second_response.context['form']
+        self.assertTrue(form.is_bound)
+        self.assertTrue(form.has_error(NON_FIELD_ERRORS, 'inquiry_throttled'))
+        for field, value in self.project_brief_data().items():
+            self.assertEqual(form.data[field], str(value))
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(
             self.client.session[PROJECT_INQUIRY_COOLDOWN_SESSION_KEY],
@@ -425,10 +596,6 @@ class TestViews(TestCase):
         self.assertIn(
             'Please wait a moment before sending another project brief.',
             second_response.context['form'].non_field_errors(),
-        )
-        self.assertEqual(
-            second_response.context['form'].data['goal'],
-            self.project_brief_data()['goal'],
         )
         self.assertContains(second_response, 'data-initial-step="3"')
         self.assertContains(second_response, 'data-home-form-wide-error')
@@ -441,6 +608,13 @@ class TestViews(TestCase):
             list(get_messages(second_response.wsgi_request)), [],
         )
         self.assertEqual(ProjectInquiryThrottle.objects.get().attempt_count, 1)
+
+        fresh_response = self.client.get(self.base_url)
+        self.assert_inquiry_recovery(fresh_response, expected=False)
+        self.assertIs(fresh_response.context['project_inquiry_throttled'], False)
+        self.assertFalse(fresh_response.context['form'].has_error(
+            NON_FIELD_ERRORS, 'inquiry_throttled',
+        ))
 
     def test_fresh_sessions_share_throttle_only_for_same_client_address(self):
         first_client = Client(
@@ -499,6 +673,11 @@ class TestViews(TestCase):
         )
 
         self.assertEqual(blocked_response.status_code, 200)
+        self.assert_inquiry_recovery(blocked_response)
+        self.assertIs(blocked_response.context['project_inquiry_throttled'], True)
+        self.assertTrue(blocked_response.context['form'].has_error(
+            NON_FIELD_ERRORS, 'inquiry_throttled',
+        ))
         self.assertEqual(len(mail.outbox), 1)
         self.assertIn(
             'Please wait a moment before sending another project brief.',
@@ -584,6 +763,7 @@ class TestViews(TestCase):
 
         send.assert_not_called()
         self.assertEqual(response.status_code, 200)
+        self.assert_inquiry_recovery(response, expected=False)
         form = response.context['form']
         self.assertTrue(form.is_bound)
         for field, value in self.project_brief_data().items():
@@ -659,8 +839,15 @@ class TestViews(TestCase):
                 self.assertIs(consume.call_args.args[0], response.wsgi_request)
                 send.assert_not_called()
                 self.assertEqual(response.status_code, 200)
+                self.assert_inquiry_recovery(response, expected=False)
                 form = response.context['form']
                 self.assertTrue(form.is_bound)
+                self.assertIs(
+                    response.context['project_inquiry_throttled'], False,
+                )
+                self.assertFalse(form.has_error(
+                    NON_FIELD_ERRORS, 'inquiry_throttled',
+                ))
                 self.assertEqual(form.data['name'], 'Ada Lovelace')
                 self.assertEqual(
                     form.data['goal'], self.project_brief_data()['goal'],
@@ -703,7 +890,12 @@ class TestViews(TestCase):
 
         consume.assert_not_called()
         self.assertEqual(response.status_code, 200)
+        self.assert_inquiry_recovery(response, expected=False)
         self.assertIn('website', response.context['form'].errors)
+        self.assertIs(response.context['project_inquiry_throttled'], False)
+        self.assertFalse(response.context['form'].has_error(
+            NON_FIELD_ERRORS, 'inquiry_throttled',
+        ))
         self.assertEqual(mail.outbox, [])
         self.assertFalse(ProjectInquiryThrottle.objects.exists())
         self.assertNotIn(
@@ -794,6 +986,7 @@ class TestViews(TestCase):
             [(f'{self.base_url}#start-a-project', 302)],
         )
         self.assertContains(response, 'data-home-project-success')
+        self.assert_inquiry_recovery(response, expected=False)
         self.assertContains(response, 'data-home-reset-project')
         self.assertContains(
             response,

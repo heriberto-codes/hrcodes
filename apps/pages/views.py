@@ -2,6 +2,7 @@ import logging
 
 from django.conf import settings
 from django.contrib import messages
+from django.core.exceptions import NON_FIELD_ERRORS, ValidationError
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.urls import reverse
@@ -86,6 +87,10 @@ class HomePageView(FormView):
             'insight_signal_count': len(insight_signals),
             'insights_complete': not missing_insight_channels,
             'missing_insight_channels': missing_insight_channels,
+            'project_inquiry_throttled': context['form'].has_error(
+                NON_FIELD_ERRORS,
+                'inquiry_throttled',
+            ),
         })
         return context
 
@@ -100,7 +105,10 @@ class HomePageView(FormView):
         if not allowed:
             form.add_error(
                 None,
-                'Please wait a moment before sending another project brief.',
+                ValidationError(
+                    'Please wait a moment before sending another project brief.',
+                    code='inquiry_throttled',
+                ),
             )
             return self.form_invalid(form)
 
