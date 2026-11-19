@@ -33,7 +33,7 @@
 
 This repository includes [Turtle AI](https://github.com/heriberto-codes/turtle_ai) v1.1.0 as a repo-scoped Codex workflow under `.agents/skills/`.
 
-After opening the repository in Codex, Turtle commands such as `/turtle-plan`, `/turtle-execute`, and `/turtle-verify` are discovered automatically. The required implementation loop is:
+After opening the repository in Codex, Turtle commands such as `$turtle-plan`, `$turtle-engineer-execute`, and `$turtle-engineer-verify` are discovered automatically. The required implementation loop is:
 
 ```text
 EXECUTE -> VERIFY -> ENGINEER CHECKPOINT -> TEST -> DEBUG if needed -> PLAN STEP UPDATE
@@ -45,10 +45,12 @@ Foundation context for this project lives in:
 - `architecture.md`
 - `repo_map.md`
 
-Workflow and state rules live in `docs/system/`.
+Workflow and state rules live in `docs/system/`. See the [Engineering Workflow guide](docs/guides/planning_workflow.md) for the command sequence.
 
-Installed from Turtle AI commit `05e37202dc372940b0c0615ccd0ff16c5e423b9e` (branch `main`).
+Installed from Turtle AI commit `04c7a3f732cac0f272eba7c9b031035cfe3eccb0` (branch `main`).
 
 The installation includes all 25 Turtle skills, the four shared workflow documents in `docs/system/`, and the MIT license notice in `docs/licenses/turtle-ai-LICENSE.txt`. Start a fresh Codex chat in this project to discover the updated skills.
 
-In v1.1.0, `$turtle-commit` creates a commit by default. Use `$turtle-commit message only` to prepare a message without committing. Git finalization uses separately invoked `$turtle-add`, `$turtle-commit`, `$turtle-push`, and optional `$turtle-pull-request` skills.
+In v1.1.0, `$turtle-engineer-commit` creates a commit by default. Use `$turtle-engineer-commit message only` to prepare a message without committing. Git finalization uses separately invoked `$turtle-engineer-add`, `$turtle-engineer-commit`, `$turtle-engineer-push`, and optional `$turtle-engineer-pull-request` skills.
+
+The latest upstream revision retains the v1.1.0 version label and renames 13 engineering skills to `turtle-engineer-*`. Foundation, discovery, design, `$turtle-plan`, and `$turtle-engineer-checkpoint` keep their names. The legacy copies of renamed skills have been removed.

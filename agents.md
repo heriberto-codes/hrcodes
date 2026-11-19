@@ -78,4 +78,4 @@ For planned feature implementation, follow the required loop documented in `docs
 
 `EXECUTE -> VERIFY -> ENGINEER CHECKPOINT -> TEST -> DEBUG if needed -> PLAN STEP UPDATE`
 
-The active step is the first unchecked item in `docs/plans/<feature_slug>_plan.md`. Only `turtle-plan-step-update` may mark a plan step complete.
+The active step is the first unchecked item in `docs/plans/<feature_slug>_plan.md`. Only `turtle-engineer-plan-step-update` may mark a plan step complete.
