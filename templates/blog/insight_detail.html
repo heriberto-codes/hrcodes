@@ -39,6 +39,7 @@
                     </div>
                     <p class="insight-display" aria-hidden="true">AI with<br>judgment<span>.</span></p>
                     <h1 id="insight-title">{{ post.title }}</h1>
+                    {% include 'blog/includes/like_feedback.html' %}
                     <ul class="insight-topic-list" aria-label="Article topics">
                         {% for category in post.categories.all %}
                             <li>{{ category.name }}</li>

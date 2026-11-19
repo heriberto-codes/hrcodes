@@ -5,6 +5,13 @@ from django.test import Client, TestCase
 from django.urls import reverse
 
 from apps.blog.models import Like, Post
+from apps.blog.views import GUARDRAILS_INSIGHT_SLUG
+
+
+LIKE_FEEDBACK_HTML = (
+    '<p class="blog-like-feedback" role="status">'
+    'You liked this post. Thank you!</p>'
+)
 
 
 class LikeFormParser(HTMLParser):
@@ -446,4 +453,75 @@ class TestLikeViews(TestCase):
 
         self.assertEqual(repeated.redirect_chain, response.redirect_chain)
         self.assertEqual(repeated.status_code, 200)
+        self.assertIs(repeated.context['post_was_liked'], True)
         self.assert_state_unchanged(client, rows_before, session_before)
+
+        for result in (response, repeated):
+            self.assertContains(
+                result, LIKE_FEEDBACK_HTML, count=1, html=True,
+            )
+
+    def test_guardrails_index_form_redirect_confirms_like_and_repeat(self):
+        guardrails_post = Post.objects.create(
+            title='Guardrails article',
+            slug=GUARDRAILS_INSIGHT_SLUG,
+            snippet='A Guardrails article.',
+            body='<p>Guardrails introduction.</p>',
+            status=1,
+        )
+        action = reverse(
+            'like_post', args=[guardrails_post.pk, guardrails_post.slug],
+        )
+        response = self.client.get(reverse('blog_index'))
+        self.assertEqual(response.status_code, 200)
+        forms = LikeFormParser(response.content.decode()).forms
+        form = next(form for form in forms if form['action'] == action)
+        self.assertEqual(form['method'], 'post')
+        token = next(
+            field['value'] for field in form['inputs']
+            if field.get('name') == 'csrfmiddlewaretoken'
+        )
+        rows_before = self.like_rows()
+        session_before = dict(self.client.session)
+
+        submitted = self.client.post(
+            form['action'], {'csrfmiddlewaretoken': token},
+            HTTP_ORIGIN='http://testserver', follow=True,
+        )
+
+        self.assertEqual(submitted.redirect_chain, [
+            (f'{guardrails_post.get_absolute_url()}?liked=true', 302),
+        ])
+        self.assertEqual(submitted.status_code, 200)
+        self.assertTemplateUsed(submitted, 'blog/insight_detail.html')
+        self.assertEqual(submitted.context['post'], guardrails_post)
+        self.assertIs(submitted.context['post_was_liked'], True)
+        like = Like.objects.get(post=guardrails_post)
+        self.assertEqual(self.like_rows(), [
+            *rows_before, (like.pk, guardrails_post.pk, 1),
+        ])
+        self.assertEqual(dict(self.client.session), {
+            **session_before,
+            'liked_posts': [
+                *session_before['liked_posts'], guardrails_post.pk,
+            ],
+        })
+        rows_before = self.like_rows()
+        session_before = dict(self.client.session)
+
+        repeated = self.client.post(
+            form['action'], {'csrfmiddlewaretoken': token},
+            HTTP_ORIGIN='http://testserver', follow=True,
+        )
+
+        self.assertEqual(repeated.redirect_chain, submitted.redirect_chain)
+        self.assertEqual(repeated.status_code, 200)
+        self.assertTemplateUsed(repeated, 'blog/insight_detail.html')
+        self.assertIs(repeated.context['post_was_liked'], True)
+        self.assert_state_unchanged(self.client, rows_before, session_before)
+
+        for result in (submitted, repeated):
+            self.assertContains(
+                result, LIKE_FEEDBACK_HTML, count=1, html=True,
+            )
+            self.assertEqual(LikeFormParser(result.content.decode()).forms, [])

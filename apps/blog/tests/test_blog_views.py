@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+from django.conf import settings
 from django.template.loader import render_to_string
 from django.test import Client, TestCase
 from django.templatetags.static import static
@@ -8,7 +9,7 @@ from django.utils import timezone
 from django.utils.html import escape
 
 from apps.blog.models import Category, Like, Post
-from apps.blog.tests.test_like_views import LikeFormParser
+from apps.blog.tests.test_like_views import LIKE_FEEDBACK_HTML, LikeFormParser
 from apps.blog.views import (
     GUARDRAILS_CHAPTERS,
     GUARDRAILS_INSIGHT_SLUG,
@@ -127,58 +128,152 @@ class TestBlogViews(TestCase):
         self.assertNotIn(escape(self.standard_post.snippet), legacy_include)
 
     def test_article_reads_preserve_missing_zero_and_positive_likes(self):
-        for count in (None, 0, 5):
-            for feedback in (False, True):
-                with self.subTest(count=count, feedback=feedback):
-                    Like.objects.all().delete()
-                    like = None if count is None else Like.objects.create(
-                        post=self.standard_post, like=count,
-                    )
+        for post, template in (
+            (self.standard_post, 'blog/blog_detail.html'),
+            (self.create_guardrails_post(), 'blog/insight_detail.html'),
+        ):
+            for count in (None, 0, 5):
+                for feedback in (False, True):
+                    with self.subTest(
+                        slug=post.slug, count=count, feedback=feedback,
+                    ):
+                        Like.objects.all().delete()
+                        like = None if count is None else Like.objects.create(
+                            post=post, like=count,
+                        )
+                        client = Client(enforce_csrf_checks=True)
+                        session = client.session
+                        session['liked_posts'] = [post.pk]
+                        session['unrelated_value'] = 'preserve-me'
+                        session.save()
+                        session_before = dict(client.session)
+                        rows_before = list(Like.objects.values_list(
+                            'pk', 'post_id', 'like',
+                        ))
+                        url = post.get_absolute_url()
+                        if feedback:
+                            url += '?liked=true'
+
+                        for method in ('get', 'get', 'head'):
+                            response = getattr(client, method)(url)
+
+                            self.assertEqual(response.status_code, 200)
+                            self.assertTemplateUsed(response, template)
+                            self.assertIs(
+                                response.context['post_was_liked'], feedback,
+                            )
+                            if method == 'get':
+                                if feedback:
+                                    self.assertContains(
+                                        response, LIKE_FEEDBACK_HTML,
+                                        count=1, html=True,
+                                    )
+                                else:
+                                    self.assertNotContains(
+                                        response, 'blog-like-feedback',
+                                    )
+                                    self.assertNotContains(
+                                        response,
+                                        'You liked this post. Thank you!',
+                                    )
+                            if post == self.standard_post:
+                                self.assertEqual(response.context['like'], like)
+                                if method == 'get':
+                                    self.assertContains(
+                                        response,
+                                        f'<small>{count or 0}</small>',
+                                        html=True,
+                                    )
+                                    icon = LikeFormParser(
+                                        response.content.decode(),
+                                    ).forms[0]['icons'][0]
+                                    self.assertIn(
+                                        'fa-solid' if feedback else 'fa-regular',
+                                        icon['class'].split(),
+                                    )
+                            elif method == 'get':
+                                self.assertEqual(LikeFormParser(
+                                    response.content.decode(),
+                                ).forms, [])
+                            if method == 'head':
+                                self.assertEqual(response.content, b'')
+                            self.assertEqual(
+                                list(Like.objects.values_list(
+                                    'pk', 'post_id', 'like',
+                                )),
+                                rows_before,
+                            )
+                            self.assertEqual(
+                                dict(client.session), session_before,
+                            )
+
+    def test_detail_feedback_requires_matching_query_and_session(self):
+        guardrails_post = self.create_guardrails_post()
+        Like.objects.create(post=self.standard_post, like=3)
+        Like.objects.create(post=guardrails_post, like=7)
+        rows_before = list(Like.objects.order_by('pk').values_list(
+            'pk', 'post_id', 'like',
+        ))
+        for post, other_post, template in (
+            (self.standard_post, guardrails_post, 'blog/blog_detail.html'),
+            (guardrails_post, self.standard_post, 'blog/insight_detail.html'),
+        ):
+            cases = (
+                ('fresh_session', '?liked=true', None),
+                ('missing_key', '?liked=true', {}),
+                ('empty_list', '?liked=true', {'liked_posts': []}),
+                ('other_article', '?liked=true', {
+                    'liked_posts': [other_post.pk],
+                }),
+                ('missing_flag', '', {'liked_posts': [post.pk]}),
+                ('wrong_flag', '?liked=false', {'liked_posts': [post.pk]}),
+                ('wrong_case', '?liked=True', {'liked_posts': [post.pk]}),
+            )
+            for case, query, initial_session in cases:
+                with self.subTest(slug=post.slug, case=case):
                     client = Client(enforce_csrf_checks=True)
-                    session = client.session
-                    session['liked_posts'] = [self.standard_post.pk]
-                    session['unrelated_value'] = 'preserve-me'
-                    session.save()
-                    session_before = dict(client.session)
-                    rows_before = list(Like.objects.values_list(
-                        'pk', 'post_id', 'like',
-                    ))
-                    url = self.blog_detail_url
-                    if feedback:
-                        url += '?liked=true'
+                    session_before = {}
+                    if initial_session is not None:
+                        session = client.session
+                        session.update(initial_session)
+                        session['unrelated_value'] = 'preserve-me'
+                        session.save()
+                        session_before = dict(client.session)
 
                     for method in ('get', 'get', 'head'):
-                        response = getattr(client, method)(url)
+                        response = getattr(client, method)(
+                            f'{post.get_absolute_url()}{query}',
+                        )
 
                         self.assertEqual(response.status_code, 200)
-                        self.assertTemplateUsed(
-                            response, 'blog/blog_detail.html',
-                        )
-                        self.assertEqual(response.context['like'], like)
-                        self.assertEqual(
-                            response.context['post_was_liked'], feedback,
+                        self.assertTemplateUsed(response, template)
+                        self.assertIs(
+                            response.context['post_was_liked'], False,
                         )
                         if method == 'get':
-                            self.assertContains(
-                                response, f'<small>{count or 0}</small>',
-                                html=True,
+                            self.assertNotContains(
+                                response, 'blog-like-feedback',
                             )
-                            icon = LikeFormParser(
-                                response.content.decode(),
-                            ).forms[0]['icons'][0]
-                            self.assertIn(
-                                'fa-solid' if feedback else 'fa-regular',
-                                icon['class'].split(),
+                            self.assertNotContains(
+                                response, 'You liked this post. Thank you!',
                             )
-                        else:
-                            self.assertEqual(response.content, b'')
                         self.assertEqual(
-                            list(Like.objects.values_list(
+                            list(Like.objects.order_by('pk').values_list(
                                 'pk', 'post_id', 'like',
                             )),
                             rows_before,
                         )
-                        self.assertEqual(dict(client.session), session_before)
+                        self.assertEqual(
+                            dict(response.wsgi_request.session), session_before,
+                        )
+                        if initial_session is None:
+                            self.assertNotIn(
+                                settings.SESSION_COOKIE_NAME, client.cookies,
+                            )
+                        else:
+                            self.assertEqual(
+                                dict(client.session), session_before,
+                            )
 
     def assert_like_forms(self, content, posts):
         parsed = LikeFormParser(content)

@@ -59,3 +59,12 @@ img {
     outline: 2px solid var(--hrColorOrange);
     outline-offset: 3px;
 }
+
+.blogSection .blog-like-feedback {
+    color: var(--hrColorWhite);
+    line-height: 1.6;
+    margin: 0.5rem 0 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    white-space: normal;
+}

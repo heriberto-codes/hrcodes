@@ -16,4 +16,4 @@
 ## Client Improvements
 
 - [x] Add accessible inquiry-throttling guidance with the scheduling alternative
-- [ ] Replace like links with secure no-JavaScript form controls and success feedback
+- [x] Replace like links with secure no-JavaScript form controls and success feedback

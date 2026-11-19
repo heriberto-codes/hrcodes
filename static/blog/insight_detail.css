@@ -149,6 +149,16 @@
     padding-top: 23px;
 }
 
+.insight-hero-copy .blog-like-feedback {
+    color: var(--insight-cream);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0 0 28px;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    white-space: normal;
+}
+
 .insight-topic-list {
     color: var(--insight-grey);
     display: flex;

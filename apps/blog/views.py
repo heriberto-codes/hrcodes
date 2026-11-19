@@ -178,6 +178,10 @@ def blog_detail(request, pk, slug):
         pk=pk,
         slug=slug,
     )
+    post_was_liked = (
+        request.GET.get('liked') == 'true'
+        and post.pk in request.session.get('liked_posts', [])
+    )
 
     if post.slug == GUARDRAILS_INSIGHT_SLUG:
         insight_intro, insight_chapters, insight_payloads = (
@@ -201,6 +205,7 @@ def blog_detail(request, pk, slug):
             'blog/insight_detail.html',
             {
                 'post': post,
+                'post_was_liked': post_was_liked,
                 'insight_intro': insight_intro,
                 'insight_chapters': insight_chapters,
                 'insight_payloads': insight_payloads,
@@ -209,7 +214,6 @@ def blog_detail(request, pk, slug):
         )
 
     like = Like.objects.filter(post=post).first()
-    post_was_liked = request.GET.get('liked') == 'true'
     context = {
         'post': post,
         'slug': post.slug,
