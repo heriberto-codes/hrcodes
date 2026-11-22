@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="only light">
+  <title>Case studies introduction — continuity</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: only light;
+      --navy-deep: #101d3b;
+      --cream: #f9e9d5;
+      --peach: #f29576;
+      --grey: #aeb7ca;
+      --mono: "IBM Plex Mono", monospace;
+      --page-gutter: clamp(18px, 4vw, 32px);
+      --section-space: clamp(64px, 9vw, 132px);
+      --supporting-copy-size: clamp(.94rem, 1.3vw, 1.06rem);
+      background: var(--navy-deep);
+      color: var(--cream);
+      font-family: var(--mono);
+      -webkit-font-smoothing: antialiased;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; }
+    .case-section { padding: var(--section-space) var(--page-gutter) clamp(88px, 10vw, 144px); }
+    .case-layout {
+      display: grid;
+      gap: clamp(55px, 8vw, 110px);
+      grid-template-columns: minmax(280px, .7fr) minmax(0, 1.3fr);
+      max-width: 1320px;
+      margin: auto;
+    }
+    .introduction { min-width: 0; }
+    .section-number {
+      align-items: center; display: flex; gap: 16px;
+      color: var(--peach); font-size: .68rem; font-weight: 700;
+      letter-spacing: .14em; margin: 0 0 20px; text-transform: uppercase;
+    }
+    .section-number::after { background: var(--peach); content: ""; height: 1px; width: 74px; }
+    h2 {
+      color: var(--cream); font-family: var(--mono);
+      font-size: clamp(2.75rem, 5vw, 5rem); font-weight: 500;
+      letter-spacing: -.05em; line-height: .98; margin: 0; overflow-wrap: anywhere;
+    }
+    h2 em { color: var(--peach); font-style: normal; }
+    .trail-word { display: inline-block; max-width: 100%; }
+    .period { animation: period-glow 2.4s ease-in-out infinite; display: inline-block; }
+    .intro-copy { color: var(--grey); font-size: var(--supporting-copy-size); line-height: 1.75; margin: 28px 0 0; }
+    @keyframes period-glow {
+      0%, 100% { text-shadow: 0 0 5px rgba(249,233,213,.65), 0 0 9px rgba(242,149,118,.55); }
+      50% { text-shadow: 0 0 7px rgba(249,233,213,.8), 0 0 16px rgba(242,149,118,.75); }
+    }
+    @media (max-width: 1080px) { .case-layout { grid-template-columns: 1fr; } }
+    @media (max-width: 700px) { :root { --page-gutter: 18px; --section-space: 64px; } }
+    @media (prefers-reduced-motion: reduce) { .period { animation: none; } }
+  </style>
+</head>
+<body>
+  <!-- Isolated introduction only; the unoccupied desktop column is not a proposed UI change. -->
+  <main class="case-section" aria-labelledby="case-title">
+    <div class="case-layout">
+      <section class="introduction">
+        <p class="section-number">02 / Case Studies</p>
+        <h2 id="case-title">Follow the <em>evidence <span class="trail-word">trail<span class="period">.</span></span></em></h2>
+        <p class="intro-copy">Four client engagements and two founder projects. Explore the work by relationship, then follow the same path from need to tangible proof.</p>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

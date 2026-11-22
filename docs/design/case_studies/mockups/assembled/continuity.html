@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="only light">
+  <title>Case studies — complete continuity preview</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: only light;
+      --navy-deep: #101d3b; --cream: #f9e9d5; --peach: #f29576; --grey: #aeb7ca;
+      --line-light: rgba(249,233,213,.24); --mono: "IBM Plex Mono", monospace;
+      --page-gutter: clamp(18px,4vw,32px); --section-space: clamp(64px,9vw,132px);
+      --supporting-copy-size: clamp(.94rem,1.3vw,1.06rem);
+      background: var(--navy-deep); color: var(--cream); font-family: var(--mono);
+      -webkit-font-smoothing: antialiased;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body { margin: 0; }
+    .review-banner {
+      border-bottom: 1px solid var(--line-light); padding: 18px var(--page-gutter);
+      font: 14px/1.6 system-ui,sans-serif; color: var(--grey);
+    }
+    .review-banner > div { max-width: 1320px; margin: auto; }
+    .review-banner strong { color: var(--cream); }
+    .review-banner a { color: var(--peach); }
+    .case-section { padding: var(--section-space) var(--page-gutter) 88px; }
+    .case-layout {
+      display: grid; gap: clamp(55px,8vw,110px);
+      grid-template-columns: minmax(280px,.7fr) minmax(0,1.3fr);
+      max-width: 1320px; margin: auto;
+    }
+    .rail, .review-guide { min-width: 0; align-self: start; }
+    .section-number {
+      display: flex; align-items: center; gap: 16px; color: var(--peach);
+      font-size: .68rem; font-weight: 700; letter-spacing: .14em;
+      margin: 0 0 20px; text-transform: uppercase;
+    }
+    .section-number::after { background: var(--peach); content: ""; height: 1px; width: 74px; }
+    h2 {
+      color: var(--cream); font: 500 clamp(2.75rem,5vw,5rem)/.98 var(--mono);
+      letter-spacing: -.05em; margin: 0; overflow-wrap: anywhere;
+    }
+    h2 em { color: var(--peach); font-style: normal; }
+    .trail-word { display: inline-block; max-width: 100%; }
+    .period { display: inline-block; animation: period-glow 2.4s ease-in-out infinite; }
+    .intro-copy { color: var(--grey); font-size: var(--supporting-copy-size); line-height: 1.75; margin: 28px 0 0; }
+    .tabs { border: 1px solid var(--line-light); display: none; grid-template-columns: 1fr 1fr; margin-top: 38px; padding: 4px; }
+    .enhanced .tabs { display: grid; }
+    .tabs button {
+      background: transparent; border: 0; border-radius: 0; box-shadow: none;
+      color: var(--grey); cursor: pointer; font: 600 .65rem/1.35 var(--mono);
+      min-height: 50px; padding: 10px 12px; text-align: left; overflow-wrap: anywhere;
+      transition: background-color 160ms ease,color 160ms ease;
+    }
+    .tabs button[aria-selected="true"] { background: var(--peach); color: var(--navy-deep); }
+    .tabs button:not([aria-selected="true"]):hover { background: rgba(249,233,213,.08); color: var(--cream); }
+    .project-index { border-top: 1px solid var(--line-light); display: grid; margin-top: 20px; }
+    .project-index a {
+      border-bottom: 1px solid var(--line-light); color: var(--grey); display: grid;
+      font-size: .68rem; gap: 14px; grid-template-columns: 34px minmax(0,1fr);
+      padding: 18px 0; text-decoration: none; overflow-wrap: anywhere;
+      transition: color 160ms ease,padding-left 160ms ease;
+    }
+    .project-index a span { color: var(--peach); }
+    .project-index a:hover { color: var(--cream); padding-left: 8px; }
+    a:focus-visible, button:focus-visible, .destination:target {
+      outline: 3px solid var(--peach); outline-offset: 4px;
+    }
+    .group-label { color: var(--cream); font-size: .85rem; margin: 24px 0 0; }
+    .enhanced .group-label { display: none; }
+    .fallback { border: 1px solid var(--line-light); padding: 16px; color: var(--grey); font-size: .72rem; line-height: 1.6; }
+    /* Review-only guide occupies the future cards column; it is not proposed site UI. */
+    .review-guide {
+      border: 1px dashed var(--line-light); padding: clamp(20px,3vw,40px);
+      font: 16px/1.7 system-ui,sans-serif; color: var(--grey);
+    }
+    .review-guide h3 { font-size: 24px; line-height: 1.3; color: var(--cream); margin: 8px 0 16px; }
+    .review-guide .kicker { color: var(--peach); font-size: 12px; text-transform: uppercase; letter-spacing: .1em; margin: 0; }
+    .review-guide strong { color: var(--cream); }
+    .destination { border-top: 1px solid var(--line-light); padding: 18px 0; scroll-margin-top: 24px; overflow-wrap: anywhere; }
+    .destination span { display: block; font-size: 13px; }
+    .destination p { margin: 0; color: var(--cream); font-weight: 600; }
+    @keyframes period-glow {
+      0%,100% { text-shadow: 0 0 5px rgba(249,233,213,.65),0 0 9px rgba(242,149,118,.55); }
+      50% { text-shadow: 0 0 7px rgba(249,233,213,.8),0 0 16px rgba(242,149,118,.75); }
+    }
+    @media(max-width:1080px) {
+      .case-layout { grid-template-columns: 1fr; }
+      .tabs { max-width: 640px; }
+      .project-index { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .project-index a { padding-right: 16px; }
+    }
+    @media(max-width:760px) { .tabs, .project-index { grid-template-columns: 1fr; } }
+    @media(max-width:700px) { :root { --page-gutter: 18px; --section-space: 64px; } }
+    @media(prefers-reduced-motion:reduce) {
+      .period { animation: none; }
+      .project-index a, .tabs button { transition: none; }
+      .project-index a:hover { padding-left: 0; }
+    }
+.home-evidence-trail { display: grid; gap: 32px; }
+.home-case-fallback { border: 1px solid var(--line-light); color: var(--grey); font-size: 0.72rem; line-height: 1.6; margin: 0; padding: 16px; }
+.home-work-panel { display: grid; gap: 32px; }
+.home-case-studies:not(.is-enhanced) .home-work-panel + .home-work-panel { margin-top: 32px; }
+
+.home-trail-case {
+    background: var(--cream);
+    color: var(--navy-deep);
+    padding: 18px;
+    position: relative;
+    scroll-margin-top: 24px;
+}
+
+.home-trail-case::before { background: var(--peach); content: ""; height: 4px; left: 0; position: absolute; top: 0; width: 100%; }
+.home-trail-identity { align-items: end; display: flex; justify-content: space-between; padding: 26px 24px 24px; }
+.home-trail-identity span { color: var(--peach-deep); font-size: 0.59rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.home-trail-identity h3 { color: var(--navy-deep); font-family: var(--mono); font-size: clamp(1.8rem, 3vw, 3.15rem); letter-spacing: -0.045em; margin: 12px 0 0; }
+.home-trail-identity > p { color: #58647c; font-size: 0.62rem; margin: 0 0 4px 25px; text-align: right; white-space: nowrap; }
+
+.home-trail-visual { height: clamp(280px, 31vw, 470px); overflow: hidden; }
+.home-trail-visual img { height: 100%; object-fit: cover; object-position: left top; transition: filter 220ms ease, transform 220ms ease; width: 100%; }
+.home-plantid-visual { background: #f7f4ed; }
+.home-plantid-visual img { object-position: center top; }
+.home-trail-visual.home-linktag-visual { aspect-ratio: 16 / 9; height: auto; }
+.home-linktag-visual img { display: block; object-fit: contain; }
+
+.home-trail-steps { display: grid; grid-template-columns: repeat(3, 1fr); list-style: none; margin: 0; padding: 0; }
+.home-trail-steps li { min-height: 240px; padding: 30px 24px; }
+.home-trail-steps li + li { border-left: 1px solid var(--line-dark); }
+.home-trail-steps span { color: var(--peach-deep); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.home-trail-steps h4 { color: var(--navy-deep); font-family: var(--mono); font-size: 0.9rem; line-height: 1.35; margin: 21px 0 14px; }
+.home-trail-steps p { color: #58647c; font-size: 0.66rem; line-height: 1.67; margin: 0; }
+
+.home-trail-case details { border-top: 1px solid var(--line-dark); }
+.home-trail-case summary { align-items: center; cursor: pointer; display: flex; font-size: 0.68rem; font-weight: 700; justify-content: space-between; list-style: none; padding: 20px 24px; }
+.home-trail-case summary::-webkit-details-marker { display: none; }
+.home-trail-case summary b { color: var(--peach-deep); font-size: 1.15rem; transition: transform 160ms ease; }
+.home-trail-case details[open] summary b { transform: rotate(45deg); }
+.home-artifact-panel { background: rgba(242, 149, 118, 0.1); padding: 20px 24px 24px; }
+.home-artifact-intro { color: var(--peach-deep); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.12em; margin: 0 0 12px; text-transform: uppercase; }
+.home-artifact-list { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); list-style: none; margin: 0; padding: 0; }
+.home-artifact-list-four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.home-artifact-list li { background: rgba(255, 247, 237, 0.55); border: 1px solid var(--line-dark); display: flex; flex-direction: column; min-height: 132px; padding: 16px; }
+.home-artifact-list strong { display: block; font-size: 0.72rem; line-height: 1.4; }
+.home-artifact-list span { color: #58647c; display: block; font-size: 0.6rem; line-height: 1.55; margin-top: 6px; }
+.home-artifact-list a { border-top: 1px solid var(--line-dark); color: var(--peach-deep) !important; display: flex; font-size: 0.62rem; font-weight: 700; justify-content: space-between; margin-top: auto; padding-top: 14px; text-decoration: none; }
+.home-artifact-list a:hover { color: var(--navy-deep) !important; }
+
+
+    :root { --peach-deep: #b7583e; --line-dark: rgba(16,29,59,.22); }
+    .home-evidence-trail, .home-work-panel, .home-trail-case, .home-trail-steps li { min-width: 0; }
+    .home-work-panel + .home-work-panel { margin-top: 32px; }
+    .enhanced .home-work-panel + .home-work-panel { margin-top: 0; }
+    .home-trail-case { overflow-wrap: anywhere; }
+    .home-trail-identity h3 { font-weight: 500; }
+    .home-trail-identity > p { white-space: normal; }
+    .home-trail-steps h4 { font-weight: 500; }
+    .home-artifact-list strong { color: var(--peach); }
+    #case-turtle-ai .home-artifact-list strong { color: var(--navy-deep); }
+    .home-trail-visual.home-turtle-visual { height: auto; aspect-ratio: 1; }
+    .home-turtle-visual img { display: block; object-fit: contain; }
+    .home-trail-case :focus-visible { outline: 3px solid var(--navy-deep); outline-offset: 4px; }
+    @media(max-width:760px) {
+      .home-trail-identity { align-items: start; flex-direction: column; gap: 10px; padding: 24px 16px 20px; }
+      .home-trail-identity > p { margin: 0; text-align: left; }
+      .home-trail-visual { height: 300px; }
+      .home-trail-steps { grid-template-columns: 1fr; }
+      .home-trail-steps li { min-height: 0; padding: 26px 16px; }
+      .home-trail-steps li + li { border-left: 0; border-top: 1px solid var(--line-dark); }
+      .home-trail-case summary { padding: 20px 16px; }
+      .home-artifact-panel { padding: 19px 16px; }
+      .home-artifact-list, .home-artifact-list-four { grid-template-columns: minmax(0,1fr); }
+      .home-artifact-list li { min-height: 0; }
+      #case-turtle-ai .home-artifact-list a { margin-top: 14px; }
+    }
+    @media(max-width:460px) {
+      .home-trail-case { padding: 10px; }
+      .home-trail-visual { height: 220px; }
+      .home-trail-visual.home-turtle-visual { height: auto; }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      .home-trail-visual img, .home-trail-case summary b { transition: none; }
+    }
+  .home-trail-close { align-items: center; background: rgba(249, 233, 213, 0.035); border: 1px solid var(--peach); display: grid; gap: 40px; grid-template-columns: minmax(0, 1fr) auto; margin-top: 12px; padding: 30px 28px; }
+.home-trail-close > div { max-width: 650px; }
+.home-trail-close span { color: var(--peach); display: block; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.12em; margin-bottom: 10px; text-transform: uppercase; }
+.home-trail-close strong { display: block; font-size: clamp(1rem, 2vw, 1.35rem); line-height: 1.3; }
+.home-trail-close p { color: var(--grey); font-size: 0.66rem; line-height: 1.65; margin: 10px 0 0; max-width: 620px; }
+.home-trail-close a { background: var(--peach); border: 2px solid var(--peach); border-radius: 8px; color: var(--navy-deep); display: flex; font-size: 0.7rem; font-weight: 700; gap: 36px; padding: 14px 17px; text-decoration: none; }
+.home-trail-close a:hover { background: var(--cream); border-color: var(--cream); }
+.home-trail-close a,
+.home-trail-close { min-width:0; overflow-wrap:anywhere; }
+.home-trail-close a { align-items:center; }
+
+.home-trail-close strong { color:var(--peach); }
+@media(max-width:760px) { .home-trail-close { align-items:stretch; gap:24px; grid-template-columns:1fr; } .home-trail-close a { justify-content:space-between; } }
+ .review-destination { border:1px dashed var(--line-light); max-width:1320px; margin:96px auto 0; padding:24px; font:14px/1.7 system-ui,sans-serif; color:var(--grey); scroll-margin-top:24px; }
+.review-destination h2 { color:var(--cream); font:700 20px/1.4 system-ui,sans-serif; letter-spacing:normal; margin:0 0 16px; }
+.review-destination a { color:var(--peach); }
+.review-destination:target { outline:3px solid var(--peach); outline-offset:4px; }
+  </style>
+</head>
+<body>
+  <header class="review-banner"><div><strong>Complete Case Studies design preview.</strong> All four selected sections are combined here. Switch to Founder Projects to see cThink followed by Turtle AI. <a href="../index.html">Review guide</a></div></header>
+  <main class="case-section" aria-labelledby="case-title">
+    <div class="case-layout">
+      <aside class="rail">
+        <p class="section-number">02 / Case Studies</p>
+        <h2 id="case-title">Follow the <em>evidence <span class="trail-word">trail<span class="period">.</span></span></em></h2>
+        <p class="intro-copy">Four client engagements and two founder projects. Explore the work by relationship, then follow the same path from need to tangible proof.</p>
+        <div class="tabs" role="tablist" aria-label="Case study type">
+          <button type="button" role="tab" id="tab-client" aria-controls="panel-client" aria-selected="true" tabindex="0">Client Work</button>
+          <button type="button" role="tab" id="tab-founder" aria-controls="panel-founder" aria-selected="false" tabindex="-1">Founder Projects</button>
+        </div>
+        <p class="group-label">Client Work</p>
+        <nav class="project-index" aria-label="Client work index" data-group="client">
+          <a href="#case-ept"><span>01</span> Empowered Path Therapy</a>
+          <a href="#case-rubix"><span>02</span> Rubix AI</a>
+          <a href="#case-linktag"><span>03</span> LinkTag</a>
+          <a href="#case-change-food"><span>04</span> Change Food For Good</a>
+        </nav>
+        <p class="group-label">Founder Projects</p>
+        <nav class="project-index" aria-label="Founder projects index" data-group="founder">
+          <a href="#case-cthink"><span>01</span> cThink</a>
+          <a href="#case-turtle-ai"><span>02</span> Turtle AI</a>
+        </nav>
+        <noscript><p class="fallback">Client work and founder project case studies are both shown below because interactive filtering is unavailable.</p></noscript>
+      </aside>
+      <div class="home-evidence-trail">
+      <section class="home-work-panel" id="panel-client" role="tabpanel" aria-labelledby="tab-client" data-home-case-panel>
+        <article class="home-trail-case" id="case-ept">
+          <header class="home-trail-identity"><div><span>01 / Client work</span><h3>Empowered Path Therapy</h3></div><p>Full-Stack Software Engineer · 2024–2016</p></header>
+          <div class="home-trail-visual"><img src="../assets/EPT_home_page.png" width="1440" height="965" loading="lazy" alt="Empowered Path Therapy homepage with therapist portrait and client portal action"></div>
+          <ol class="home-trail-steps"><li><span>Understand</span><h4>A growing telehealth practice</h4><p>Translate the practice’s services and client journey into a clear, welcoming digital experience.</p></li><li><span>Build</span><h4>Public experience + application foundation</h4><p>Combine responsive interface work with a Django-based foundation that can support evolving workflows.</p></li><li><span>Show</span><h4>Evidence a buyer can inspect</h4><p>The live website and Figma work make the delivered interface and product thinking visible.</p></li></ol>
+          <details open><summary>Open evidence notes <b aria-hidden="true">+</b></summary><div class="home-artifact-panel"><p class="home-artifact-intro">Available artifacts</p><ul class="home-artifact-list"><li><div><strong>Live site</strong><span>Published client experience</span></div><a href="https://www.empoweredpaththerapy.com" target="_blank" rel="noopener noreferrer">Visit site ↗</a></li><li><div><strong>Interface design</strong><span>Figma design file</span></div><a href="https://www.figma.com/design/fNgk1FRaKhQxTCskFZpnwx/EPT?node-id=0-1&amp;t=C0bqFUX7kbWYrLPf-1" target="_blank" rel="noopener noreferrer">Open Figma ↗</a></li></ul></div></details>
+        </article>
+
+        <article class="home-trail-case" id="case-rubix">
+          <header class="home-trail-identity"><div><span>02 / Client product work</span><h3>Rubix AI</h3></div><p>Software Engineer · 2024–2025</p></header>
+          <div class="home-trail-visual"><img src="../assets/rubixAIhomepage.png" width="1306" height="812" loading="lazy" alt="Rubix AI marketing calendar beta landing page"></div>
+          <ol class="home-trail-steps"><li><span>Understand</span><h4>Make marketing planning less fragmented</h4><p>Frame a product that helps users generate personalized brand marketing assets and a calendar in one place.</p></li><li><span>Build</span><h4>MVP interface + system shape</h4><p>Support the product through Django implementation, interface prototyping, and documented software architecture.</p></li><li><span>Show</span><h4>Multiple proof layers</h4><p>LinkedIn updates, interface designs, an interactive prototype, and a C4 model provide product context alongside design and technical evidence.</p></li></ol>
+          <details><summary>Open evidence notes <b aria-hidden="true">+</b></summary><div class="home-artifact-panel"><p class="home-artifact-intro">Available artifacts</p><ul class="home-artifact-list home-artifact-list-four"><li><div><strong>LinkedIn updates</strong><span>Rubix Tech AI company posts</span></div><a href="https://www.linkedin.com/company/rubix-tech-ai/posts/?feedView=all" target="_blank" rel="noopener noreferrer">View posts ↗</a></li><li><div><strong>Interface design</strong><span>Figma design file</span></div><a href="https://www.figma.com/design/5Qd4LC0HDaccNVGKWOiS1G/Rubix_AI?node-id=0-1&amp;t=6r84vRKQbbUpyHNi-1" target="_blank" rel="noopener noreferrer">Open Figma ↗</a></li><li><div><strong>Interactive prototype</strong><span>Figma product flow</span></div><a href="https://www.figma.com/proto/sWPthTO7GABWLjOiMERhHn/Rubix_HR_Codes?page-id=0%3A1&amp;node-id=1-11519&amp;viewport=4280%2C-1252%2C0.06&amp;t=878VxVUcrt29Etse-1&amp;scaling=scale-down-width&amp;content-scaling=fixed&amp;starting-point-node-id=1%3A11519&amp;show-proto-sidebar=1" target="_blank" rel="noopener noreferrer">Open prototype ↗</a></li><li><div><strong>Software architecture</strong><span>C4 system-design document</span></div><a href="https://hromancodes.s3.us-east-1.amazonaws.com/static/pages/Rubix_Software_System_Design.drawio.pdf" target="_blank" rel="noopener noreferrer">View C4 model ↗</a></li></ul></div></details>
+        </article>
+
+        <article class="home-trail-case" id="case-linktag">
+          <header class="home-trail-identity"><div><span>03 / Client workflow product</span><h3>LinkTag</h3></div><p>Full Stack Developer · 2023–2024</p></header>
+          <div class="home-trail-visual home-linktag-visual"><img src="../assets/linktag-home.jpg" width="1280" height="720" loading="lazy" alt="LinkTag homepage with Your network. The right people. headline, Get started action, and an illustrative connections table"></div>
+          <ol class="home-trail-steps"><li><span>Understand</span><h4>Professional follow-up loses context</h4><p>Make a large set of LinkedIn connections easier to organize, search, and revisit.</p></li><li><span>Build</span><h4>Authentication + data workflow</h4><p>Turn uploaded connection data into a Django application with role-aware access, tags, and filtered views.</p></li><li><span>Show</span><h4>A workflow buyers can inspect</h4><p>The live application and source repository expose both the user flow and implementation.</p></li></ol>
+          <details><summary>Open evidence notes <b aria-hidden="true">+</b></summary><div class="home-artifact-panel"><p class="home-artifact-intro">Available artifacts</p><ul class="home-artifact-list"><li><div><strong>Live application</strong><span>Published workflow experience</span></div><a href="https://linktag.fly.dev" target="_blank" rel="noopener noreferrer">Visit app ↗</a></li><li><div><strong>Source repository</strong><span>Django implementation</span></div><a href="https://github.com/hroman-codes/link_tag" target="_blank" rel="noopener noreferrer">View GitHub ↗</a></li></ul></div></details>
+        </article>
+
+        <article class="home-trail-case" id="case-change-food">
+          <header class="home-trail-identity"><div><span>04 / Client workforce development</span><h3>Change Food For Good</h3></div><p>Technical Instructor · 2023–2024</p></header>
+          <div class="home-trail-visual home-plantid-visual"><img src="../assets/plantid-main.png" width="1440" height="1100" loading="lazy" alt="PlantID Living Gallery interface with a large plant photograph beside the photo upload and identification workflow"></div>
+          <ol class="home-trail-steps"><li><span>Understand</span><h4>Make technical learning practical</h4><p>Support learners building useful web skills within a mission-driven workforce program.</p></li><li><span>Build</span><h4>Teach through a working PlantID project</h4><p>Apply JavaScript and API lessons in PlantID, a working class project that connects a photo-upload flow to plant identification.</p></li><li><span>Show</span><h4>A class project learners can inspect</h4><p>The live PlantID application and public repository make the experience, implementation, and learning context visible.</p></li></ol>
+          <details><summary>Open evidence notes <b aria-hidden="true">+</b></summary><div class="home-artifact-panel"><p class="home-artifact-intro">Available artifacts</p><ul class="home-artifact-list"><li><div><strong>Live PlantID project</strong><span>Published class project</span></div><a href="https://plantid-heriberto.fly.dev" target="_blank" rel="noopener noreferrer">Visit project ↗</a></li><li><div><strong>PlantID source</strong><span>Public GitHub repository</span></div><a href="https://github.com/heriberto-codes/plantID" target="_blank" rel="noopener noreferrer">View GitHub ↗</a></li><li><div><strong>Organization site</strong><span>Program mission and context</span></div><a href="https://changefoodforgood.org/" target="_blank" rel="noopener noreferrer">Visit site ↗</a></li></ul></div></details>
+        </article>
+      </section>
+
+      <section class="home-work-panel" id="panel-founder" role="tabpanel" aria-labelledby="tab-founder" data-home-case-panel>
+        <article class="home-trail-case" id="case-cthink">
+          <header class="home-trail-identity"><div><span>01 / Founder product</span><h3>cThink</h3></div><p>Product concept + full-stack build</p></header>
+          <div class="home-trail-visual"><img src="../assets/cThink.png" width="1427" height="847" loading="lazy" alt="cThink proof-of-concept page describing its technical learning approach"></div>
+          <ol class="home-trail-steps"><li><span>Understand</span><h4>Technical concepts are hard to retain</h4><p>Start from a teaching problem observed across adult learners, young learners, and a former coding beginner.</p></li><li><span>Build</span><h4>Draw, Act, Build</h4><p>Turn a multisensory teaching approach into a Django product where learners can create and save their process.</p></li><li><span>Show</span><h4>An inspectable product hypothesis</h4><p>The project documents the problem, pedagogy, product direction, and implementation in one visible artifact.</p></li></ol>
+          <details open><summary>Open evidence notes <b aria-hidden="true">+</b></summary><div class="home-artifact-panel"><p class="home-artifact-intro">Available artifact</p><ul class="home-artifact-list"><li><div><strong>Source repository</strong><span>Code and proof-of-concept product narrative</span></div><a href="https://github.com/hroman-codes/cThink" target="_blank" rel="noopener noreferrer">View GitHub ↗</a></li></ul></div></details>
+        </article>
+        <article class="home-trail-case" id="case-turtle-ai">
+          <header class="home-trail-identity"><div><span>02 / Founder project</span><h3>Turtle AI</h3></div><p>Codex skills + development workflow</p></header>
+          <div class="home-trail-visual home-turtle-visual"><img src="../assets/turtle-ai-overview.png" width="1254" height="1254" loading="lazy" alt="Turtle AI overview: 25 skills, optional design, five implementation steps with debugging when needed, and two state systems"></div>
+          <ol class="home-trail-steps"><li><span>Understand</span><h4>Keep understanding the code you build</h4><p>Accepting AI-generated code without knowing how it works can make a project harder to maintain.</p></li><li><span>Build</span><h4>Small changes, deliberate checkpoints</h4><p>Organize Codex work with project-local skills, Markdown rules, and a step-by-step loop for implementation, review, understanding, and testing.</p></li><li><span>Show</span><h4>A published workflow to inspect</h4><p>The public repository documents the skills, optional design path, and file-based progress tracking. People review the work and decide when to continue.</p></li></ol>
+          <details open><summary>Open evidence notes <b aria-hidden="true">+</b></summary><div class="home-artifact-panel"><p class="home-artifact-intro">Available artifacts</p><ul class="home-artifact-list"><li><div><strong>Source repository</strong><span>Project-local skills and getting-started guide</span></div><a href="https://github.com/heriberto-codes/turtle_ai" target="_blank" rel="noopener noreferrer">View GitHub ↗</a></li><li><div><strong>Workflow reference</strong><span>Implementation loop and engineer checkpoint</span></div><a href="https://github.com/heriberto-codes/turtle_ai/blob/04c7a3f732cac0f272eba7c9b031035cfe3eccb0/docs/system/workflow.md" target="_blank" rel="noopener noreferrer">Read workflow ↗</a></li><li><div><strong>Design workflow</strong><span>From section mockups to an approved design</span></div><a href="https://github.com/heriberto-codes/turtle_ai/blob/04c7a3f732cac0f272eba7c9b031035cfe3eccb0/docs/system/design-workflow.md" target="_blank" rel="noopener noreferrer">Read design guide ↗</a></li></ul></div></details>
+        </article>
+      </section>
+
+      <aside class="home-trail-close" id="inquiry-band">
+        <div><span>Have a product or workflow challenge?</span><strong>Let’s map a practical next step.</strong><p>Bring the problem, your goals, and where the work stands. We’ll use the call to clarify fit and identify the most useful next move.</p></div>
+        <a href="#start-a-project">Discuss Your Project <b aria-hidden="true">→</b></a>
+      </aside>
+      </div>
+    </div>
+  </main>
+  <section class="review-destination" id="start-a-project" aria-labelledby="destination-title" tabindex="-1"><h2 id="destination-title">Preview destination: Start a Project</h2><p>The button reached its on-page target. The real homepage contains the project brief form here; this isolated design preview does not collect or submit information.</p><a href="#inquiry-band">Return to the inquiry band</a></section>
+  <script>
+    (() => {
+      const tabs = [...document.querySelectorAll('[role="tab"]')];
+      const groups = ['client','founder'];
+      const select = (index, focus = false) => {
+        tabs.forEach((tab,i) => {
+          tab.setAttribute('aria-selected',String(i === index));
+          tab.tabIndex = i === index ? 0 : -1;
+          document.getElementById(tab.getAttribute('aria-controls')).hidden = i !== index;
+          document.querySelector(`[data-group="${groups[i]}"]`).hidden = i !== index;
+        });
+        if (focus) tabs[index].focus({preventScroll:true});
+      };
+      tabs.forEach((tab,index) => {
+        tab.addEventListener('click',() => select(index));
+        tab.addEventListener('keydown',event => {
+          const next = {ArrowRight:(index+1)%2,ArrowLeft:(index+1)%2,Home:0,End:1}[event.key];
+          if (next === undefined) return;
+          event.preventDefault(); select(next,true);
+        });
+      });
+      const selectFromHash = () => {
+        const target = document.getElementById(location.hash.slice(1));
+        const panel = target && target.closest('[role="tabpanel"]');
+        if (panel) select(panel.id === 'panel-founder' ? 1 : 0);
+      };
+      document.body.classList.add('enhanced');
+      select(new URLSearchParams(location.search).get('group') === 'founder' ? 1 : 0);
+      selectFromHash();
+      window.addEventListener('hashchange',selectFromHash);
+    })();
+  </script>
+</body>
+</html>

@@ -5,13 +5,13 @@
     <aside class="home-case-rail">
       <p class="home-section-number">02 / Case Studies</p>
       <h2 id="home-case-studies-title">
-        Follow the <em>evidence trail<span class="home-case-period"><span class="home-period-glyph">.</span><span class="home-period-pixels" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></span></em>
+        Follow the <em>evidence <span class="home-case-last-word">trail<span class="home-case-period"><span class="home-period-glyph">.</span><span class="home-period-pixels" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></span></span></em>
       </h2>
-      <p class="home-case-intro">Four client engagements and one founder product. Explore the work by relationship, then follow the same path from need to tangible proof.</p>
+      <p class="home-case-intro">Four client engagements and two founder projects. Explore the work by relationship, then follow the same path from need to tangible proof.</p>
 
       <div class="home-case-tabs" role="tablist" aria-label="Case study type" data-home-case-tabs>
         <button type="button" role="tab" id="home-case-tab-client" aria-selected="true" aria-controls="home-case-panel-client" tabindex="0">Client Work</button>
-        <button type="button" role="tab" id="home-case-tab-product" aria-selected="false" aria-controls="home-case-panel-product" tabindex="-1">Founder Product</button>
+        <button type="button" role="tab" id="home-case-tab-product" aria-selected="false" aria-controls="home-case-panel-product" tabindex="-1">Founder Projects</button>
       </div>
 
       <nav id="home-case-nav-client" class="home-case-index" aria-label="Client work index" data-home-case-index="home-case-tab-client">
@@ -20,13 +20,14 @@
         <a href="#case-linktag"><span>03</span> LinkTag</a>
         <a href="#case-change-food"><span>04</span> Change Food For Good</a>
       </nav>
-      <nav id="home-case-nav-product" class="home-case-index" aria-label="Founder product index" data-home-case-index="home-case-tab-product">
+      <nav id="home-case-nav-product" class="home-case-index" aria-label="Founder projects index" data-home-case-index="home-case-tab-product">
         <a href="#case-cthink"><span>01</span> cThink</a>
+        <a href="#case-turtle-ai"><span>02</span> Turtle AI</a>
       </nav>
     </aside>
 
     <div class="home-evidence-trail">
-      <noscript><p class="home-case-fallback">Client work and founder product case studies are both shown below because interactive filtering is unavailable.</p></noscript>
+      <noscript><p class="home-case-fallback">Client work and founder project case studies are both shown below because interactive filtering is unavailable.</p></noscript>
 
       <section class="home-work-panel" id="home-case-panel-client" role="tabpanel" aria-labelledby="home-case-tab-client" data-home-case-panel>
         <article class="home-trail-case" id="case-ept">
@@ -65,11 +66,18 @@
           <ol class="home-trail-steps"><li><span>Understand</span><h4>Technical concepts are hard to retain</h4><p>Start from a teaching problem observed across adult learners, young learners, and a former coding beginner.</p></li><li><span>Build</span><h4>Draw, Act, Build</h4><p>Turn a multisensory teaching approach into a Django product where learners can create and save their process.</p></li><li><span>Show</span><h4>An inspectable product hypothesis</h4><p>The project documents the problem, pedagogy, product direction, and implementation in one visible artifact.</p></li></ol>
           <details open><summary>Open evidence notes <b aria-hidden="true">+</b></summary><div class="home-artifact-panel"><p class="home-artifact-intro">Available artifact</p><ul class="home-artifact-list"><li><div><strong>Source repository</strong><span>Code and proof-of-concept product narrative</span></div><a href="https://github.com/hroman-codes/cThink" target="_blank" rel="noopener noreferrer">View GitHub ↗</a></li></ul></div></details>
         </article>
+
+        <article class="home-trail-case" id="case-turtle-ai">
+          <header class="home-trail-identity"><div><span>02 / Founder project</span><h3>Turtle AI</h3></div><p>Codex skills + development workflow</p></header>
+          <div class="home-trail-visual home-turtle-visual"><img src="{% static 'pages/images/turtle-ai-overview.png' %}" width="1254" height="1254" loading="lazy" alt="Turtle AI overview: 25 skills, optional design, five implementation steps with debugging when needed, and two state systems"></div>
+          <ol class="home-trail-steps"><li><span>Understand</span><h4>Keep understanding the code you build</h4><p>Accepting AI-generated code without knowing how it works can make a project harder to maintain.</p></li><li><span>Build</span><h4>Small changes, deliberate checkpoints</h4><p>Organize Codex work with project-local skills, Markdown rules, and a step-by-step loop for implementation, review, understanding, and testing.</p></li><li><span>Show</span><h4>A published workflow to inspect</h4><p>The public repository documents the skills, optional design path, and file-based progress tracking. People review the work and decide when to continue.</p></li></ol>
+          <details open><summary>Open evidence notes <b aria-hidden="true">+</b></summary><div class="home-artifact-panel"><p class="home-artifact-intro">Available artifacts</p><ul class="home-artifact-list"><li><div><strong>Source repository</strong><span>Project-local skills and getting-started guide</span></div><a href="https://github.com/heriberto-codes/turtle_ai" target="_blank" rel="noopener noreferrer">View GitHub ↗</a></li><li><div><strong>Workflow reference</strong><span>Implementation loop and engineer checkpoint</span></div><a href="https://github.com/heriberto-codes/turtle_ai/blob/04c7a3f732cac0f272eba7c9b031035cfe3eccb0/docs/system/workflow.md" target="_blank" rel="noopener noreferrer">Read workflow ↗</a></li><li><div><strong>Design workflow</strong><span>From section mockups to an approved design</span></div><a href="https://github.com/heriberto-codes/turtle_ai/blob/04c7a3f732cac0f272eba7c9b031035cfe3eccb0/docs/system/design-workflow.md" target="_blank" rel="noopener noreferrer">Read design guide ↗</a></li></ul></div></details>
+        </article>
       </section>
 
       <aside class="home-trail-close">
         <div><span>Have a product or workflow challenge?</span><strong>Let’s map a practical next step.</strong><p>Bring the problem, your goals, and where the work stands. We’ll use the call to clarify fit and identify the most useful next move.</p></div>
-        <a href="#start-a-project" aria-label="Go to the Start a Project form">Discuss Your Project <b aria-hidden="true">→</b></a>
+        <a href="#start-a-project">Discuss Your Project <b aria-hidden="true">→</b></a>
       </aside>
     </div>
   </div>

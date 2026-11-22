@@ -76,6 +76,43 @@ class HomepageContinuityParser(HTMLParser):
             self.heading_one_count += 1
 
 
+class HomepageCaseStudiesParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.nodes = []
+        self.stack = []
+
+    def handle_starttag(self, tag, attrs):
+        node = {
+            'tag': tag,
+            'attrs': dict(attrs),
+            'ancestors': tuple(self.stack),
+            'text': '',
+        }
+        self.nodes.append(node)
+        if tag not in {'img', 'br', 'hr', 'input', 'link', 'meta'}:
+            self.stack.append(node)
+
+    def handle_endtag(self, tag):
+        for index in range(len(self.stack) - 1, -1, -1):
+            if self.stack[index]['tag'] == tag:
+                del self.stack[index:]
+                break
+
+    def handle_data(self, data):
+        for node in self.stack:
+            node['text'] += data
+
+    def find_all(self, tag=None, within=None, **attrs):
+        return [
+            node for node in self.nodes
+            if (tag is None or node['tag'] == tag)
+            and (within is None or within in node['ancestors'])
+            and all(node['attrs'].get(key) == value
+                    for key, value in attrs.items())
+        ]
+
+
 class ProjectBriefTokenParser(HTMLParser):
     def __init__(self):
         super().__init__()
@@ -1353,12 +1390,12 @@ class TestViews(TestCase):
         )
         self.assertContains(
             response,
-            f'href="{static("pages/home.css")}?v=20260926-continuity-4"',
+            f'href="{static("pages/home.css")}?v=20261122-case-studies-2"',
         )
         self.assertContains(
             response,
             f'<script src="{static("pages/home.js")}'
-            '?v=20260926-continuity-3" defer></script>',
+            '?v=20261121-case-studies-1" defer></script>',
             html=True,
         )
         self.assertIsNotNone(home_css_path)
@@ -1528,12 +1565,15 @@ class TestViews(TestCase):
 
     def test_home_renders_case_studies_b_contract(self):
         case_studies = render_to_string('includes/case_studies.html')
+        parser = HomepageCaseStudiesParser()
+        parser.feed(case_studies)
         case_names = (
             'Empowered Path Therapy',
             'Rubix AI',
             'LinkTag',
             'Change Food For Good',
             'cThink',
+            'Turtle AI',
         )
         artifact_urls = (
             'https://www.empoweredpaththerapy.com',
@@ -1550,6 +1590,13 @@ class TestViews(TestCase):
             'https://github.com/heriberto-codes/plantID',
             'https://changefoodforgood.org/',
             'https://github.com/hroman-codes/cThink',
+            'https://github.com/heriberto-codes/turtle_ai',
+            'https://github.com/heriberto-codes/turtle_ai/blob/'
+            '04c7a3f732cac0f272eba7c9b031035cfe3eccb0/'
+            'docs/system/workflow.md',
+            'https://github.com/heriberto-codes/turtle_ai/blob/'
+            '04c7a3f732cac0f272eba7c9b031035cfe3eccb0/'
+            'docs/system/design-workflow.md',
         )
 
         self.assertIn(
@@ -1582,37 +1629,112 @@ class TestViews(TestCase):
             case_studies,
         )
 
-        positions = [case_studies.index(name) for name in case_names]
-        self.assertEqual(positions, sorted(positions))
-        self.assertEqual(case_studies.count('class="home-trail-case"'), 5)
-        for step_name in ('Understand', 'Build', 'Show'):
-            self.assertEqual(
-                case_studies.count(f'<li><span>{step_name}</span>'),
-                5,
-            )
-        self.assertEqual(case_studies.count('<details'), 5)
-        self.assertEqual(case_studies.count('<details open>'), 2)
+        articles = parser.find_all('article', **{'class': 'home-trail-case'})
+        self.assertEqual(len(articles), 6)
         self.assertEqual(
-            case_studies.count(
-                'target="_blank" rel="noopener noreferrer"'
-            ),
-            len(artifact_urls),
+            [parser.find_all('h3', within=article)[0]['text']
+             for article in articles],
+            list(case_names),
         )
-        for artifact_url in artifact_urls:
-            self.assertIn(artifact_url, case_studies)
+        for article in articles:
+            steps = parser.find_all(
+                'ol', within=article, **{'class': 'home-trail-steps'},
+            )
+            self.assertEqual(len(steps), 1)
+            self.assertEqual(
+                [node['text'] for node in
+                 parser.find_all('span', within=steps[0])],
+                ['Understand', 'Build', 'Show'],
+            )
+            self.assertEqual(len(parser.find_all('details', within=article)), 1)
+        self.assertEqual(
+            len([node for node in parser.find_all('details')
+                 if 'open' in node['attrs']]),
+            3,
+        )
+        evidence_links = parser.find_all('a', target='_blank')
+        self.assertEqual(len(evidence_links), len(artifact_urls))
+        for link, destination in zip(evidence_links, artifact_urls):
+            self.assertTrue(link['attrs']['href'].startswith(destination))
+        for link in evidence_links:
+            self.assertEqual(set(link['attrs']['rel'].split()),
+                             {'noopener', 'noreferrer'})
 
-        for asset_name in ('linktag-home.jpg', 'plantid-main.png'):
+        for asset_name in (
+            'linktag-home.jpg', 'plantid-main.png', 'turtle-ai-overview.png',
+        ):
             static_path = f'pages/images/{asset_name}'
             self.assertIn(static(static_path), case_studies)
             self.assertIsNotNone(finders.find(static_path))
 
-        self.assertIn('<noscript>', case_studies)
-        self.assertIn('both shown below', case_studies)
         self.assertIn(
-            'href="#start-a-project" '
-            'aria-label="Go to the Start a Project form"',
+            'Four client engagements and two founder projects.',
             case_studies,
         )
+        founder_tab = parser.find_all('button', id='home-case-tab-product')[0]
+        self.assertEqual(founder_tab['text'], 'Founder Projects')
+        founder_panel = parser.find_all(
+            'section', id=founder_tab['attrs']['aria-controls'],
+        )[0]
+        founder_index = parser.find_all('nav', id='home-case-nav-product')[0]
+        self.assertEqual(founder_index['attrs']['aria-label'],
+                         'Founder projects index')
+        self.assertEqual(founder_index['attrs']['data-home-case-index'],
+                         founder_tab['attrs']['id'])
+        self.assertEqual(
+            [node['attrs']['id'] for node in
+             parser.find_all('article', within=founder_panel)],
+            ['case-cthink', 'case-turtle-ai'],
+        )
+        index_links = parser.find_all('a', within=founder_index)
+        self.assertEqual(
+            [(node['attrs']['href'], ' '.join(node['text'].split()))
+             for node in index_links],
+            [('#case-cthink', '01 cThink'), ('#case-turtle-ai', '02 Turtle AI')],
+        )
+        for link in parser.find_all('a'):
+            if link['attrs']['href'].startswith('#case-'):
+                self.assertEqual(len(parser.find_all(
+                    'article', id=link['attrs']['href'][1:],
+                )), 1)
+
+        turtle = articles[-1]
+        self.assertInHTML(
+            '<img src="%s" width="1254" height="1254" loading="lazy" '
+            'alt="Turtle AI overview: 25 skills, optional design, five '
+            'implementation steps with debugging when needed, and two '
+            'state systems">' % static('pages/images/turtle-ai-overview.png'),
+            case_studies,
+        )
+        self.assertIn('Codex skills + development workflow', turtle['text'])
+        self.assertIn('open', parser.find_all('details', within=turtle)[0]['attrs'])
+        self.assertEqual(
+            [node['attrs']['href'] for node in
+             parser.find_all('a', within=turtle)],
+            list(artifact_urls[-3:]),
+        )
+
+        # Both groups and indexes are available before enhancement runs.
+        for node in parser.find_all(role='tabpanel') + parser.find_all('nav'):
+            self.assertNotIn('hidden', node['attrs'])
+        fallback = parser.find_all('noscript')
+        self.assertEqual(len(fallback), 1)
+        self.assertIn('Client work and founder project case studies are both '
+                      'shown below', fallback[0]['text'])
+
+        closing = parser.find_all('aside', **{'class': 'home-trail-close'})
+        self.assertEqual(len(closing), 1)
+        self.assertFalse(any(node['attrs'].get('role') == 'tabpanel'
+                             for node in closing[0]['ancestors']))
+        closing_links = parser.find_all('a', within=closing[0])
+        self.assertEqual(len(closing_links), 1)
+        action = closing_links[0]
+        self.assertEqual(action['attrs']['href'], '#start-a-project')
+        self.assertNotIn('aria-label', action['attrs'])
+        self.assertNotIn('aria-labelledby', action['attrs'])
+        self.assertEqual(action['text'].strip(), 'Discuss Your Project →')
+        self.assertEqual(parser.find_all('b', within=action)[0]['attrs'],
+                         {'aria-hidden': 'true'})
         self.assertNotIn('<script', case_studies)
 
     def test_home_css_defines_case_studies_b_contract(self):
@@ -1623,8 +1745,6 @@ class TestViews(TestCase):
 
         for contract in (
             '.home-page .home-case-studies {',
-            '.home-page .home-case-rail { align-self: start; '
-            'position: sticky;',
             '.home-page .home-case-tabs {',
             'display: none;',
             '.home-page .home-case-studies.is-enhanced '
@@ -1659,7 +1779,6 @@ class TestViews(TestCase):
             'tab.addEventListener("click", () => selectTab('
             'tab, { preserveViewport: true }));',
             '["ArrowLeft", "ArrowRight", "Home", "End"]',
-            'window.location.hash === "#case-cthink"',
             'section.classList.add("is-enhanced");',
             'window.addEventListener("hashchange", selectTabForHash);',
         ):

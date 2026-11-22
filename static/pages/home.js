@@ -116,8 +116,14 @@
     });
 
     const selectTabForHash = () => {
-        const selectedTab = window.location.hash === "#case-cthink" ? tabs[1] : tabs[0];
-        selectTab(selectedTab);
+        const target = document.getElementById(window.location.hash.slice(1));
+        const panel = target?.closest("[data-home-case-panel]");
+        const selectedTab = tabs.find((tab) => tab.getAttribute("aria-controls") === panel?.id);
+        selectTab(selectedTab || tabs[0]);
+
+        if (selectedTab) {
+            window.requestAnimationFrame(() => target.scrollIntoView({ block: "start", behavior: "instant" }));
+        }
     };
 
     section.classList.add("is-enhanced");
