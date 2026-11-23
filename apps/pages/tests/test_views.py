@@ -1390,7 +1390,7 @@ class TestViews(TestCase):
         )
         self.assertContains(
             response,
-            f'href="{static("pages/home.css")}?v=20261122-case-studies-2"',
+            f'href="{static("pages/home.css")}?v=20261122-about-profile-1"',
         )
         self.assertContains(
             response,
@@ -1896,6 +1896,23 @@ class TestViews(TestCase):
         )
         self.assertIsNotNone(portrait_path)
         self.assertIn('Founder + Principal Software Engineer', about)
+        education_status = 'Current student · Boston University'
+        education_program = (
+            'Master’s in Software Engineering for Artificial Intelligence'
+        )
+        self.assertInHTML(
+            '<div class="home-about-portrait-caption">'
+            '<span>Founder + Principal Software Engineer</span>'
+            '<strong>Heriberto Roman</strong>'
+            '<div class="home-about-education">'
+            f'<p class="home-about-education-status">{education_status}</p>'
+            f'<p class="home-about-education-program">{education_program}</p>'
+            '</div></div>',
+            about,
+            count=1,
+        )
+        self.assertEqual(about.count(education_status), 1)
+        self.assertEqual(about.count(education_program), 1)
         self.assertIn(
             'turn ideas and business problems into production-ready '
             'software',
@@ -1947,8 +1964,8 @@ class TestViews(TestCase):
 
         for destination in (
             'https://www.youtube.com/@heriberto_codes',
-            'https://hromancodes.s3.us-east-1.amazonaws.com/static/pages/'
-            'HRomandevresume_April_2026.pdf',
+            'https://hroman-codes.s3.us-east-2.amazonaws.com/'
+            'HRomandevresume_November_2026.pdf',
             'https://calendly.com/heriberto_codes/coffee_chat',
         ):
             self.assertIn(
@@ -1957,7 +1974,17 @@ class TestViews(TestCase):
                 about,
             )
 
-        self.assertIn('>View résumé ', about)
+        self.assertNotIn(
+            'https://hromancodes.s3.us-east-1.amazonaws.com/static/pages/'
+            'HRomandevresume_April_2026.pdf',
+            about,
+        )
+        self.assertIn(
+            '>View résumé <span aria-hidden="true">↗</span>'
+            '<span class="home-visually-hidden"> '
+            '(opens in a new tab)</span></a>',
+            about,
+        )
         self.assertNotIn(' download', about)
         self.assertNotIn('<script', about)
 

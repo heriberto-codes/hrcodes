@@ -1,0 +1,11 @@
+/* Minimal base defaults used by the existing page; preview only. */
+html { font-size: 16px; scroll-behavior: smooth; }
+body { margin: 0; font-size: 1rem; font-weight: 400; line-height: 1.5; text-align: left; }
+h1,h2,h3,h4,h5,h6 { margin-top: 0; margin-bottom: .5rem; font-weight: 500; line-height: 1.2; }
+p { margin-top: 0; margin-bottom: 1rem; color: #8893af; font-size: 1rem; }
+strong { color: #f29576; font-weight: 700; }
+a { color: #007bff; text-decoration: none; background-color: transparent; }
+a:hover { text-decoration: none; }
+img { vertical-align: middle; border-style: none; }
+svg { overflow: hidden; vertical-align: middle; }
+figure { margin: 0 0 1rem; }

@@ -1268,6 +1268,10 @@
 .home-page .home-about-portrait-caption { border-bottom: 1px solid var(--line-dark); display: flex; flex-direction: column; gap: 7px; padding: 25px 0 20px; }
 .home-page .home-about-portrait-caption span { color: var(--ink); font-size: 0.62rem; text-transform: uppercase; }
 .home-page .home-about-portrait-caption strong { font-size: 1.15rem; }
+.home-page .home-about-education { border-top: 1px solid var(--line-dark); margin-top: 11px; padding-top: 16px; }
+.home-page .home-about-education p { color: var(--ink); margin: 0; }
+.home-page .home-about-education .home-about-education-status { color: var(--navy-deep); font-size: 0.75rem; font-weight: 600; line-height: 1.6; }
+.home-page .home-about-education .home-about-education-program { font-size: 0.875rem; line-height: 1.65; margin-top: 8px; overflow-wrap: anywhere; }
 .home-page .home-about-story { min-width: 0; }
 .home-page .home-about .home-section-number { color: var(--navy-deep); }
 .home-page .home-about .home-section-number::after { background: var(--peach-deep); }

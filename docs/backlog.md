@@ -7,6 +7,7 @@
 - [x] Secure blog likes with CSRF-protected POST actions limited to exact published posts
 - [x] Prevent project-brief data and client identifiers from reaching Sentry (`project_brief_sentry_privacy`)
 - [x] Add Turtle AI as the second founder case study while preserving the approved site design (`case_studies`)
+- [x] Refresh résumé links and add current Boston University study beneath the About portrait using the approved design (`about_profile_refresh`)
 
 ## Architecture Improvements
 

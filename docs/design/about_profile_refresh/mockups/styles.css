@@ -1,0 +1,30 @@
+/* Only the education block is proposed product styling. */
+.home-page .home-about-education {
+  border-top: 1px solid var(--line-dark);
+  margin-top: 11px;
+  padding-top: 16px;
+}
+.home-page .home-about-education p { color: var(--ink); margin: 0; }
+.home-page .home-about-education .home-about-education-status {
+  color: var(--navy-deep);
+  font-size: .75rem;
+  font-weight: 600;
+  line-height: 1.6;
+}
+.home-page .home-about-education .home-about-education-program {
+  font-size: .875rem;
+  line-height: 1.65;
+  margin-top: 8px;
+  overflow-wrap: anywhere;
+}
+/* Review guidance is separate from the proposed website UI. */
+.review-bar { align-items: center; border-bottom: 1px solid var(--line-light); display: flex; flex-wrap: wrap; gap: 16px 28px; justify-content: space-between; padding: 20px var(--page-gutter); }
+.review-bar p { color: var(--cream); font-size: .75rem; margin: 0; }
+.review-bar a, .review-notes a { color: var(--cream); font-size: .8rem; text-decoration: underline; text-underline-offset: .2em; }
+.review-notes { margin: auto; max-width: 1000px; padding: 40px var(--page-gutter) 64px; }
+.review-notes h2 { color: var(--cream); font-size: 1.25rem; }
+.review-notes p { color: var(--cream); font-size: .875rem; line-height: 1.7; }
+.review-url { overflow-wrap: anywhere; }
+.review-skip { background: var(--navy-deep); color: var(--cream); left: 16px; padding: 12px; position: absolute; top: -100px; z-index: 5; }
+.review-skip:focus { top: 12px; }
+/* Keep review navigation focus visible on its navy surface. */
